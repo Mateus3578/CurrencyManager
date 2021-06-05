@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CardMoney extends StatelessWidget {
-  final bool showMoney;
-  final VoidCallback click;
+  final bool showMoney; // Mostra ou não o saldo
+  final VoidCallback click; // Recebe o evento de clique no ícone
 
   const CardMoney({Key? key, required this.showMoney, required this.click})
       : super(key: key);

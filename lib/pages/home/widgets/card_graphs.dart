@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Temporário, apenas para visualização. Cada gráfico terá sua classe
 class CardGraphs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

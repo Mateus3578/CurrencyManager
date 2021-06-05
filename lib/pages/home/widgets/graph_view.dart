@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'card_graphs.dart';
 
 class GraphView extends StatelessWidget {
-  final double top;
-  final ValueChanged<int> changed;
-  final GestureDragUpdateCallback pan;
-
+  final double top; // Recebe a posição (altura)
+  final ValueChanged<int> changed; // Recebe o índice do card (página)
+  final GestureDragUpdateCallback
+      pan; // Recebe o evento de arrastar pra cima/baixo
   const GraphView({
     Key? key,
     required this.top,

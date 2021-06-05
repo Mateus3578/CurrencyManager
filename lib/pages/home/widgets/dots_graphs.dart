@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DotsGraphs extends StatelessWidget {
-  final int index;
-  final double top;
+  final int index; // Recebe o índice do card (página)
+  final double top; // Recebe a posição (altura)
 
+  // Deixa em destaque (cor) apenas o índice atual
   Color getColor(int dotIndex) {
     return index == dotIndex ? Colors.white : Colors.white38;
   }
