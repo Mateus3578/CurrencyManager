@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tc/pages/home/widgets/card_money.dart';
+import 'package:tc/pages/home/widgets/card_show_money.dart';
 import 'package:tc/pages/home/widgets/dots_graphs.dart';
 import 'package:tc/pages/home/widgets/graph_view.dart';
 
@@ -35,7 +36,7 @@ class _HomeState extends State<Home> {
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
-          CardMoney(
+          CardShowMoney(
             showMoney: _showMoney,
             click: () {
               setState(() {
@@ -45,6 +46,10 @@ class _HomeState extends State<Home> {
                     _showMoney ? _screenHeight * 0.44 : _screenHeight * 0.24;
               });
             },
+          ),
+          CardMoney(
+            top: _screenHeight * 0.20,
+            showMoney: _showMoney,
           ),
           GraphView(
             // Posição levando em conta o card de saldo
