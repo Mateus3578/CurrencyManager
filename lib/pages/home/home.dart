@@ -33,6 +33,7 @@ class _HomeState extends State<Home> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.grey[900],
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
@@ -43,7 +44,7 @@ class _HomeState extends State<Home> {
                 // Posição levando em conta o card de saldo
                 _showMoney = !_showMoney;
                 _yPosition =
-                    _showMoney ? _screenHeight * 0.44 : _screenHeight * 0.24;
+                    _showMoney ? _screenHeight * 0.40 : _screenHeight * 0.20;
               });
             },
           ),
@@ -53,7 +54,7 @@ class _HomeState extends State<Home> {
           ),
           GraphView(
             // Posição levando em conta o card de saldo
-            top: !_showMoney ? _screenHeight * 0.24 : _screenHeight * 0.44,
+            top: !_showMoney ? _screenHeight * 0.20 : _screenHeight * 0.40,
             changed: (index) {
               setState(() {
                 _index = index;
@@ -61,8 +62,8 @@ class _HomeState extends State<Home> {
             },
             // A mágica de puxar os gráficos pra cima ou pra baixo e mostrar o saldo
             pan: (details) {
-              double positionTopLimit = _screenHeight * 0.24; //Posição inicial
-              double positionBottomLimit = _screenHeight * 0.44; //Posição final
+              double positionTopLimit = _screenHeight * 0.20; //Posição inicial
+              double positionBottomLimit = _screenHeight * 0.40; //Posição final
               double midlePosition = (positionBottomLimit - positionTopLimit) /
                   2; //Posição do meio
 
@@ -105,7 +106,7 @@ class _HomeState extends State<Home> {
           DotsGraphs(
             index: _index,
             // Posição levando em conta o card de saldo
-            top: !_showMoney ? _screenHeight * 0.65 : _screenHeight * 0.85,
+            top: !_showMoney ? _screenHeight * 0.60 : _screenHeight * 0.80,
           ),
         ],
       ),

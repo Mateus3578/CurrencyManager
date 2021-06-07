@@ -18,7 +18,7 @@ class CardMoney extends StatelessWidget {
         // Mostra ou não o saldo usando a opacidade
         opacity: showMoney ? 1 : 0,
         child: Container(
-          color: Colors.red,
+          color: Colors.grey[900],
           height: MediaQuery.of(context).size.height * 0.24,
           child: Column(
             children: <Widget>[
@@ -46,6 +46,9 @@ class CardMoney extends StatelessWidget {
                         color: Colors.green,
                         size: 35,
                       ),
+                    ),
+                    SizedBox(
+                      width: 10,
                     ),
                     Expanded(
                       child: Align(
@@ -84,6 +87,9 @@ class CardMoney extends StatelessWidget {
                           ],
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      width: 10,
                     ),
                     Align(
                       alignment: Alignment.centerRight,

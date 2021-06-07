@@ -17,11 +17,21 @@ class CardShowMoney extends StatelessWidget {
         GestureDetector(
           onTap: click,
           child: Container(
-            color: Colors.red,
+            color: Colors.grey[900],
             height: MediaQuery.of(context).size.height * 0.14,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  "Olá, " + "user",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(
+                  height: 6,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -29,7 +39,7 @@ class CardShowMoney extends StatelessWidget {
                       "Detalhes",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 14,
                       ),
                     )
                   ],
