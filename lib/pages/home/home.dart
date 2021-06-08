@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tc/pages/home/widgets/bottom_menu.dart';
 import 'package:tc/pages/home/widgets/card_money.dart';
 import 'package:tc/pages/home/widgets/card_show_money.dart';
 import 'package:tc/pages/home/widgets/dots_graphs.dart';
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
     _showMoney = false;
     _index = 0;
     _yPosition = 0;
-  } // Inicia tudo com 0 fds
+  } // Inicia tudo com 0
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +109,7 @@ class _HomeState extends State<Home> {
             // Posição levando em conta o card de saldo
             top: !_showMoney ? _screenHeight * 0.60 : _screenHeight * 0.80,
           ),
+          BottomMenu(),
         ],
       ),
     );

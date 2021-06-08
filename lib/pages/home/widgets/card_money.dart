@@ -4,8 +4,11 @@ class CardMoney extends StatelessWidget {
   final double top;
   final bool showMoney;
 
-  const CardMoney({Key? key, required this.top, required this.showMoney})
-      : super(key: key);
+  const CardMoney({
+    Key? key,
+    required this.top,
+    required this.showMoney,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
