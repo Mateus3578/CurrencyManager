@@ -24,6 +24,7 @@ class _BottomMenuState extends State<BottomMenu> {
                 size: Size(size.width, 80),
                 painter: NavbarCustomPainter(Colors.amber),
               ),
+              // Botão de adicionar transações
               Center(
                 heightFactor: 0.6,
                 child: FloatingActionButton(
@@ -42,12 +43,14 @@ class _BottomMenuState extends State<BottomMenu> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    // Menu principal
                     IconButton(
                       onPressed: () {},
                       icon: Icon(Icons.home),
                       color: Colors.black,
                       iconSize: 30,
                     ),
+                    // Contas
                     IconButton(
                       onPressed: () {},
                       icon: Icon(Icons.account_balance_wallet),
@@ -58,12 +61,14 @@ class _BottomMenuState extends State<BottomMenu> {
                     SizedBox(
                       width: size.width * 0.2,
                     ),
+                    // Lista de transações
                     IconButton(
                       onPressed: () {},
                       icon: Icon(Icons.list),
                       color: Colors.black,
                       iconSize: 30,
                     ),
+                    // Configurações
                     IconButton(
                       onPressed: () {},
                       icon: Icon(Icons.settings),

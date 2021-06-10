@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'card_graphs.dart';
+import 'graphs/card_graphs.dart';
 
 class GraphView extends StatelessWidget {
   final double top; // Recebe a posição (altura)
