@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tc/pages/home/classes/navbar_custom_painter.dart';
+import 'package:tc/pages/new/new_transaction.dart';
 
 class BottomMenu extends StatefulWidget {
   const BottomMenu({Key? key}) : super(key: key);
@@ -28,7 +29,12 @@ class _BottomMenuState extends State<BottomMenu> {
               Center(
                 heightFactor: 0.6,
                 child: FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => NewTransaction(),
+                    );
+                  },
                   backgroundColor: Colors.orange,
                   child: Icon(
                     Icons.add,
