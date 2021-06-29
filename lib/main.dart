@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tc/pages/new/new_revenue.dart';
 import 'package:tc/pages/splash/my_splash.dart';
 
 void main() {
@@ -22,7 +23,9 @@ class MyApp extends StatelessWidget {
       title: "{insert_name}",
       // Dark mode >>>>> Light mode
       theme: ThemeData(brightness: Brightness.dark),
-      home: MySplash(),
+      home: NewRevenue(
+        color: Colors.green,
+      ),
     );
   }
 }

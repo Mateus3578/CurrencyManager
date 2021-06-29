@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tc/pages/new/new_revenue.dart';
 
 class NewTransaction extends StatefulWidget {
   const NewTransaction({Key? key}) : super(key: key);
@@ -25,7 +26,16 @@ class _NewTransactionState extends State<NewTransaction> {
                   child: Column(
                     children: [
                       FloatingActionButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NewRevenue(
+                                color: Colors.green,
+                              ),
+                            ),
+                          );
+                        },
                         backgroundColor: Colors.green,
                         child: Icon(
                           Icons.arrow_upward_rounded,
