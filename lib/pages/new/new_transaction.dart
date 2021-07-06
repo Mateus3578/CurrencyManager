@@ -27,6 +27,7 @@ class _NewTransactionState extends State<NewTransaction> {
                     children: [
                       FloatingActionButton(
                         onPressed: () {
+                          Navigator.pop(context);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -59,7 +60,9 @@ class _NewTransactionState extends State<NewTransaction> {
                   child: Column(
                     children: [
                       FloatingActionButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         backgroundColor: Colors.red,
                         child: Icon(
                           Icons.arrow_downward_rounded,
@@ -88,7 +91,9 @@ class _NewTransactionState extends State<NewTransaction> {
                   child: Column(
                     children: [
                       FloatingActionButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         backgroundColor: Colors.blue,
                         child: Icon(
                           Icons.cached_rounded,
@@ -112,7 +117,9 @@ class _NewTransactionState extends State<NewTransaction> {
                   child: Column(
                     children: [
                       FloatingActionButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         backgroundColor: Colors.purple,
                         child: Icon(
                           Icons.credit_card_rounded,
