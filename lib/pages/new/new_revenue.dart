@@ -11,6 +11,7 @@ class NewRevenue extends StatefulWidget {
 class _NewRevenueState extends State<NewRevenue> {
   bool _isFixed = false;
   bool _isRepeatable = false;
+  String _date = "";
 
   // Pop-up com confirmação para cancelar a criação da transação
   // O ´´?? false´´ lá no final é para permitir voltar apertando fora do pop-up sem explodir tudo
@@ -126,11 +127,12 @@ class _NewRevenueState extends State<NewRevenue> {
                 ),
                 // Dados
                 Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Column(
                     children: [
                       Row(children: [Text("Valor")]),
                       Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(10.0),
                         child: Row(
                           children: [
                             Text(
@@ -166,25 +168,91 @@ class _NewRevenueState extends State<NewRevenue> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Hoje",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _date = "hoje";
+                                });
+                              },
+                              child: Container(
+                                decoration: _date == "hoje"
+                                    ? BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(4)),
+                                        border: Border.all(
+                                          color: widget.color,
+                                          width: 4,
+                                        ),
+                                      )
+                                    : BoxDecoration(),
+                                child: Padding(
+                                  padding: EdgeInsets.all(6),
+                                  child: Text(
+                                    "Hoje",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                            Text(
-                              "Ontem",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _date = "ontem";
+                                });
+                              },
+                              child: Container(
+                                decoration: _date == "ontem"
+                                    ? BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(4)),
+                                        border: Border.all(
+                                          color: widget.color,
+                                          width: 4,
+                                        ),
+                                      )
+                                    : BoxDecoration(),
+                                child: Padding(
+                                  padding: EdgeInsets.all(6),
+                                  child: Text(
+                                    "Ontem",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                            Text(
-                              "Selecionar",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _date = "choose";
+                                });
+                              },
+                              child: Container(
+                                decoration: _date == "choose"
+                                    ? BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(4)),
+                                        border: Border.all(
+                                          color: widget.color,
+                                          width: 4,
+                                        ),
+                                      )
+                                    : BoxDecoration(),
+                                child: Padding(
+                                  padding: EdgeInsets.all(6),
+                                  child: Text(
+                                    "Selecionar",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
