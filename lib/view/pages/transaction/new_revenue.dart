@@ -13,8 +13,8 @@ class _NewRevenueState extends State<NewRevenue> {
   bool _isRepeatable = false;
   String _date = "";
 
-  // Pop-up com confirmação para cancelar a criação da transação
-  // O ´´?? false´´ lá no final é para permitir voltar apertando fora do pop-up sem explodir tudo
+  /// Pop-up com confirmação para cancelar a criação da transação.
+  /// O ´´?? false´´ lá no final é para permitir voltar apertando fora do pop-up sem explodir tudo
   Future<bool> _onExit() async {
     return (await showDialog(
           context: context,

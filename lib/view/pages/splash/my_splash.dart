@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tc/pages/home/home.dart';
+import 'package:tc/view/pages/home/home.dart';
 
 class MySplash extends StatefulWidget {
   @override

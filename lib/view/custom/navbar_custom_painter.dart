@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/* Desenha a barra de menu. Recebe como parâmetro a cor de fundo. */
+/// Desenha a barra de menu. Recebe como parâmetro a cor de fundo.
 class NavbarCustomPainter extends CustomPainter {
   final Color mainColor;
 

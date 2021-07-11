@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tc/pages/home/widgets/bottom_menu.dart';
-import 'package:tc/pages/home/widgets/card_money.dart';
-import 'package:tc/pages/home/widgets/dots_graphs.dart';
-import 'package:tc/pages/home/widgets/graph_view.dart';
-import 'package:tc/pages/home/widgets/my_appbar.dart';
+import 'package:tc/view/pages/home/widgets/bottom_menu.dart';
+import 'package:tc/view/pages/home/widgets/card_money.dart';
+import 'package:tc/view/pages/home/widgets/dots_graphs.dart';
+import 'package:tc/view/pages/home/widgets/graph_view.dart';
+import 'package:tc/view/pages/home/widgets/my_appbar.dart';
 
 class Home extends StatefulWidget {
   @override

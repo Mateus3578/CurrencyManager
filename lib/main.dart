@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tc/pages/splash/my_splash.dart';
+import 'package:tc/view/pages/splash/my_splash.dart';
 
 void main() {
   //Barra de notificações no modo escuro

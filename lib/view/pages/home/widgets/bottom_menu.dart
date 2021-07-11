@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tc/pages/home/classes/navbar_custom_painter.dart';
-import 'package:tc/pages/new/new_transaction.dart';
+import 'package:tc/view/custom/navbar_custom_painter.dart';
+import 'package:tc/view/pages/transaction/new_transaction.dart';
 
 class BottomMenu extends StatefulWidget {
   const BottomMenu({Key? key}) : super(key: key);

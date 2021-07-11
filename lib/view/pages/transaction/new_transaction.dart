@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tc/pages/new/new_revenue.dart';
+import 'package:tc/view/pages/transaction/new_revenue.dart';
 
 class NewTransaction extends StatefulWidget {
   const NewTransaction({Key? key}) : super(key: key);
