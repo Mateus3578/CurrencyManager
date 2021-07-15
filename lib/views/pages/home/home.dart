@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tc/view/pages/home/widgets/bottom_menu.dart';
-import 'package:tc/view/pages/home/widgets/card_money.dart';
-import 'package:tc/view/pages/home/widgets/dots_graphs.dart';
-import 'package:tc/view/pages/home/widgets/graph_view.dart';
-import 'package:tc/view/pages/home/widgets/my_appbar.dart';
+import 'package:tc/classes/app_colors.dart';
+import 'package:tc/views/pages/home/widgets/bottom_menu.dart';
+import 'package:tc/views/pages/home/widgets/card_money.dart';
+import 'package:tc/views/pages/home/widgets/dots_graphs.dart';
+import 'package:tc/views/pages/home/widgets/graph_view.dart';
+import 'package:tc/views/pages/home/widgets/my_appbar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,17 +12,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late bool _showMoney; // Mostra/Oculta o saldo
-  late int _index; // Contador de página dos gráficos
-  late double _yPosition; // Cuida da posição dos gráficos
+  AppColors appColors = AppColors.instance;
 
-  @override
-  void initState() {
-    super.initState();
-    _showMoney = false; // Sempre inicia com o saldo oculto
-    _index = 0; // Sempre inicia no primeiro gráfico
-    _yPosition = 0;
-  }
+  late bool _showMoney = false; // Mostra/Oculta o saldo, padrão não mostrar
+  late int _index = 0; // Contador de página dos gráficos. Começa no primeiro
+  late double _yPosition = 0; // Cuida da posição vertical dos gráficos.
+  // Tanto faz o valor, ele muda depois.
+  // Só pro Flutter não reclamar que não foi inicializado ¯\_(ツ)_/¯
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class _HomeState extends State<Home> {
     double _screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: appColors.colors["background"],
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[

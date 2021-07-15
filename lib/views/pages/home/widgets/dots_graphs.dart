@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+/// Bolinhas (dots) que representam a página dos gráficos
+///
+/// Poderia ter usado um carousel ou algo assim, mas....
 class DotsGraphs extends StatelessWidget {
   final int index; // Recebe o índice do card (página)
   final double top; // Recebe a posição (altura)
 
-  // Deixa em destaque (cor) apenas o índice atual
+  /// Deixa em destaque (cor) apenas o dot do índice atual
   Color getColor(int dotIndex) {
     return index == dotIndex ? Colors.white : Colors.white38;
   }

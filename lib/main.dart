@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tc/view/pages/splash/my_splash.dart';
+import 'package:tc/classes/restart_widget.dart';
+import 'package:tc/views/pages/splash/my_splash.dart';
 
 void main() {
   //Barra de notificações no modo escuro
@@ -9,7 +10,8 @@ void main() {
         statusBarBrightness: Brightness.dark,
         statusBarColor: Colors.transparent),
   );
-  runApp(MyApp());
+  //Função para reiniciar o app. Mais informações dentro da classe
+  runApp(RestartWidget(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
       title: "{insert_name}",
       // Dark mode >>>>> Light mode
       theme: ThemeData(brightness: Brightness.dark),
+      //home: NewRevenue(color: Colors.green,),
       home: MySplash(),
     );
   }

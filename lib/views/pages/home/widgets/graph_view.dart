@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'graphs/card_graphs.dart';
 
+/// "Deck" de cards com os gráficos
 class GraphView extends StatelessWidget {
   final double top; // Recebe a posição (altura)
   final ValueChanged<int> changed; // Recebe o índice do card (página)
