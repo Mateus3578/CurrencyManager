@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
+import 'package:tc/classes/app_database.dart';
 import 'package:tc/models/transaction.dart';
-
-//TODO: Organizar. Muitas linhas. Separar
-//! Parei nas contas
-
-/// Compara duas datas.
-extension DateOnlyCompare on DateTime {
-  bool isSameDate(DateTime other) {
-    return this.year == other.year &&
-        this.month == other.month &&
-        this.day == other.day;
-  }
-}
 
 class NewRevenue extends StatefulWidget {
   final MaterialColor color;
@@ -23,7 +13,8 @@ class NewRevenue extends StatefulWidget {
 }
 
 class _NewRevenueState extends State<NewRevenue> {
-  Transaction transaction = new Transaction();
+  Transaction transaction = Transaction();
+  AppDatabase db = AppDatabase.instance;
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -36,83 +27,58 @@ class _NewRevenueState extends State<NewRevenue> {
   DateTime _date = DateTime.now();
 
   /// Pop-up com confirmação para cancelar a criação da transação.
-  /// O ´´?? false´´ lá no final é para permitir voltar apertando fora do pop-up sem explodir tudo
   Future<bool> _onExit() async {
     return (await showDialog(
-          //TODO: MUITO FEIO, EMBELEZAR
-          context: context,
-          builder: (context) => Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  padding:
-                      EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 20),
-                  margin: EdgeInsets.only(top: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[700],
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black,
-                        offset: Offset(0, 10),
-                        blurRadius: 10,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        "Confirmação",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        "Deseja descartar as alterações?",
-                        style: TextStyle(fontSize: 20),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 22),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(false),
-                            child: Text(
-                              "Não",
-                              style: TextStyle(fontSize: 18, color: Colors.red),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(true),
-                            child: Text(
-                              "Sim",
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.green),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Confirmação", textAlign: TextAlign.center),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 2),
+                child: Text(
+                  "Deseja descartar as alterações?",
+                  style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        )) ??
-        false;
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: TextButton(
+                  child: Text(
+                    "Cancelar",
+                    style: TextStyle(fontSize: 18, color: Colors.red),
+                  ),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: TextButton(
+                  child: Text(
+                    "Confirmar",
+                    style: TextStyle(fontSize: 18, color: Colors.green),
+                  ),
+                  onPressed: () => Navigator.of(context).pop(true),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ));
   }
 
   /// Abre um pop-up para escolher uma data
-  // TODO: Verificar em portugues. Parece estranho
   _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
@@ -124,6 +90,28 @@ class _NewRevenueState extends State<NewRevenue> {
         _date = picked;
       });
     }
+  }
+
+  _onSaved() async {
+    // Reformatando o valor
+    // TODO: Fazer algo melhor aqui
+    String value = valueController.text;
+    value = value.replaceAll("R\$", "");
+    value = value.replaceAll(" ", "");
+    value = value.replaceFirst(",", "x", value.length - 3);
+    value = value.replaceAll(".", "");
+    value = value.replaceAll("x", ".");
+
+    // Montando o mapa
+    transaction.type = 1;
+    transaction.description = descriptionController.text;
+    transaction.accountId = 1; // !!! //TODO: Arrumar isso
+    transaction.value = double.tryParse(value);
+    transaction.date = DateFormat("yyyy-MM-dd").format(_date);
+    transaction.moreDesc = moreDescController.text;
+
+    // Salvando no banco de dados
+    await db.insert(TransactionForDb.tableName, transaction.toMap());
   }
 
   @override
@@ -139,16 +127,14 @@ class _NewRevenueState extends State<NewRevenue> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).padding.top,
-                  ),
+                  SizedBox(height: MediaQuery.of(context).padding.top),
                   // Título
                   Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "Nova Receita",
                             style: TextStyle(
@@ -162,15 +148,16 @@ class _NewRevenueState extends State<NewRevenue> {
                   ),
                   // Dados
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Column(
                       children: [
                         // Valor
                         Row(children: [Text("Valor")]),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                           child: TextFormField(
                             keyboardType: TextInputType.number,
+                            //TODO: Formatar apenas para mostrar
                             inputFormatters: [
                               CurrencyTextInputFormatter(
                                 locale: "pt-br",
@@ -180,8 +167,6 @@ class _NewRevenueState extends State<NewRevenue> {
                             ],
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
                               disabledBorder: InputBorder.none,
                               hintText: "R\$0,00",
                             ),
@@ -191,15 +176,8 @@ class _NewRevenueState extends State<NewRevenue> {
                             ),
                             controller: valueController,
                             validator: (value) {
-                              if (value!.isEmpty ||
-                                  num.tryParse(value) == null ||
-                                  double.parse(value) < 0) {
-                                return "Insira um valor válido";
-                              }
-                            },
-                            onSaved: (value) {
-                              if (value != null) {
-                                transaction.value = double.tryParse(value);
+                              if (value!.isEmpty) {
+                                return "Insira um valor";
                               }
                             },
                           ),
@@ -208,16 +186,12 @@ class _NewRevenueState extends State<NewRevenue> {
                         // Descrição
                         Row(children: [Text("Descrição")]),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                           child: TextFormField(
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
                               disabledBorder: InputBorder.none,
-                              hintText:
-                                  "Descrição", //TODO: Escolher entre título e hint ou pensar em uma melhor
                             ),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -227,11 +201,6 @@ class _NewRevenueState extends State<NewRevenue> {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Insira uma descrição";
-                              }
-                            },
-                            onSaved: (value) {
-                              if (value != null) {
-                                transaction.description = value;
                               }
                             },
                           ),
@@ -332,7 +301,7 @@ class _NewRevenueState extends State<NewRevenue> {
                                               _date.isSameDate(DateTime.now()
                                                   .subtract(Duration(days: 1)))
                                           ? "Selecionar"
-                                          : "${_date.day}/${_date.month}/${_date.year}",
+                                          : "${DateFormat("dd/MM/yyyy").format(_date)}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
@@ -346,6 +315,9 @@ class _NewRevenueState extends State<NewRevenue> {
                         ),
                         Divider(color: Colors.white),
                         Row(children: [Text("Conta")]),
+                        //! Falta as contas
+                        //TODO: Buscar as contas do DB
+                        //* Sempre abrir na última usada
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Row(
@@ -363,21 +335,21 @@ class _NewRevenueState extends State<NewRevenue> {
                         Divider(color: Colors.white),
                         Row(children: [Text("Observações")]),
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Nada a declarar",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              )
-                            ],
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+                          child: TextFormField(
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                            ),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                            ),
+                            controller: moreDescController,
                           ),
                         ),
                         Divider(color: Colors.white),
-                        Row(children: [Text("Repetição")]),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Row(
@@ -388,7 +360,7 @@ class _NewRevenueState extends State<NewRevenue> {
                                   Row(
                                     children: [
                                       Text(
-                                        "Repetir?",
+                                        "Repetir",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
@@ -417,7 +389,7 @@ class _NewRevenueState extends State<NewRevenue> {
                                   Row(
                                     children: [
                                       Text(
-                                        "Receita Fixa?",
+                                        "Receita Fixa",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
@@ -455,7 +427,12 @@ class _NewRevenueState extends State<NewRevenue> {
                       child: Column(
                         children: [
                           FloatingActionButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _onSaved();
+                                Navigator.of(context).pop(true);
+                              }
+                            },
                             backgroundColor: widget.color,
                             child: Icon(
                               Icons.check,
@@ -477,5 +454,14 @@ class _NewRevenueState extends State<NewRevenue> {
         ),
       ),
     );
+  }
+}
+
+/// Compara duas datas.
+extension DateOnlyCompare on DateTime {
+  bool isSameDate(DateTime other) {
+    return this.year == other.year &&
+        this.month == other.month &&
+        this.day == other.day;
   }
 }

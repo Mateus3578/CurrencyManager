@@ -31,9 +31,8 @@ class _NewTransactionState extends State<NewTransaction> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => NewRevenue(
-                                color: Colors.green,
-                              ),
+                              builder: (context) =>
+                                  NewRevenue(color: Colors.green),
                             ),
                           );
                         },

@@ -3,6 +3,7 @@ import 'package:flutter_circle_color_picker/flutter_circle_color_picker.dart';
 import 'package:tc/classes/app_colors.dart';
 import 'package:tc/classes/restart_widget.dart';
 
+/// Widget com um botão que muda a cor e reinicia o app
 class ColorChange extends StatelessWidget {
   final String text;
   final String colorID;

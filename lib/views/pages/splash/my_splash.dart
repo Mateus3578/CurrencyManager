@@ -35,10 +35,17 @@ class MySplashState extends State<MySplash> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       body: Center(
-        child: Icon(
-          Icons.attach_money,
-          size: 50,
-          color: Colors.white,
+        child: DecoratedBox(
+          decoration: const BoxDecoration(color: Color(0xFF212121)),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              textDirection: TextDirection.ltr,
+              children: const <Widget>[
+                FlutterLogo(size: 60),
+              ],
+            ),
+          ),
         ),
       ),
     );

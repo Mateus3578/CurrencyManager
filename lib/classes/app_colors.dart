@@ -8,6 +8,8 @@ class AppColors {
   static final AppColors instance = AppColors._();
 
   /// Mapa que guarda as cores do app
+  ///
+  /// Uso: AppColors.instance.colors["background"] ==> cor background
   Map<String, Color> colors = {
     "main": Color(0xFFFFC107), // Colors.amber
     "background": Color(0xFF212121) // Colors.grey[900]

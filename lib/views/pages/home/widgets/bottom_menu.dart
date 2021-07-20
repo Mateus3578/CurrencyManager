@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:tc/classes/app_colors.dart';
 import 'package:tc/views/custom/navbar_custom_painter.dart';
+import 'package:tc/views/pages/home/home.dart';
+import 'package:tc/views/pages/home/transactions/monthly_transactions.dart';
 import 'package:tc/views/pages/settings/settings.dart';
 import 'package:tc/views/pages/transactions/new_transaction.dart';
 
-//TODO: Decidir entre PageView para as opções e manter o menu nas telas principais ou substituir o ícone home por outra opção
+//TODO: PageView (ou algo parecido) entre as opções principais do menu
+//TODO: Trocar Navigation para PageView
 
 /// Barra de menu inferior
 class BottomMenu extends StatelessWidget {
@@ -51,7 +54,14 @@ class BottomMenu extends StatelessWidget {
                 children: [
                   // Menu principal
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home(),
+                        ),
+                      );
+                    },
                     icon: Icon(Icons.home),
                     color: Colors.black,
                     iconSize: 30,
@@ -70,7 +80,12 @@ class BottomMenu extends StatelessWidget {
                   // Lista de transações
                   IconButton(
                     onPressed: () {
-                      print(appColors.colors);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MonthlyTransactions(),
+                        ),
+                      );
                     },
                     icon: Icon(Icons.list),
                     color: Colors.black,

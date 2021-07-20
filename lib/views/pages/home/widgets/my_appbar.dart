@@ -11,6 +11,8 @@ class MyAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Opção para salvar o nome do usuário
+    final String username = "Mateus";
     AppColors appColors = AppColors.instance;
     return Column(
       children: <Widget>[
@@ -26,7 +28,7 @@ class MyAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Olá, " + "user",
+                  "Olá, " + "$username",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,

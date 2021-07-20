@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
       title: "{insert_name}",
       // Dark mode >>>>> Light mode
       theme: ThemeData(brightness: Brightness.dark),
-      //home: NewRevenue(color: Colors.green,),
       home: MySplash(),
     );
   }
