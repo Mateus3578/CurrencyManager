@@ -105,7 +105,8 @@ class _NewRevenueState extends State<NewRevenue> {
     // Montando o mapa
     transaction.type = 1;
     transaction.description = descriptionController.text;
-    transaction.accountId = 1; // !!! //TODO: Arrumar isso
+    transaction.accountId =
+        1; // !!! //TODO: Arrumar isso assim que arrumar as contas
     transaction.value = double.tryParse(value);
     transaction.date = DateFormat("yyyy-MM-dd").format(_date);
     transaction.moreDesc = moreDescController.text;
@@ -457,7 +458,7 @@ class _NewRevenueState extends State<NewRevenue> {
   }
 }
 
-/// Compara duas datas.
+/// Compara se duas datas são idênticas.
 extension DateOnlyCompare on DateTime {
   bool isSameDate(DateTime other) {
     return this.year == other.year &&

@@ -43,12 +43,33 @@ class AppDatabase {
     return id;
   }
 
-  //TODO: getTransactionsByMonth
+  /// Busca no db todas as transações dentro de um período.
+  /// Retorna uma lista de transações ordenada por data
+  Future<List<tr.Transaction>> getTransactionsByPeriod(
+      String firstDate, String lastDate) async {
+    Database db = await database;
+    List<Map<String, dynamic>> result = await db.query(
+      tr.TransactionForDb.tableName,
+      where: "date >= ? and date <= ?",
+      whereArgs: [firstDate, lastDate],
+      orderBy: "date",
+    );
+    List<tr.Transaction> transactions = [];
+    for (int i = 0; i < result.length; i++) {
+      transactions.add(tr.Transaction.fromMap(result[i]));
+    }
 
+    return transactions;
+  }
+
+  /// Busca no db todas as transações.
+  /// Retorna uma lista de transações ordenada por data.
   Future<List<tr.Transaction>> getAllTransactions() async {
     Database db = await database;
-    List<Map<String, dynamic>> result =
-        await db.query(tr.TransactionForDb.tableName);
+    List<Map<String, dynamic>> result = await db.query(
+      tr.TransactionForDb.tableName,
+      orderBy: "date",
+    );
     List<tr.Transaction> transactions = [];
     for (int i = 0; i < result.length; i++) {
       transactions.add(tr.Transaction.fromMap(result[i]));
@@ -61,9 +82,9 @@ class AppDatabase {
       String tableName, Map<String, dynamic> map, int id) async {
     Database db = await database;
     int rowsAffected = await db.update(
-      'tableName',
+      tableName,
       map,
-      where: 'id = ?',
+      where: "id = ?",
       whereArgs: [id],
     );
     print("Updated $rowsAffected rows on $tableName");

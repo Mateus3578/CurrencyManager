@@ -11,7 +11,7 @@ class MyAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Opção para salvar o nome do usuário
+    // TODO: Opção para salvar o nome do usuário, no banco de dados ou no shared preferences
     final String username = "Mateus";
     AppColors appColors = AppColors.instance;
     return Column(

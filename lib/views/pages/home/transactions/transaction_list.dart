@@ -41,3 +41,5 @@ class TransactionList extends StatelessWidget {
   }
 }
 //TODO: Se por algum motivo não conseguir puxar nada do db, avisar invés de ficar rodando infinitamente
+
+//TODO: Organizar transações por data e mês
