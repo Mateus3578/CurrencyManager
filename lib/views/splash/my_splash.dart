@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tc/views/pages/home/home.dart';
+import 'package:tc/classes/user_preferences.dart';
+import 'package:tc/views/my_app.dart';
 
 class MySplash extends StatefulWidget {
   @override
@@ -10,7 +11,12 @@ class MySplashState extends State<MySplash> {
   @override
   void initState() {
     super.initState();
+    // Recarrega as preferências enquanto mostra a animação.
+    // Ao menos dá alguma utilidade pro splash
+    UserPreferences.instance.reloadData();
     delay();
+    print(_meme);
+    print(_meme2);
   }
 
   /// Delay entre a tela de início e o app
@@ -20,9 +26,12 @@ class MySplashState extends State<MySplash> {
       () {
         Navigator.pushReplacement(
           context,
-          PageRouteBuilder(pageBuilder: (BuildContext context,
-              Animation animation, Animation secondaryAnimation) {
-            return Home();
+          PageRouteBuilder(pageBuilder: (
+            BuildContext context,
+            Animation animation,
+            Animation secondaryAnimation,
+          ) {
+            return MyApp();
           }),
         );
       },
@@ -35,24 +44,19 @@ class MySplashState extends State<MySplash> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       body: Center(
-        child: DecoratedBox(
-          decoration: const BoxDecoration(color: Color(0xFF212121)),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              textDirection: TextDirection.ltr,
-              children: const <Widget>[
-                FlutterLogo(size: 60),
-              ],
-            ),
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          textDirection: TextDirection.ltr,
+          children: const <Widget>[
+            FlutterLogo(size: 60),
+          ],
         ),
       ),
     );
   }
 }
 
-/*
+String get _meme => '''
     ⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⣠⣤⣶⣶
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢰⣿⣿⣿⣿
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣀⣀⣾⣿⣿⣿⣿
@@ -63,9 +67,11 @@ class MySplashState extends State<MySplash> {
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣴⣿⣿⣿⣿
     ⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⢰⣹⡆⠀⠀⠀⠀⠀⠀⣭⣷⠀⠀⠀⠸⣿⣿⣿⣿
     ⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠈⠉⠀⠀⠤⠄⠀⠀⠀⠉⠁⠀⠀⠀⠀⢿⣿⣿⣿
+''';
+String get _meme2 => '''
     ⣿⣿⣿⣿⣿⣿⣿⣿⢾⣿⣷⠀⠀⠀⠀⡠⠤⢄⠀⠀⠀⠠⣿⣿⣷⠀⢸⣿⣿⣿
     ⣿⣿⣿⣿⣿⣿⣿⣿⡀⠉⠀⠀⠀⠀⠀⢄⠀⢀⠀⠀⠀⠀⠉⠉⠁⠀⠀⣿⣿⣿
     ⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿
       YOU'RE NOT SUPPOSED TO BE IN HERE
-*/
+''';

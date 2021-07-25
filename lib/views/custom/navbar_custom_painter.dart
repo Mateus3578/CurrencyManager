@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-/// Desenha a barra de menu. Recebe como parâmetro a cor de fundo.
-/// TODO: enviar também a cor dos ícones
+/// Desenha a barra de menu.
 class NavbarCustomPainter extends CustomPainter {
-  final Color? mainColor;
+  final Color? color;
 
-  NavbarCustomPainter(this.mainColor);
+  NavbarCustomPainter(this.color);
 
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
-      ..color = mainColor!
+      ..color = color!
       ..style = PaintingStyle.fill;
     Path path = Path()..moveTo(0, 15);
 

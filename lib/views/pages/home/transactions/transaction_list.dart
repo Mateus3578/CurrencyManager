@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tc/classes/user_preferences.dart';
 import 'package:tc/views/pages/home/transactions/transaction_list_tile.dart';
 
 class TransactionList extends StatelessWidget {
@@ -34,7 +35,9 @@ class TransactionList extends StatelessWidget {
             )
           : Container(
               child: Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: UserPreferences.instance.colors["icon"],
+                ),
               ),
             ),
     );

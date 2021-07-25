@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tc/classes/user_preferences.dart';
 
 class TransactionListTile extends StatelessWidget {
   final onTap;
@@ -23,6 +24,7 @@ class TransactionListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserPreferences userPreferences = UserPreferences.instance;
     _returnIcon(int type) {
       if (type == 1) {
         return Icon(
@@ -58,13 +60,23 @@ class TransactionListTile extends StatelessWidget {
               _returnIcon(type),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(description),
+                child: Text(
+                  description,
+                  style: TextStyle(
+                    color: userPreferences.colors["text"],
+                  ),
+                ),
               ),
             ],
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text("R\$ $formattedValue"),
+            child: Text(
+              "R\$ $formattedValue",
+              style: TextStyle(
+                color: userPreferences.colors["text"],
+              ),
+            ),
           ),
         ],
       )),

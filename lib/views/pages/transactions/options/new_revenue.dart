@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:tc/classes/app_database.dart';
+import 'package:tc/classes/user_preferences.dart';
 import 'package:tc/models/transaction.dart';
 
 class NewRevenue extends StatefulWidget {
@@ -117,10 +118,11 @@ class _NewRevenueState extends State<NewRevenue> {
 
   @override
   Widget build(BuildContext context) {
+    UserPreferences userPreferences = UserPreferences.instance;
     return WillPopScope(
       onWillPop: _onExit,
       child: Scaffold(
-        backgroundColor: Colors.grey[900],
+        backgroundColor: userPreferences.colors["background"],
         body: Container(
           child: Form(
             key: _formKey,
@@ -141,6 +143,7 @@ class _NewRevenueState extends State<NewRevenue> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
+                              color: userPreferences.colors["text"],
                             ),
                           ),
                         ),
@@ -153,12 +156,23 @@ class _NewRevenueState extends State<NewRevenue> {
                     child: Column(
                       children: [
                         // Valor
-                        Row(children: [Text("Valor")]),
+                        Row(
+                          children: [
+                            Text(
+                              "Valor",
+                              style: TextStyle(
+                                color: userPreferences.colors["text"],
+                              ),
+                            )
+                          ],
+                        ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                           child: TextFormField(
                             keyboardType: TextInputType.number,
                             //TODO: Formatar apenas para mostrar
+                            //* LojaVirtual usa "R\$${product.price.toStringAsFixed(2)}"
+                            //* Mas é um Text e não um FormField
                             inputFormatters: [
                               CurrencyTextInputFormatter(
                                 locale: "pt-br",
@@ -174,6 +188,7 @@ class _NewRevenueState extends State<NewRevenue> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 25,
+                              color: userPreferences.colors["text"],
                             ),
                             controller: valueController,
                             validator: (value) {
@@ -185,7 +200,16 @@ class _NewRevenueState extends State<NewRevenue> {
                         ),
                         Divider(color: Colors.white),
                         // Descrição
-                        Row(children: [Text("Descrição")]),
+                        Row(
+                          children: [
+                            Text(
+                              "Descrição",
+                              style: TextStyle(
+                                color: userPreferences.colors["text"],
+                              ),
+                            )
+                          ],
+                        ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                           child: TextFormField(
@@ -197,6 +221,7 @@ class _NewRevenueState extends State<NewRevenue> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 25,
+                              color: userPreferences.colors["text"],
                             ),
                             controller: descriptionController,
                             validator: (value) {
@@ -207,7 +232,16 @@ class _NewRevenueState extends State<NewRevenue> {
                           ),
                         ),
                         Divider(color: Colors.white),
-                        Row(children: [Text("Data")]),
+                        Row(
+                          children: [
+                            Text(
+                              "Data",
+                              style: TextStyle(
+                                color: userPreferences.colors["text"],
+                              ),
+                            )
+                          ],
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Row(
@@ -239,6 +273,7 @@ class _NewRevenueState extends State<NewRevenue> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
+                                        color: userPreferences.colors["text"],
                                       ),
                                     ),
                                   ),
@@ -272,6 +307,7 @@ class _NewRevenueState extends State<NewRevenue> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
+                                        color: userPreferences.colors["text"],
                                       ),
                                     ),
                                   ),
@@ -306,6 +342,7 @@ class _NewRevenueState extends State<NewRevenue> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
+                                        color: userPreferences.colors["text"],
                                       ),
                                     ),
                                   ),
@@ -315,7 +352,16 @@ class _NewRevenueState extends State<NewRevenue> {
                           ),
                         ),
                         Divider(color: Colors.white),
-                        Row(children: [Text("Conta")]),
+                        Row(
+                          children: [
+                            Text(
+                              "Conta",
+                              style: TextStyle(
+                                color: userPreferences.colors["text"],
+                              ),
+                            )
+                          ],
+                        ),
                         //! Falta as contas
                         //TODO: Buscar as contas do DB
                         //* Sempre abrir na última usada
@@ -328,13 +374,23 @@ class _NewRevenueState extends State<NewRevenue> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
+                                  color: userPreferences.colors["text"],
                                 ),
                               ),
                             ],
                           ),
                         ),
                         Divider(color: Colors.white),
-                        Row(children: [Text("Observações")]),
+                        Row(
+                          children: [
+                            Text(
+                              "Observações",
+                              style: TextStyle(
+                                color: userPreferences.colors["text"],
+                              ),
+                            )
+                          ],
+                        ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                           child: TextFormField(
@@ -346,6 +402,7 @@ class _NewRevenueState extends State<NewRevenue> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 25,
+                              color: userPreferences.colors["text"],
                             ),
                             controller: moreDescController,
                           ),
@@ -365,6 +422,7 @@ class _NewRevenueState extends State<NewRevenue> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
+                                          color: userPreferences.colors["text"],
                                         ),
                                       ),
                                     ],
@@ -394,6 +452,7 @@ class _NewRevenueState extends State<NewRevenue> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
+                                          color: userPreferences.colors["text"],
                                         ),
                                       ),
                                     ],
@@ -442,7 +501,12 @@ class _NewRevenueState extends State<NewRevenue> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text("Confirmar"),
+                            child: Text(
+                              "Confirmar",
+                              style: TextStyle(
+                                color: userPreferences.colors["text"],
+                              ),
+                            ),
                           ),
                         ],
                       ),

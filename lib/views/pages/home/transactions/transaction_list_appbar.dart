@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tc/classes/user_preferences.dart';
 
 class TransactionListAppbar extends StatelessWidget {
   /// Quantidade de transações
@@ -14,6 +15,7 @@ class TransactionListAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserPreferences userPreferences = UserPreferences.instance;
     double height = MediaQuery.of(context).size.height;
     String formattedValue = NumberFormat.currency(decimalDigits: 2, symbol: "")
         .format(monthBalance);
@@ -33,6 +35,7 @@ class TransactionListAppbar extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
+                      color: userPreferences.colors["text"],
                     ),
                   ),
                 )
@@ -43,7 +46,10 @@ class TransactionListAppbar extends StatelessWidget {
               children: [
                 IconButton(
                   splashRadius: 25,
-                  icon: Icon(Icons.arrow_back_ios_rounded),
+                  icon: Icon(
+                    Icons.arrow_back_ios_rounded,
+                    color: userPreferences.colors["text"],
+                  ),
                   onPressed: () {},
                 ),
                 Padding(
@@ -53,12 +59,16 @@ class TransactionListAppbar extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
+                      color: userPreferences.colors["text"],
                     ),
                   ),
                 ),
                 IconButton(
                   splashRadius: 25,
-                  icon: Icon(Icons.arrow_forward_ios_rounded),
+                  icon: Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: userPreferences.colors["text"],
+                  ),
                   onPressed: () {},
                 ),
               ],
@@ -76,6 +86,7 @@ class TransactionListAppbar extends StatelessWidget {
                         "Total de transações",
                         style: TextStyle(
                           fontSize: 16,
+                          color: userPreferences.colors["text"],
                         ),
                       ),
                       SizedBox(height: 5),
@@ -84,6 +95,7 @@ class TransactionListAppbar extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
+                          color: userPreferences.colors["text"],
                         ),
                       ),
                     ],
@@ -99,6 +111,7 @@ class TransactionListAppbar extends StatelessWidget {
                         "Balanço mensal",
                         style: TextStyle(
                           fontSize: 16,
+                          color: userPreferences.colors["text"],
                         ),
                       ),
                       SizedBox(height: 5),
@@ -107,6 +120,7 @@ class TransactionListAppbar extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
+                          color: userPreferences.colors["text"],
                         ),
                       ),
                     ],

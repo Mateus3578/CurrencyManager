@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tc/classes/user_preferences.dart';
 
 /// Bolinhas (dots) que representam a página dos gráficos
 ///
@@ -8,8 +9,11 @@ class DotsGraphs extends StatelessWidget {
   final double top; // Recebe a posição (altura)
 
   /// Deixa em destaque (cor) apenas o dot do índice atual
-  Color getColor(int dotIndex) {
-    return index == dotIndex ? Colors.white : Colors.white38;
+  Color? getColor(int dotIndex) {
+    UserPreferences userPreferences = UserPreferences.instance;
+    return index == dotIndex
+        ? userPreferences.colors["icon"]
+        : userPreferences.colors["icon"]!.withOpacity(0.38);
   }
 
   const DotsGraphs({Key? key, required this.index, required this.top})

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tc/classes/app_colors.dart';
 import 'package:tc/classes/app_database.dart';
 import 'package:tc/models/transaction.dart';
 import 'package:tc/views/pages/home/transactions/transaction_list.dart';
 import 'package:tc/views/pages/home/transactions/transaction_list_appbar.dart';
-import 'package:tc/views/pages/home/widgets/bottom_menu.dart';
 
 class MonthlyTransactions extends StatefulWidget {
   const MonthlyTransactions({Key? key}) : super(key: key);
@@ -63,22 +61,18 @@ class _MonthlyTransactionsState extends State<MonthlyTransactions> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.instance.colors["background"],
-      body: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          TransactionListAppbar(
-            transactions: "${items.length}",
-            monthBalance: _getBalance(items),
-          ),
-          TransactionList(
-            items: items,
-            scrollController: _scrollController,
-          ),
-          BottomMenu()
-        ],
-      ),
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        TransactionListAppbar(
+          transactions: "${items.length}",
+          monthBalance: _getBalance(items),
+        ),
+        TransactionList(
+          items: items,
+          scrollController: _scrollController,
+        ),
+      ],
     );
   }
 }

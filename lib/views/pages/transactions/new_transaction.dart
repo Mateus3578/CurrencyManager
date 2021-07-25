@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tc/classes/user_preferences.dart';
 import 'package:tc/views/pages/transactions/options/new_revenue.dart';
 
 class NewTransaction extends StatefulWidget {
@@ -9,6 +10,8 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
+  UserPreferences userPreferences = UserPreferences.instance;
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -40,6 +43,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         child: Icon(
                           Icons.arrow_upward_rounded,
                           size: 35,
+                          color: userPreferences.colors["icon"],
                         ),
                       ),
                       Padding(
@@ -47,7 +51,10 @@ class _NewTransactionState extends State<NewTransaction> {
                         child: Text(
                           "Receita\n",
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: userPreferences.colors["text"],
+                          ),
                         ),
                       ),
                     ],
@@ -66,6 +73,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         child: Icon(
                           Icons.arrow_downward_rounded,
                           size: 35,
+                          color: userPreferences.colors["icon"],
                         ),
                       ),
                       Padding(
@@ -73,7 +81,10 @@ class _NewTransactionState extends State<NewTransaction> {
                         child: Text(
                           "Despesa\n",
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: userPreferences.colors["text"],
+                          ),
                         ),
                       ),
                     ],
@@ -97,6 +108,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         child: Icon(
                           Icons.cached_rounded,
                           size: 35,
+                          color: userPreferences.colors["icon"],
                         ),
                       ),
                       Padding(
@@ -104,7 +116,10 @@ class _NewTransactionState extends State<NewTransaction> {
                         child: Text(
                           "Transferência\n",
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: userPreferences.colors["text"],
+                          ),
                         ),
                       ),
                     ],
@@ -123,6 +138,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         child: Icon(
                           Icons.credit_card_rounded,
                           size: 35,
+                          color: userPreferences.colors["icon"],
                         ),
                       ),
                       Padding(
@@ -130,7 +146,10 @@ class _NewTransactionState extends State<NewTransaction> {
                         child: Text(
                           "Despesa\nCartão",
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: userPreferences.colors["text"],
+                          ),
                         ),
                       ),
                     ],

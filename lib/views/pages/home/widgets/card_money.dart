@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tc/classes/app_colors.dart';
+import 'package:tc/classes/user_preferences.dart';
 
 /// Card com o saldo
 class CardMoney extends StatelessWidget {
@@ -14,7 +14,7 @@ class CardMoney extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppColors appColors = AppColors.instance;
+    UserPreferences userPreferences = UserPreferences.instance;
     return Positioned(
       top: top,
       left: 0,
@@ -24,7 +24,7 @@ class CardMoney extends StatelessWidget {
         // Mostra ou não o saldo usando a opacidade
         opacity: showMoney ? 1 : 0,
         child: Container(
-          color: appColors.colors["background"],
+          color: userPreferences.colors["background"],
           height: MediaQuery.of(context).size.height * 0.24,
           child: Column(
             children: <Widget>[

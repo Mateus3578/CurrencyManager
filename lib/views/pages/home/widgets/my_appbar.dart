@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tc/classes/app_colors.dart';
+import 'package:tc/classes/user_preferences.dart';
 
 /// Barra de saudações. Ao clicar, mostra o saldo
 class MyAppBar extends StatelessWidget {
@@ -11,9 +11,9 @@ class MyAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Opção para salvar o nome do usuário, no banco de dados ou no shared preferences
-    final String username = "Mateus";
-    AppColors appColors = AppColors.instance;
+    UserPreferences userPreferences = UserPreferences.instance;
+    final String username = userPreferences.username;
+
     return Column(
       children: <Widget>[
         SizedBox(
@@ -22,7 +22,6 @@ class MyAppBar extends StatelessWidget {
         GestureDetector(
           onTap: onClick,
           child: Container(
-            color: appColors.colors["backgrond"],
             height: MediaQuery.of(context).size.height * 0.14,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

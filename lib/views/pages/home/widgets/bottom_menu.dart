@@ -1,116 +1,94 @@
 import 'package:flutter/material.dart';
-import 'package:tc/classes/app_colors.dart';
+import 'package:tc/classes/user_preferences.dart';
 import 'package:tc/views/custom/navbar_custom_painter.dart';
-import 'package:tc/views/pages/home/home.dart';
-import 'package:tc/views/pages/home/transactions/monthly_transactions.dart';
-import 'package:tc/views/pages/settings/settings.dart';
 import 'package:tc/views/pages/transactions/new_transaction.dart';
 
-//TODO: PageView (ou algo parecido) entre as opções principais do menu
-//TODO: Trocar Navigation para PageView
-
 /// Barra de menu inferior
-class BottomMenu extends StatelessWidget {
-  const BottomMenu({Key? key}) : super(key: key);
+class BottomMenu extends StatefulWidget {
+  final onPressed;
+
+  BottomMenu({required this.onPressed});
+
+  @override
+  _BottomMenuState createState() => _BottomMenuState();
+}
+
+class _BottomMenuState extends State<BottomMenu> {
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    AppColors appColors = AppColors.instance;
+    UserPreferences userPreferences = UserPreferences.instance;
     final Size size = MediaQuery.of(context).size;
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      child: Container(
-        width: size.width,
-        height: 80,
-        child: Stack(
-          children: [
-            CustomPaint(
-              size: Size(size.width, 80),
-              painter: NavbarCustomPainter(appColors.colors["main"]),
-            ),
-            // Botão de adicionar transações
-            Center(
-              heightFactor: 0.6,
-              child: FloatingActionButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => NewTransaction(),
-                  );
-                },
-                backgroundColor: appColors.colors["main"],
-                child: Icon(
-                  Icons.add,
-                  size: 35,
-                ),
-                elevation: 0.1,
+
+    List<IconData> _icons = [
+      Icons.home,
+      Icons.account_balance_wallet,
+      Icons.list,
+      Icons.settings
+    ];
+
+    List<Widget> _navbarItemList = [];
+
+    _navbarItemList.add(navBarItem(0, _icons[0], Colors.black));
+    _navbarItemList.add(navBarItem(1, _icons[1], Colors.black));
+    _navbarItemList.add(SizedBox(width: size.width * 0.2));
+    _navbarItemList.add(navBarItem(2, _icons[2], Colors.black));
+    _navbarItemList.add(navBarItem(3, _icons[3], Colors.black));
+
+    return Container(
+      width: size.width,
+      height: 80,
+      child: Stack(
+        children: [
+          CustomPaint(
+            size: Size(size.width, 80),
+            painter: NavbarCustomPainter(userPreferences.colors["main"]),
+          ),
+          // Botão central
+          Center(
+            heightFactor: 0.6,
+            child: FloatingActionButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => NewTransaction(),
+                );
+              },
+              backgroundColor: userPreferences.colors["main"],
+              child: Icon(
+                Icons.add,
+                size: 35,
+                color: Colors.black,
               ),
+              elevation: 0.1,
             ),
-            Container(
-              width: size.width,
-              height: 80,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  // Menu principal
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Home(),
-                        ),
-                      );
-                    },
-                    icon: Icon(Icons.home),
-                    color: Colors.black,
-                    iconSize: 30,
-                  ),
-                  // Contas
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.account_balance_wallet),
-                    color: Colors.black,
-                    iconSize: 30,
-                  ),
-                  //Espaçamento
-                  SizedBox(
-                    width: size.width * 0.2,
-                  ),
-                  // Lista de transações
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MonthlyTransactions(),
-                        ),
-                      );
-                    },
-                    icon: Icon(Icons.list),
-                    color: Colors.black,
-                    iconSize: 30,
-                  ),
-                  // Configurações
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Settings(),
-                        ),
-                      );
-                    },
-                    icon: Icon(Icons.settings),
-                    color: Colors.black,
-                    iconSize: 30,
-                  ),
-                ],
-              ),
+          ),
+          // Outros botões
+          Container(
+            width: size.width,
+            height: 80,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: _navbarItemList,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+    );
+  }
+
+  IconButton navBarItem(int index, IconData iconData, Color color) {
+    return IconButton(
+      onPressed: () {
+        widget.onPressed(index);
+        setState(() {
+          _selectedIndex = index;
+        });
+      },
+      icon: Icon(iconData),
+      color: index == _selectedIndex ? color : color.withAlpha(200),
+      iconSize: 30,
     );
   }
 }
