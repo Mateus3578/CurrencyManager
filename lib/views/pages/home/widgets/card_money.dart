@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tc/classes/user_preferences.dart';
 
 /// Card com o saldo
 class CardMoney extends StatelessWidget {
@@ -14,7 +13,6 @@ class CardMoney extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserPreferences userPreferences = UserPreferences.instance;
     return Positioned(
       top: top,
       left: 0,
@@ -24,20 +22,20 @@ class CardMoney extends StatelessWidget {
         // Mostra ou não o saldo usando a opacidade
         opacity: showMoney ? 1 : 0,
         child: Container(
-          color: userPreferences.colors["background"],
           height: MediaQuery.of(context).size.height * 0.24,
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: 8,
-              ),
+              SizedBox(height: 8),
               Text(
                 "Saldo",
                 style: TextStyle(fontSize: 18),
               ),
               Text(
                 "R\$" + "1.000,00",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Container(
                 alignment: Alignment.center,
@@ -69,7 +67,9 @@ class CardMoney extends StatelessWidget {
                             Text(
                               "R\$" + "2.500,00",
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
@@ -88,7 +88,9 @@ class CardMoney extends StatelessWidget {
                             Text(
                               "R\$" + "1.500,00",
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),

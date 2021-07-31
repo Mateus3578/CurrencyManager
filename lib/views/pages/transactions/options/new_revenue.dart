@@ -1,91 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
-import 'package:tc/classes/app_database.dart';
-import 'package:tc/classes/user_preferences.dart';
-import 'package:tc/models/transaction.dart';
+import 'package:tc/controllers/database_helper.dart';
+import 'package:tc/controllers/theme_provider.dart';
+import 'package:tc/models/transaction_model.dart';
+import 'package:tc/views/pages/transactions/options/widgets/functions.dart';
+import 'package:tc/views/pages/transactions/options/widgets/new_transaction_description.dart';
+import 'package:tc/views/pages/transactions/options/widgets/new_transaction_title.dart';
+import 'package:tc/views/pages/transactions/options/widgets/new_transaction_value.dart';
 
 class NewRevenue extends StatefulWidget {
-  final MaterialColor color;
-  const NewRevenue({Key? key, required this.color}) : super(key: key);
+  final ThemeProvider theme;
+  NewRevenue(this.theme);
 
   @override
   _NewRevenueState createState() => _NewRevenueState();
 }
 
 class _NewRevenueState extends State<NewRevenue> {
-  Transaction transaction = Transaction();
-  AppDatabase db = AppDatabase.instance;
+  TransactionModel transaction = TransactionModel();
+  DatabaseHelper db = DatabaseHelper.instance;
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController valueController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  TextEditingController moreDescController = TextEditingController();
-
-  bool _isFixed = false;
-  bool _isRepeatable = false;
+  // Controllers do formulário
+  TextEditingController _valueController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _moreDescController = TextEditingController();
   DateTime _date = DateTime.now();
-
-  /// Pop-up com confirmação para cancelar a criação da transação.
-  Future<bool> _onExit() async {
-    return (await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Confirmação", textAlign: TextAlign.center),
-        content: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 15, 10, 2),
-                child: Text(
-                  "Deseja descartar as alterações?",
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: TextButton(
-                  child: Text(
-                    "Cancelar",
-                    style: TextStyle(fontSize: 18, color: Colors.red),
-                  ),
-                  onPressed: () => Navigator.of(context).pop(false),
-                ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: TextButton(
-                  child: Text(
-                    "Confirmar",
-                    style: TextStyle(fontSize: 18, color: Colors.green),
-                  ),
-                  onPressed: () => Navigator.of(context).pop(true),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    ));
-  }
+  bool _isRepeatable = false;
+  bool _isFixed = false;
 
   /// Abre um pop-up para escolher uma data
   _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: _date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2100));
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(1950),
+      lastDate: DateTime(2100),
+    );
+
     if (picked != null && picked != _date) {
       setState(() {
         _date = picked;
@@ -96,7 +49,7 @@ class _NewRevenueState extends State<NewRevenue> {
   _onSaved() async {
     // Reformatando o valor
     // TODO: Fazer algo melhor aqui
-    String value = valueController.text;
+    String value = _valueController.text;
     value = value.replaceAll("R\$", "");
     value = value.replaceAll(" ", "");
     value = value.replaceFirst(",", "x", value.length - 3);
@@ -105,418 +58,306 @@ class _NewRevenueState extends State<NewRevenue> {
 
     // Montando o mapa
     transaction.type = 1;
-    transaction.description = descriptionController.text;
-    transaction.accountId =
-        1; // !!! //TODO: Arrumar isso assim que arrumar as contas
+    transaction.description = _descriptionController.text;
+    // TODO: Arrumar isso assim que arrumar as contas
+    transaction.accountId = 1; // !!!
     transaction.value = double.tryParse(value);
     transaction.date = DateFormat("yyyy-MM-dd").format(_date);
-    transaction.moreDesc = moreDescController.text;
+    transaction.moreDesc = _moreDescController.text;
 
     // Salvando no banco de dados
-    await db.insert(TransactionForDb.tableName, transaction.toMap());
+    await db.insert(TransactionModelForDb.tableName, transaction.toMap());
   }
 
   @override
   Widget build(BuildContext context) {
-    UserPreferences userPreferences = UserPreferences.instance;
     return WillPopScope(
-      onWillPop: _onExit,
-      child: Scaffold(
-        backgroundColor: userPreferences.colors["background"],
-        body: Container(
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: MediaQuery.of(context).padding.top),
-                  // Título
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Nova Receita",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: userPreferences.colors["text"],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Dados
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Column(
-                      children: [
-                        // Valor
-                        Row(
-                          children: [
-                            Text(
-                              "Valor",
-                              style: TextStyle(
-                                color: userPreferences.colors["text"],
-                              ),
-                            )
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            //TODO: Formatar apenas para mostrar
-                            //* LojaVirtual usa "R\$${product.price.toStringAsFixed(2)}"
-                            //* Mas é um Text e não um FormField
-                            inputFormatters: [
-                              CurrencyTextInputFormatter(
-                                locale: "pt-br",
-                                decimalDigits: 2,
-                                symbol: "R\$",
-                              ),
-                            ],
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                              hintText: "R\$0,00",
-                            ),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: userPreferences.colors["text"],
-                            ),
-                            controller: valueController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Insira um valor";
-                              }
-                            },
-                          ),
-                        ),
-                        Divider(color: Colors.white),
-                        // Descrição
-                        Row(
-                          children: [
-                            Text(
-                              "Descrição",
-                              style: TextStyle(
-                                color: userPreferences.colors["text"],
-                              ),
-                            )
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-                          child: TextFormField(
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                            ),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: userPreferences.colors["text"],
-                            ),
-                            controller: descriptionController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Insira uma descrição";
-                              }
-                            },
-                          ),
-                        ),
-                        Divider(color: Colors.white),
-                        Row(
-                          children: [
-                            Text(
-                              "Data",
-                              style: TextStyle(
-                                color: userPreferences.colors["text"],
-                              ),
-                            )
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Dia atual
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _date = DateTime.now();
-                                  });
-                                },
-                                child: Container(
-                                  decoration: _date.isSameDate(DateTime.now())
-                                      ? BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4)),
-                                          color: widget.color,
-                                          border: Border.all(
-                                            color: widget.color,
-                                            width: 4,
-                                          ),
-                                        )
-                                      : BoxDecoration(),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(6),
-                                    child: Text(
-                                      "Hoje",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: userPreferences.colors["text"],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // Dia atual -1
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _date = DateTime.now()
-                                        .subtract(Duration(days: 1));
-                                  });
-                                },
-                                child: Container(
-                                  decoration: _date.isSameDate(DateTime.now()
-                                          .subtract(Duration(days: 1)))
-                                      ? BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4)),
-                                          color: widget.color,
-                                          border: Border.all(
-                                            color: widget.color,
-                                            width: 4,
-                                          ),
-                                        )
-                                      : BoxDecoration(),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(6),
-                                    child: Text(
-                                      "Ontem",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: userPreferences.colors["text"],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // Escolher
-                              GestureDetector(
-                                onTap: () => _selectDate(context),
-                                child: Container(
-                                  decoration:
-                                      !_date.isSameDate(DateTime.now()) &&
-                                              !_date.isSameDate(DateTime.now()
-                                                  .subtract(Duration(days: 1)))
-                                          ? BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4)),
-                                              color: widget.color,
-                                              border: Border.all(
-                                                color: widget.color,
-                                                width: 4,
-                                              ),
-                                            )
-                                          : BoxDecoration(),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(6),
-                                    child: Text(
-                                      _date.isSameDate(DateTime.now()) ||
-                                              _date.isSameDate(DateTime.now()
-                                                  .subtract(Duration(days: 1)))
-                                          ? "Selecionar"
-                                          : "${DateFormat("dd/MM/yyyy").format(_date)}",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: userPreferences.colors["text"],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Divider(color: Colors.white),
-                        Row(
-                          children: [
-                            Text(
-                              "Conta",
-                              style: TextStyle(
-                                color: userPreferences.colors["text"],
-                              ),
-                            )
-                          ],
-                        ),
-                        //! Falta as contas
-                        //TODO: Buscar as contas do DB
-                        //* Sempre abrir na última usada
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Selecionar",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: userPreferences.colors["text"],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Divider(color: Colors.white),
-                        Row(
-                          children: [
-                            Text(
-                              "Observações",
-                              style: TextStyle(
-                                color: userPreferences.colors["text"],
-                              ),
-                            )
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-                          child: TextFormField(
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                            ),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: userPreferences.colors["text"],
-                            ),
-                            controller: moreDescController,
-                          ),
-                        ),
-                        Divider(color: Colors.white),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Repetir",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: userPreferences.colors["text"],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Switch(
-                                        value: _isRepeatable,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _isRepeatable = value;
-                                          });
-                                        },
-                                        activeTrackColor: widget.color,
-                                        activeColor: widget.color,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Receita Fixa",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: userPreferences.colors["text"],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Switch(
-                                        value: _isFixed,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _isFixed = value;
-                                          });
-                                        },
-                                        activeTrackColor: widget.color,
-                                        activeColor: widget.color,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Divider(color: Colors.white),
-                      ],
-                    ),
-                  ),
-                  // Confirmação
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+      onWillPop: () => getExitConfirmationDialog(context),
+      child: Listener(
+        // Deixa clicar fora dos campos para tirar o foco da caixa de texto.
+        onPointerDown: (_) {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus &&
+              currentFocus.focusedChild != null) {
+            currentFocus.focusedChild!.unfocus();
+          }
+        },
+        child: Scaffold(
+          body: Container(
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: MediaQuery.of(context).padding.top),
+                    // Título
+                    NewTransactionTitle(title: "Nova Receita"),
+                    // Dados
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Column(
                         children: [
-                          FloatingActionButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                _onSaved();
-                                Navigator.of(context).pop(true);
-                              }
-                            },
-                            backgroundColor: widget.color,
-                            child: Icon(
-                              Icons.check,
-                              size: 30,
+                          // Valor
+                          Row(children: [Text("Valor")]),
+                          NewTransactionValue(
+                            controller: _valueController,
+                          ),
+                          Divider(color: widget.theme.textColor),
+                          // Descrição
+                          Row(children: [Text("Descrição")]),
+                          NewTransactionDescription(
+                            controller: _descriptionController,
+                          ),
+                          Divider(color: widget.theme.textColor),
+                          Row(children: [Text("Data")]),
+                          newTransactionDate(context),
+                          Divider(color: widget.theme.textColor),
+                          Row(children: [Text("Conta")]),
+                          //! Falta as contas
+                          //TODO: Buscar as contas do DB
+                          //* Sempre abrir na última usada
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Selecionar",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
                             ),
+                          ),
+                          Divider(color: Colors.white),
+                          Row(
+                            children: [Text("Observações")],
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Confirmar",
-                              style: TextStyle(
-                                color: userPreferences.colors["text"],
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+                            child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                disabledBorder: InputBorder.none,
                               ),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                              ),
+                              controller: _moreDescController,
                             ),
                           ),
+                          Divider(color: Colors.white),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Repetir",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Switch(
+                                          value: _isRepeatable,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _isRepeatable = value;
+                                            });
+                                          },
+                                          activeTrackColor: Colors.green,
+                                          activeColor: Colors.green,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Receita Fixa",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Switch(
+                                          value: _isFixed,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _isFixed = value;
+                                            });
+                                          },
+                                          activeTrackColor: Colors.green,
+                                          activeColor: Colors.green,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Divider(color: Colors.white),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                    // Confirmação
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            FloatingActionButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  _onSaved();
+                                  Navigator.of(context).pop(true);
+                                }
+                              },
+                              backgroundColor: Colors.green,
+                              child: Icon(
+                                Icons.check,
+                                size: 30,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Confirmar"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Padding newTransactionDate(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // Dia atual
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _date = DateTime.now();
+              });
+            },
+            child: Container(
+              decoration: _date.isSameDate(DateTime.now())
+                  ? BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      color: Colors.green,
+                      border: Border.all(
+                        color: Colors.green,
+                        width: 4,
+                      ),
+                    )
+                  : BoxDecoration(),
+              child: Padding(
+                padding: EdgeInsets.all(6),
+                child: Text(
+                  "Hoje",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // Dia atual -1
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _date = DateTime.now().subtract(Duration(days: 1));
+              });
+            },
+            child: Container(
+              decoration:
+                  _date.isSameDate(DateTime.now().subtract(Duration(days: 1)))
+                      ? BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          color: Colors.green,
+                          border: Border.all(
+                            color: Colors.green,
+                            width: 4,
+                          ),
+                        )
+                      : BoxDecoration(),
+              child: Padding(
+                padding: EdgeInsets.all(6),
+                child: Text(
+                  "Ontem",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // Escolher
+          GestureDetector(
+            onTap: () => _selectDate(context),
+            child: Container(
+              decoration: !_date.isSameDate(DateTime.now()) &&
+                      !_date.isSameDate(
+                          DateTime.now().subtract(Duration(days: 1)))
+                  ? BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      color: Colors.green,
+                      border: Border.all(
+                        color: Colors.green,
+                        width: 4,
+                      ),
+                    )
+                  : BoxDecoration(),
+              child: Padding(
+                padding: EdgeInsets.all(6),
+                child: Text(
+                  _date.isSameDate(DateTime.now()) ||
+                          _date.isSameDate(
+                              DateTime.now().subtract(Duration(days: 1)))
+                      ? "Selecionar"
+                      : "${DateFormat("dd/MM/yyyy").format(_date)}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

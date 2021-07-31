@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tc/classes/user_preferences.dart';
 
 class TransactionListTile extends StatelessWidget {
   final onTap;
+  final Color textColor;
 
   /// Descrição da transação
   final String description;
@@ -14,17 +14,17 @@ class TransactionListTile extends StatelessWidget {
   /// Valor da transação. Formatado aqui mesmo
   final double value;
 
-  const TransactionListTile(
-      {Key? key,
-      required this.description,
-      required this.type,
-      required this.value,
-      required this.onTap})
-      : super(key: key);
+  const TransactionListTile({
+    Key? key,
+    required this.description,
+    required this.type,
+    required this.value,
+    required this.onTap,
+    required this.textColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    UserPreferences userPreferences = UserPreferences.instance;
     _returnIcon(int type) {
       if (type == 1) {
         return Icon(
@@ -55,27 +55,31 @@ class TransactionListTile extends StatelessWidget {
           child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              _returnIcon(type),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  description,
-                  style: TextStyle(
-                    color: userPreferences.colors["text"],
+          Expanded(
+            child: Row(
+              children: [
+                _returnIcon(type),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      description,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: false,
+                      style: TextStyle(color: textColor),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Text(
               "R\$ $formattedValue",
-              style: TextStyle(
-                color: userPreferences.colors["text"],
-              ),
+              maxLines: 1,
+              style: TextStyle(color: textColor),
             ),
           ),
         ],

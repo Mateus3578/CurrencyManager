@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:tc/classes/user_preferences.dart';
+import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/views/custom/navbar_custom_painter.dart';
 import 'package:tc/views/pages/transactions/new_transaction.dart';
 
 /// Barra de menu inferior
 class BottomMenu extends StatefulWidget {
+  final ThemeProvider theme;
   final onPressed;
 
-  BottomMenu({required this.onPressed});
+  BottomMenu({
+    required this.theme,
+    required this.onPressed,
+  });
 
   @override
   _BottomMenuState createState() => _BottomMenuState();
@@ -18,23 +22,15 @@ class _BottomMenuState extends State<BottomMenu> {
 
   @override
   Widget build(BuildContext context) {
-    UserPreferences userPreferences = UserPreferences.instance;
     final Size size = MediaQuery.of(context).size;
 
+    // Ícones do menu
     List<IconData> _icons = [
       Icons.home,
       Icons.account_balance_wallet,
       Icons.list,
       Icons.settings
     ];
-
-    List<Widget> _navbarItemList = [];
-
-    _navbarItemList.add(navBarItem(0, _icons[0], Colors.black));
-    _navbarItemList.add(navBarItem(1, _icons[1], Colors.black));
-    _navbarItemList.add(SizedBox(width: size.width * 0.2));
-    _navbarItemList.add(navBarItem(2, _icons[2], Colors.black));
-    _navbarItemList.add(navBarItem(3, _icons[3], Colors.black));
 
     return Container(
       width: size.width,
@@ -43,25 +39,25 @@ class _BottomMenuState extends State<BottomMenu> {
         children: [
           CustomPaint(
             size: Size(size.width, 80),
-            painter: NavbarCustomPainter(userPreferences.colors["main"]),
+            painter: NavbarCustomPainter(widget.theme.primaryColor),
           ),
           // Botão central
           Center(
             heightFactor: 0.6,
             child: FloatingActionButton(
+              elevation: 0.1,
+              backgroundColor: widget.theme.alterColor,
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => NewTransaction(),
+                  builder: (context) => NewTransaction(widget.theme),
                 );
               },
-              backgroundColor: userPreferences.colors["main"],
               child: Icon(
                 Icons.add,
                 size: 35,
-                color: Colors.black,
+                color: widget.theme.iconColor,
               ),
-              elevation: 0.1,
             ),
           ),
           // Outros botões
@@ -70,7 +66,13 @@ class _BottomMenuState extends State<BottomMenu> {
             height: 80,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: _navbarItemList,
+              children: [
+                navBarItem(0, _icons[0]),
+                navBarItem(1, _icons[1]),
+                SizedBox(width: size.width * 0.2),
+                navBarItem(2, _icons[2]),
+                navBarItem(3, _icons[3]),
+              ],
             ),
           ),
         ],
@@ -78,7 +80,7 @@ class _BottomMenuState extends State<BottomMenu> {
     );
   }
 
-  IconButton navBarItem(int index, IconData iconData, Color color) {
+  IconButton navBarItem(int index, IconData iconData) {
     return IconButton(
       onPressed: () {
         widget.onPressed(index);
@@ -86,9 +88,11 @@ class _BottomMenuState extends State<BottomMenu> {
           _selectedIndex = index;
         });
       },
+      splashColor: Colors.transparent,
+      splashRadius: 0.1,
+      color: widget.theme.iconColor,
       icon: Icon(iconData),
-      color: index == _selectedIndex ? color : color.withAlpha(200),
-      iconSize: 30,
+      iconSize: index == _selectedIndex ? 34 : 26,
     );
   }
 }

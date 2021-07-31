@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:tc/classes/app_database.dart';
-import 'package:tc/models/transaction.dart';
+import 'package:tc/controllers/database_helper.dart';
+import 'package:tc/controllers/theme_provider.dart';
+import 'package:tc/models/transaction_model.dart';
 import 'package:tc/views/pages/home/transactions/transaction_list.dart';
-import 'package:tc/views/pages/home/transactions/transaction_list_appbar.dart';
+import 'package:tc/views/pages/home/transactions/transaction_view_appbar.dart';
 
-class MonthlyTransactions extends StatefulWidget {
-  const MonthlyTransactions({Key? key}) : super(key: key);
+class TransactionsView extends StatefulWidget {
+  final ThemeProvider theme;
+  TransactionsView(this.theme);
 
   @override
-  _MonthlyTransactionsState createState() => _MonthlyTransactionsState();
+  _TransactionsViewState createState() => _TransactionsViewState();
 }
 
-class _MonthlyTransactionsState extends State<MonthlyTransactions> {
-  AppDatabase db = AppDatabase.instance;
-  List<Transaction> items = [];
+class _TransactionsViewState extends State<TransactionsView> {
+  DatabaseHelper db = DatabaseHelper.instance;
+  List<TransactionModel> items = [];
   bool isLoading = false;
   bool allLoaded = false;
   final ScrollController _scrollController = ScrollController();
@@ -26,9 +28,7 @@ class _MonthlyTransactionsState extends State<MonthlyTransactions> {
     setState(() {
       isLoading = true;
     });
-    await Future.delayed(Duration(milliseconds: 500));
-    //List<Transaction> data = lista;
-    List<Transaction> data = await db.getAllTransactions();
+    List<TransactionModel> data = await db.getAllTransactions();
     if (data.isNotEmpty) {
       items = data;
     }
@@ -44,14 +44,14 @@ class _MonthlyTransactionsState extends State<MonthlyTransactions> {
     fetchingData();
   }
 
-  // Para o scrollController
+  // ScrollController
   @override
   void dispose() {
     super.dispose();
     _scrollController.dispose();
   }
 
-  double _getBalance(List<Transaction> list) {
+  double _getBalance(List<TransactionModel> list) {
     double balance = 0;
     for (int i = 0; i < list.length; i++) {
       balance += list[i].value!;
@@ -64,11 +64,14 @@ class _MonthlyTransactionsState extends State<MonthlyTransactions> {
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        TransactionListAppbar(
-          transactions: "${items.length}",
+        TransactionViewAppbar(
+          textColor: widget.theme.textColor,
+          transactionsCount: "${items.length}",
           monthBalance: _getBalance(items),
         ),
         TransactionList(
+          primaryColor: widget.theme.primaryColor,
+          textColor: widget.theme.textColor,
           items: items,
           scrollController: _scrollController,
         ),
@@ -76,3 +79,5 @@ class _MonthlyTransactionsState extends State<MonthlyTransactions> {
     );
   }
 }
+
+// TODO: Puxar pra baixo pra recarregar

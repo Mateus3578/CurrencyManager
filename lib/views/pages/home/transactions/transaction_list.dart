@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:tc/classes/user_preferences.dart';
 import 'package:tc/views/pages/home/transactions/transaction_list_tile.dart';
 
 class TransactionList extends StatelessWidget {
@@ -9,9 +10,16 @@ class TransactionList extends StatelessWidget {
   /// Controlador do scroll
   final ScrollController scrollController;
 
-  const TransactionList(
-      {Key? key, required this.items, required this.scrollController})
-      : super(key: key);
+  final Color textColor;
+  final Color primaryColor;
+
+  const TransactionList({
+    Key? key,
+    required this.items,
+    required this.scrollController,
+    required this.textColor,
+    required this.primaryColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +37,16 @@ class TransactionList extends StatelessWidget {
                   type: items[index].type,
                   description: items[index].description,
                   value: items[index].value,
-                  onTap: () {},
+                  textColor: textColor,
+                  onTap: () {
+                    // TODO: Carregar alterar despesa escolhida
+                  },
                 );
               },
             )
           : Container(
               child: Center(
-                child: CircularProgressIndicator(
-                  color: UserPreferences.instance.colors["icon"],
-                ),
+                child: CircularProgressIndicator(color: primaryColor),
               ),
             ),
     );

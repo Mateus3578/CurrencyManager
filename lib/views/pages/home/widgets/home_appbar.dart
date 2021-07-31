@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:tc/classes/user_preferences.dart';
 
 /// Barra de saudações. Ao clicar, mostra o saldo
-class MyAppBar extends StatelessWidget {
-  final bool showMoney; // Mostra ou não o saldo
+class HomeAppBar extends StatelessWidget {
+  final bool showBalance; // Mostra ou não o saldo
   final VoidCallback onClick; // Recebe o evento de clique no ícone
+  final Color iconColor;
+  final String userName;
 
-  const MyAppBar({Key? key, required this.showMoney, required this.onClick})
-      : super(key: key);
+  const HomeAppBar({
+    Key? key,
+    required this.showBalance,
+    required this.onClick,
+    required this.iconColor,
+    required this.userName,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    UserPreferences userPreferences = UserPreferences.instance;
-    final String username = userPreferences.username;
+    String username = userName.isNotEmpty ? userName : "usuário";
 
     return Column(
       children: <Widget>[
@@ -49,7 +54,8 @@ class MyAppBar extends StatelessWidget {
                   ),
                 ),
                 Icon(
-                  !showMoney ? Icons.expand_more : Icons.expand_less,
+                  !showBalance ? Icons.expand_more : Icons.expand_less,
+                  color: iconColor,
                 ),
               ],
             ),

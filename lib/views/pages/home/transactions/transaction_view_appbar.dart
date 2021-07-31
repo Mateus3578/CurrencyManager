@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tc/classes/user_preferences.dart';
 
-class TransactionListAppbar extends StatelessWidget {
+class TransactionViewAppbar extends StatelessWidget {
   /// Quantidade de transações
-  final String transactions;
+  final String transactionsCount;
 
   /// Balanço mensal. Calcular antes de enviar
   final double monthBalance;
+  final Color textColor;
 
-  const TransactionListAppbar(
-      {Key? key, required this.transactions, required this.monthBalance})
-      : super(key: key);
+  TransactionViewAppbar({
+    Key? key,
+    required this.transactionsCount,
+    required this.monthBalance,
+    required this.textColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    UserPreferences userPreferences = UserPreferences.instance;
     double height = MediaQuery.of(context).size.height;
     String formattedValue = NumberFormat.currency(decimalDigits: 2, symbol: "")
         .format(monthBalance);
@@ -35,7 +37,7 @@ class TransactionListAppbar extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: userPreferences.colors["text"],
+                      color: textColor,
                     ),
                   ),
                 )
@@ -46,81 +48,74 @@ class TransactionListAppbar extends StatelessWidget {
               children: [
                 IconButton(
                   splashRadius: 25,
-                  icon: Icon(
-                    Icons.arrow_back_ios_rounded,
-                    color: userPreferences.colors["text"],
-                  ),
-                  onPressed: () {},
+                  icon: Icon(Icons.arrow_back_ios_rounded, color: textColor),
+                  onPressed: () {
+                    //TODO: alternar entre os meses
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: Text(
                     "Julho",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: userPreferences.colors["text"],
-                    ),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: textColor),
                   ),
                 ),
                 IconButton(
                   splashRadius: 25,
-                  icon: Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: userPreferences.colors["text"],
-                  ),
-                  onPressed: () {},
+                  icon: Icon(Icons.arrow_forward_ios_rounded, color: textColor),
+                  onPressed: () {
+                    //TODO: alternar entre os meses
+                  },
                 ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding:
-                      EdgeInsets.fromLTRB(20, height * 0.02, 0, height * 0.005),
+                Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Total de transações",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: userPreferences.colors["text"],
-                        ),
+                        style: TextStyle(fontSize: 16, color: textColor),
                       ),
                       SizedBox(height: 5),
                       Text(
-                        transactions,
+                        transactionsCount,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
-                          color: userPreferences.colors["text"],
+                          color: textColor,
                         ),
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding:
-                      EdgeInsets.fromLTRB(0, height * 0.02, 20, height * 0.005),
+                Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Balanço mensal",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: userPreferences.colors["text"],
-                        ),
+                        style: TextStyle(fontSize: 16, color: textColor),
                       ),
                       SizedBox(height: 5),
                       Text(
                         "R\$ $formattedValue",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
-                          color: userPreferences.colors["text"],
+                          color: textColor,
                         ),
                       ),
                     ],
@@ -128,7 +123,7 @@ class TransactionListAppbar extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(),
+            Divider(color: textColor.withAlpha(50)),
           ],
         ),
       ),

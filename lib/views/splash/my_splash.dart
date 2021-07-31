@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tc/classes/user_preferences.dart';
+import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/views/my_app.dart';
 
 class MySplash extends StatefulWidget {
+  final ThemeProvider theme;
+  MySplash(this.theme);
+
   @override
   MySplashState createState() => MySplashState();
 }
@@ -11,9 +14,8 @@ class MySplashState extends State<MySplash> {
   @override
   void initState() {
     super.initState();
-    // Recarrega as preferências enquanto mostra a animação.
-    // Ao menos dá alguma utilidade pro splash
-    UserPreferences.instance.reloadData();
+    // Enquanto mostra o splash, carrega os dados do db
+    widget.theme.fetchData();
     delay();
     print(_meme);
     print(_meme2);
@@ -31,7 +33,7 @@ class MySplashState extends State<MySplash> {
             Animation animation,
             Animation secondaryAnimation,
           ) {
-            return MyApp();
+            return MyApp(widget.theme);
           }),
         );
       },
