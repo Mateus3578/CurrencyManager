@@ -1,18 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 /// Card com o saldo
 class CardMoney extends StatelessWidget {
   final double top;
   final bool showMoney;
+  final double currentBalance;
+  final double currentRevenues;
+  final double currentExpenses;
 
-  const CardMoney({
+  CardMoney({
     Key? key,
     required this.top,
     required this.showMoney,
-  }) : super(key: key);
+    required this.currentBalance,
+    required this.currentRevenues,
+    required this.currentExpenses,
+  });
 
   @override
   Widget build(BuildContext context) {
+    String formattedcurrentBalance =
+        NumberFormat.currency(decimalDigits: 2, symbol: "")
+            .format(currentBalance);
+    String formattedcurrentRevenues =
+        NumberFormat.currency(decimalDigits: 2, symbol: "")
+            .format(currentRevenues);
+    String formattedcurrentExpenses =
+        NumberFormat.currency(decimalDigits: 2, symbol: "")
+            .format(currentExpenses);
+
     return Positioned(
       top: top,
       left: 0,
@@ -31,7 +48,7 @@ class CardMoney extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               Text(
-                "R\$" + "1.000,00",
+                "R\$ $formattedcurrentBalance",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -65,7 +82,7 @@ class CardMoney extends StatelessWidget {
                               style: TextStyle(fontSize: 16),
                             ),
                             Text(
-                              "R\$" + "2.500,00",
+                              "R\$ $formattedcurrentRevenues",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -86,7 +103,7 @@ class CardMoney extends StatelessWidget {
                               style: TextStyle(fontSize: 16),
                             ),
                             Text(
-                              "R\$" + "1.500,00",
+                              "R\$ $formattedcurrentExpenses",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,

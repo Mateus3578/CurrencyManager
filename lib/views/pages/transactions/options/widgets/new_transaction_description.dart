@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NewTransactionDescription extends StatelessWidget {
-  const NewTransactionDescription({
-    Key? key,
-    required TextEditingController controller,
-  })  : _descriptionController = controller,
-        super(key: key);
+  const NewTransactionDescription({required TextEditingController controller})
+      : _descriptionController = controller;
 
   final TextEditingController _descriptionController;
 

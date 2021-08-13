@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/models/user_model.dart';
-import 'package:tc/views/pages/settings/widgets/change_prefs_button.dart';
+import 'package:tc/views/pages/settings/widgets/choose_theme.dart';
+import 'package:tc/views/pages/settings/widgets/custom_theme_setting.dart';
+import 'package:tc/views/pages/settings/widgets/dialogs/change_name_dialog.dart';
 
 class Settings extends StatelessWidget {
   final ThemeProvider theme;
@@ -9,51 +10,81 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: <Widget>[
-        Align(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //SizedBox(height: MediaQuery.of(context).padding.top),
-              ChangePrefsButton(
-                text: "Mudar cor principal",
-                prefId: UserModelForDb.primaryColor,
-                theme: theme,
+    Size size = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        SizedBox(height: MediaQuery.of(context).padding.top),
+        Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 0, 0, size.height * 0.020),
+              child: Text(
+                "Configurações",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: theme.textColor,
+                ),
               ),
-              ChangePrefsButton(
-                text: "Mudar cor secundária",
-                prefId: UserModelForDb.alterColor,
-                theme: theme,
+            ),
+          ],
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        tileButton(
+          size,
+          "Mudar nome de usuário",
+          () => changeNameDialog(context, theme),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+        tileButton(
+          size,
+          "Escolher tema pré-definido",
+          () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChooseTheme(theme),
               ),
-              ChangePrefsButton(
-                text: "Mudar cor de fundo",
-                prefId: UserModelForDb.backgroundColor,
-                theme: theme,
+            );
+          },
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+        tileButton(
+          size,
+          "Customizar tema",
+          () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CustomThemeSetting(theme),
               ),
-              ChangePrefsButton(
-                text: "Mudar cor do texto",
-                prefId: UserModelForDb.textColor,
-                theme: theme,
-              ),
-              ChangePrefsButton(
-                text: "Mudar cor dos ícones",
-                prefId: UserModelForDb.iconColor,
-                theme: theme,
-              ),
-              ChangePrefsButton(
-                text: "Mudar nome",
-                prefId: UserModelForDb.name,
-                theme: theme,
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ],
     );
   }
+
+  Widget tileButton(Size size, String text, onTap) {
+    return GestureDetector(
+      child: Container(
+        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+        alignment: Alignment.centerRight,
+        width: size.width,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: theme.primaryColor,
+            width: 2,
+          ),
+        ),
+      ),
+      onTap: onTap,
+    );
+  }
 }
-// TODO: Opção para mudar o nome do usuário
-// TODO: Temas pré-definidos

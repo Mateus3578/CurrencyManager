@@ -1,15 +1,12 @@
-/// Para não errar os nomes
-class UserModelForDb {
-  static String userId = "userId";
-  static String name = "name";
-  static String backgroundColor = "backgroundColor";
-  static String primaryColor = "primaryColor";
-  static String alterColor = "alterColor";
-  static String iconColor = "iconColor";
-  static String textColor = "textColor";
+import 'package:tc/models/DAO/user_DAO.dart';
 
-  static String tableName = "userPrefs";
-}
+/// Model de preferências do usuário
+///
+/// Apesar de possuir um id, ele sempre será 1.
+/// Serve para ter certeza de não fazer algo errado e criar uma nova linha
+/// ou alterar outro lugar.
+///
+/// Os atributos possuem nomes auto-explicativos.
 
 class UserModel {
   final int userId;
@@ -21,7 +18,7 @@ class UserModel {
   final String textColor;
 
   UserModel({
-    required this.userId,
+    this.userId = 1,
     required this.name,
     required this.backgroundColor,
     required this.primaryColor,
@@ -39,10 +36,8 @@ class UserModel {
         iconColor = map[UserModelForDb.iconColor],
         textColor = map[UserModelForDb.textColor];
 
-  /// Retorna todos os dados do usuário
   Map<String, Object?> toMap() {
     return {
-      UserModelForDb.userId: userId,
       UserModelForDb.name: name,
       UserModelForDb.backgroundColor: backgroundColor,
       UserModelForDb.primaryColor: primaryColor,

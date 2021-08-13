@@ -11,12 +11,11 @@ class GraphView extends StatelessWidget {
   final GestureDragUpdateCallback pan;
   final Color backgroundColor;
   const GraphView({
-    Key? key,
     required this.top,
     required this.index,
     required this.pan,
     required this.backgroundColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

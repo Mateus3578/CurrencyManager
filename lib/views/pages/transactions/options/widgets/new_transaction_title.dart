@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class NewTransactionTitle extends StatelessWidget {
   final String title;
 
-  const NewTransactionTitle({Key? key, required this.title}) : super(key: key);
+  const NewTransactionTitle({required this.title});
   @override
   Widget build(BuildContext context) {
     return Container(

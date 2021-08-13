@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/database_helper.dart';
+import 'package:tc/models/DAO/user_DAO.dart';
 import 'package:tc/models/user_model.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  String _username = "usuário"; // TODO: Pq isso ta aqui?
-
+  // Configurações padrão do app
+  String _username = "usuário";
   Color _primaryColor = Colors.amber;
   Color _alterColor = Colors.orange;
   Color _backgroundColor = Color(0xFF212121);
@@ -13,8 +13,8 @@ class ThemeProvider extends ChangeNotifier {
 
   /// Busca as cores guardadas no db.
   fetchData() async {
-    DatabaseHelper db = DatabaseHelper.instance;
-    UserModel userPrefs = await db.getUserPrefs();
+    UserDAO userDAO = UserDAO();
+    UserModel userPrefs = await userDAO.getUserPrefs();
 
     if (userPrefs.primaryColor.isNotEmpty)
       setPrimaryColor(Color(int.parse(userPrefs.primaryColor)));

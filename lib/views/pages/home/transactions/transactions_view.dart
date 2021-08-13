@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/database_helper.dart';
 import 'package:tc/controllers/theme_provider.dart';
+import 'package:tc/models/DAO/transaction_DAO.dart';
 import 'package:tc/models/transaction_model.dart';
 import 'package:tc/views/pages/home/transactions/transaction_list.dart';
 import 'package:tc/views/pages/home/transactions/transaction_view_appbar.dart';
+
+// TODO: Puxar pra baixo pra recarregar
 
 class TransactionsView extends StatefulWidget {
   final ThemeProvider theme;
@@ -14,7 +16,7 @@ class TransactionsView extends StatefulWidget {
 }
 
 class _TransactionsViewState extends State<TransactionsView> {
-  DatabaseHelper db = DatabaseHelper.instance;
+  TransactionDAO transactionDAO = TransactionDAO();
   List<TransactionModel> items = [];
   bool isLoading = false;
   bool allLoaded = false;
@@ -28,14 +30,20 @@ class _TransactionsViewState extends State<TransactionsView> {
     setState(() {
       isLoading = true;
     });
-    List<TransactionModel> data = await db.getAllTransactions();
+
+    List<TransactionModel> data = await transactionDAO.getAllTransactions();
     if (data.isNotEmpty) {
       items = data;
     }
-    setState(() {
-      isLoading = false;
-      allLoaded = data.isEmpty;
-    });
+    Future.delayed(
+      Duration(milliseconds: 250),
+      () {
+        setState(() {
+          isLoading = false;
+          allLoaded = data.isEmpty;
+        });
+      },
+    );
   }
 
   @override
@@ -74,10 +82,9 @@ class _TransactionsViewState extends State<TransactionsView> {
           textColor: widget.theme.textColor,
           items: items,
           scrollController: _scrollController,
+          isLoading: isLoading,
         ),
       ],
     );
   }
 }
-
-// TODO: Puxar pra baixo pra recarregar

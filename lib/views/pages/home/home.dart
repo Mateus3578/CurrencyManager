@@ -7,7 +7,15 @@ import 'package:tc/views/pages/home/widgets/home_appbar.dart';
 
 class Home extends StatefulWidget {
   final ThemeProvider theme;
-  Home(this.theme);
+  final double currentBalance;
+  final double currentExpenses;
+  final double currentRevenues;
+  Home({
+    required this.theme,
+    required this.currentBalance,
+    required this.currentExpenses,
+    required this.currentRevenues,
+  });
 
   @override
   _HomeState createState() => _HomeState();
@@ -50,6 +58,9 @@ class _HomeState extends State<Home> {
         CardMoney(
           top: _screenHeight * 0.20,
           showMoney: _showBalance,
+          currentBalance: widget.currentBalance,
+          currentExpenses: widget.currentExpenses,
+          currentRevenues: widget.currentRevenues,
         ),
         // Cards de gráficos
         GraphView(

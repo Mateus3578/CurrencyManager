@@ -1,12 +1,8 @@
-/// Para não errar os nomes
-class AccountModelForDb {
-  static String idAccount = "accountId";
-  static String name = "name";
-  static String balance = "balance";
+import 'package:tc/models/DAO/account_DAO.dart';
 
-  static String tableName = "accounts";
-}
-
+/// Model de contas
+///
+/// O id nunca deve ser inserido, somente recuperado
 class AccountModel {
   final int idAccount;
   final String name;
@@ -20,12 +16,7 @@ class AccountModel {
         name = map[AccountModelForDb.name],
         balance = map[AccountModelForDb.balance];
 
-  /// Retorna todos os dados da conta
   Map<String, Object?> toMap() {
-    return {
-      AccountModelForDb.idAccount: idAccount,
-      AccountModelForDb.name: name,
-      AccountModelForDb.balance: balance
-    };
+    return {AccountModelForDb.name: name, AccountModelForDb.balance: balance};
   }
 }

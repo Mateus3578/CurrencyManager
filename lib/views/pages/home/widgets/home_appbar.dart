@@ -8,12 +8,11 @@ class HomeAppBar extends StatelessWidget {
   final String userName;
 
   const HomeAppBar({
-    Key? key,
     required this.showBalance,
     required this.onClick,
     required this.iconColor,
     required this.userName,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

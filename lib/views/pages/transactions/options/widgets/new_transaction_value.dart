@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
 class NewTransactionValue extends StatelessWidget {
-  const NewTransactionValue({
-    Key? key,
-    required TextEditingController controller,
-  })  : _controller = controller,
-        super(key: key);
+  const NewTransactionValue({required TextEditingController controller})
+      : _controller = controller;
 
   final TextEditingController _controller;
 

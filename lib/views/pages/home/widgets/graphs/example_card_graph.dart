@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 // TODO: Criar os cards de gráficos usando esse como preset
 class ExampleCardGraphs extends StatelessWidget {
   final Color backgroundColor;
-  const ExampleCardGraphs({
-    Key? key,
-    required this.backgroundColor,
-  }) : super(key: key);
+  const ExampleCardGraphs({required this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {

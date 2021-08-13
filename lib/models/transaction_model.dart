@@ -1,17 +1,4 @@
-/// Para não errar os nomes
-class TransactionModelForDb {
-  static String idTransaction = "transactionId";
-  static String type = "type";
-  static String description = "description";
-  static String accountId = "accountId";
-  static String value = "value";
-  static String date = "date";
-  static String moreDesc = "moreDesc";
-  static String isFixed = "isFixed";
-  static String isRepeatable = "isRepeatable";
-
-  static String tableName = "transactions";
-}
+import 'package:tc/models/DAO/transaction_DAO.dart';
 
 /// Model de transação
 ///
@@ -23,7 +10,7 @@ class TransactionModelForDb {
 ///
 /// Datas devem ser guardadas como string, e transformadas de volta usando formatação de data.
 class TransactionModel {
-  int? _idTransaction;
+  int? idTransaction;
   int? type;
   String? description;
   int? accountId;
@@ -44,7 +31,7 @@ class TransactionModel {
       this.isRepeatable = false});
 
   TransactionModel.fromMap(Map<String, dynamic> map)
-      : _idTransaction = map[TransactionModelForDb.idTransaction],
+      : idTransaction = map[TransactionModelForDb.idTransaction],
         type = map[TransactionModelForDb.type],
         description = map[TransactionModelForDb.description],
         accountId = map[TransactionModelForDb.accountId],
@@ -55,7 +42,6 @@ class TransactionModel {
         isRepeatable =
             map[TransactionModelForDb.isRepeatable] == 0 ? false : true;
 
-  /// Retorna todos os dados da transação
   Map<String, dynamic> toMap() {
     return {
       TransactionModelForDb.type: type,

@@ -15,13 +15,12 @@ class TransactionListTile extends StatelessWidget {
   final double value;
 
   const TransactionListTile({
-    Key? key,
     required this.description,
     required this.type,
     required this.value,
     required this.onTap,
     required this.textColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

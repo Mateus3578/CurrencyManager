@@ -7,11 +7,10 @@ class GraphDots extends StatelessWidget {
   final Color color;
 
   const GraphDots({
-    Key? key,
     required this.index,
     required this.top,
     required this.color,
-  }) : super(key: key);
+  });
 
   /// Deixa em destaque (cor) apenas o dot do índice atual
   Color? getColor(int dotIndex) {

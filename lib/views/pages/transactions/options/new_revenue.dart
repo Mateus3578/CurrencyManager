@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tc/controllers/database_helper.dart';
 import 'package:tc/controllers/theme_provider.dart';
+import 'package:tc/models/DAO/transaction_DAO.dart';
 import 'package:tc/models/transaction_model.dart';
-import 'package:tc/views/pages/transactions/options/widgets/functions.dart';
+import 'package:tc/views/pages/transactions/options/widgets/exit_confirmation_dialog.dart';
 import 'package:tc/views/pages/transactions/options/widgets/new_transaction_description.dart';
 import 'package:tc/views/pages/transactions/options/widgets/new_transaction_title.dart';
 import 'package:tc/views/pages/transactions/options/widgets/new_transaction_value.dart';
@@ -17,8 +17,8 @@ class NewRevenue extends StatefulWidget {
 }
 
 class _NewRevenueState extends State<NewRevenue> {
+  TransactionDAO transactionDAO = TransactionDAO();
   TransactionModel transaction = TransactionModel();
-  DatabaseHelper db = DatabaseHelper.instance;
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -29,22 +29,6 @@ class _NewRevenueState extends State<NewRevenue> {
   DateTime _date = DateTime.now();
   bool _isRepeatable = false;
   bool _isFixed = false;
-
-  /// Abre um pop-up para escolher uma data
-  _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime(1950),
-      lastDate: DateTime(2100),
-    );
-
-    if (picked != null && picked != _date) {
-      setState(() {
-        _date = picked;
-      });
-    }
-  }
 
   _onSaved() async {
     // Reformatando o valor
@@ -66,7 +50,23 @@ class _NewRevenueState extends State<NewRevenue> {
     transaction.moreDesc = _moreDescController.text;
 
     // Salvando no banco de dados
-    await db.insert(TransactionModelForDb.tableName, transaction.toMap());
+    await transactionDAO.insertTransaction(transaction.toMap());
+  }
+
+  /// Abre um pop-up para escolher uma data
+  _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(1950),
+      lastDate: DateTime(2100),
+    );
+
+    if (picked != null && picked != _date) {
+      setState(() {
+        _date = picked;
+      });
+    }
   }
 
   @override
