@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tc/controllers/theme_provider.dart';
+import 'package:tc/views/pages/transactions/options/new_expense.dart';
 import 'package:tc/views/pages/transactions/options/new_revenue.dart';
 
 class NewTransaction extends StatefulWidget {
@@ -37,7 +38,7 @@ class _NewTransactionState extends State<NewTransaction> {
                 Colors.red,
                 Icons.arrow_downward_rounded,
                 "Despesa\n",
-                NewRevenue(widget.theme),
+                NewExpense(widget.theme),
               ),
             ],
           ),

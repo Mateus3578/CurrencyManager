@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class NewTransactionTitle extends StatelessWidget {
+class NewTitle extends StatelessWidget {
   final String title;
+  const NewTitle({required this.title});
 
-  const NewTransactionTitle({required this.title});
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -31,6 +31,19 @@ class AccountDAO {
     return accounts;
   }
 
+  /// Altera o saldo de uma conta com base no seu id
+  Future<int> updateBalanceById(double? newBalance, int? id) async {
+    Database db = await dbHelper.database;
+    int rowsAffected = await db.update(
+      AccountModelForDb.tableName,
+      {AccountModelForDb.balance: newBalance},
+      where: "${AccountModelForDb.idAccount} = ?",
+      whereArgs: [id],
+    );
+    print("Updated $rowsAffected rows on ${AccountModelForDb.tableName}");
+    return rowsAffected;
+  }
+
   String get createTableAccounts => '''
     CREATE TABLE ${AccountModelForDb.tableName} (
       ${AccountModelForDb.idAccount} INTEGER PRIMARY KEY AUTOINCREMENT,

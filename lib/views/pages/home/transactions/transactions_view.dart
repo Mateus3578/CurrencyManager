@@ -62,7 +62,11 @@ class _TransactionsViewState extends State<TransactionsView> {
   double _getBalance(List<TransactionModel> list) {
     double balance = 0;
     for (int i = 0; i < list.length; i++) {
-      balance += list[i].value!;
+      if (list[i].type == 1) {
+        balance += list[i].value!;
+      } else if (list[i].type == 2) {
+        balance -= list[i].value!;
+      }
     }
     return balance;
   }

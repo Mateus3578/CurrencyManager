@@ -34,8 +34,8 @@ class TransactionList extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 return TransactionListTile(
-                  type: items[index].type ?? 0,
-                  description: items[index].description ?? "",
+                  type: items[index].type,
+                  description: items[index].description,
                   value: items[index].value ?? 0,
                   textColor: textColor,
                   onTap: () {

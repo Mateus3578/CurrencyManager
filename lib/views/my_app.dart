@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
+import 'package:tc/models/DAO/account_DAO.dart';
+import 'package:tc/models/DAO/transaction_DAO.dart';
+import 'package:tc/models/account_model.dart';
+import 'package:tc/models/transaction_model.dart';
 import 'package:tc/views/pages/home/home.dart';
 import 'package:tc/views/pages/home/transactions/transactions_view.dart';
 import 'package:tc/views/pages/home/widgets/bottom_menu.dart';
@@ -23,15 +27,39 @@ class _MyAppState extends State<MyApp> {
   double currentRevenues = 0;
   double currentExpenses = 0;
 
-  //TODO: Buscar no db
   /// Busca o saldo no db
   _getInformation() async {
-    currentRevenues = 0;
-    currentExpenses = 0;
+    AccountDAO accountDAO = AccountDAO();
+    TransactionDAO transactionDAO = TransactionDAO();
+    double tempCurrentBalance = 0;
+    double tempCurrentRevenues = 0;
+    double tempCurrentExpenses = 0;
 
-    // Buscar os dados
+    List<AccountModel> dataAccount = await accountDAO.getAllAccounts();
+    if (dataAccount.isNotEmpty) {
+      for (int i = 0; i < dataAccount.length; i++) {
+        tempCurrentBalance += dataAccount[i].balance!;
+      }
+    }
 
-    currentBalance = currentRevenues - currentExpenses;
+    //TODO: trocar para pegar do mes
+    List<TransactionModel> dataTransaction =
+        await transactionDAO.getAllTransactions();
+    if (dataTransaction.isNotEmpty) {
+      for (int i = 0; i < dataTransaction.length; i++) {
+        if (dataTransaction[i].type == 1) {
+          tempCurrentRevenues += dataTransaction[i].value!;
+        } else if (dataTransaction[i].type == 2) {
+          tempCurrentExpenses += dataTransaction[i].value!;
+        }
+      }
+    }
+
+    setState(() {
+      currentBalance = tempCurrentBalance;
+      currentRevenues = tempCurrentRevenues;
+      currentExpenses = tempCurrentExpenses;
+    });
   }
 
   @override

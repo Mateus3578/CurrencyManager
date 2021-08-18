@@ -69,10 +69,14 @@ class _WalletState extends State<Wallet> {
     _scrollController.dispose();
   }
 
-  double _getMonthBalance(List<TransactionModel> list) {
+  double _getBalance(List<TransactionModel> list) {
     double balance = 0;
     for (int i = 0; i < list.length; i++) {
-      balance += list[i].value!;
+      if (list[i].type == 1) {
+        balance += list[i].value!;
+      } else if (list[i].type == 2) {
+        balance -= list[i].value!;
+      }
     }
     return balance;
   }
@@ -84,7 +88,7 @@ class _WalletState extends State<Wallet> {
       children: <Widget>[
         WalletAppbar(
           textColor: widget.theme.textColor,
-          monthBalance: _getMonthBalance(transactions),
+          monthBalance: _getBalance(transactions),
           currentBalance: widget.currentBalance,
         ),
         WalletList(

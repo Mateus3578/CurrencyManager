@@ -4,12 +4,14 @@ import 'package:tc/models/DAO/account_DAO.dart';
 ///
 /// O id nunca deve ser inserido, somente recuperado
 class AccountModel {
-  final int idAccount;
+  int? idAccount;
   final String name;
-  final double balance;
+  final double? balance;
 
-  AccountModel(
-      {required this.idAccount, required this.name, required this.balance});
+  AccountModel({
+    required this.name,
+    required this.balance,
+  });
 
   AccountModel.fromMap(Map<String, dynamic> map)
       : idAccount = map[AccountModelForDb.idAccount],

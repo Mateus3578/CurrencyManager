@@ -69,6 +69,7 @@ class MySplashState extends State<MySplash> {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     stops: [value, value],
+                    // TODO: Definir uma cor, e não esperar buscar
                     colors: [widget.theme.alterColor, Color(0xFF212121)],
                   ).createShader(rect);
                 },

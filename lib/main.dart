@@ -3,23 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
+import 'package:tc/views/custom/default_theme.dart';
 import 'package:tc/views/splash/my_splash.dart';
-
-//TODO<Bug>: Se a cor de fundo for muito clara, o texto de notificações some
-//TODO: Opção de aumentar e reduzir tamanho do texto
-//TODO: Arrasta pra baixo pra recarregar dados
-// RefreshIndicator faz isso
-//TODO: confirmação de que algo foi salvo com um toast ou sei la
-// https://pub.dev/packages/cherry_toast
-// cherry cherry toast
-//TODO: Ao criar conta, fornecer opção de ícone com base em contas comuns
-// Caixa, BB, Nubank
-//TODO: gerar gráficos das transações
-//(https://medium.com/flutter/beautiful-animated-charts-for-flutter-164940780b8c)
 
 void main() => runApp(
       MultiProvider(
         providers: [
+          // Aqui é criada a instância do provider para passar para os widgets
           ChangeNotifierProvider(
             create: (_) => ThemeProvider(),
           ),
@@ -41,9 +31,9 @@ class StartApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    // Ver sobre provider.
-    // Basicamente, o widget pai de todos é o provedor do tema, que envia para
-    // os filhos. Quando um muda, todos são notificados da mudança.
+    // https://pub.dev/packages/provider.
+    // Basicamente, o widget pai de todos é o provedor do tema, que o envia para
+    // os filhos. Quando uma coisa mudar é só notificar da mudança.
     return ChangeNotifierProvider<ThemeProvider>(
       create: (BuildContext context) => ThemeProvider(),
       child: Consumer<ThemeProvider>(
@@ -55,50 +45,25 @@ class StartApp extends StatelessWidget {
             // Tira a marca d´agua de debug
             debugShowCheckedModeBanner: false,
             // Definição do tema.
-            // Facilita para não ter que definir cores de vários widgets.
-            // As cores são importadas do ThemeProvider
-            theme: ThemeData(
-              // Cores principais
-              primaryColor: theme.primaryColor,
-              accentColor: theme.alterColor,
-              highlightColor: theme.alterColor,
-              hoverColor: theme.alterColor,
-              // Cores de fundo
-              backgroundColor: theme.backgroundColor,
-              scaffoldBackgroundColor: theme.backgroundColor,
-              // Cores do texto
-              hintColor: theme.textColor,
-              inputDecorationTheme: InputDecorationTheme(
-                counterStyle: TextStyle(color: theme.textColor),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: theme.alterColor, width: 1),
-                ),
-              ),
-              textTheme: Theme.of(context).textTheme.apply(
-                    bodyColor: theme.textColor,
-                    displayColor: theme.textColor,
-                  ),
-              // Cores de pop-ups
-              dialogTheme: DialogTheme(
-                backgroundColor: theme.backgroundColor,
-                titleTextStyle: TextStyle(color: theme.textColor),
-                contentTextStyle: TextStyle(color: theme.textColor),
-              ),
-              colorScheme: ColorScheme.light(
-                primary: theme.primaryColor,
-                onPrimary: theme.textColor,
-                onSurface: theme.textColor,
-                secondary: theme.alterColor,
-              ),
-              // Cores de outros itens
-              scrollbarTheme: ScrollbarThemeData(
-                trackColor: MaterialStateProperty.all(theme.backgroundColor),
-                thumbColor: MaterialStateProperty.all(theme.alterColor),
-              ),
-            ),
+            // Facilita para não ter que definir algumas cores.
+            // As cores são importadas do ThemeProvider.
+            theme: getDefaultTheme(theme),
           );
         },
       ),
     );
   }
 }
+
+//TODO: Considerar transformar os saldos em consumers de um provider, para atualizar tudo ao mudar.
+
+//TODO<Bug>: Se a cor de fundo for muito clara, o texto de notificações some
+//TODO: Opção de aumentar e reduzir tamanho do texto
+//TODO: Arrastar pra baixo pra recarregar dados
+// RefreshIndicator() faz isso (provavelmente)
+//TODO: confirmação de que algo foi salvo com um toast ou sei la
+// https://pub.dev/packages/cherry_toast
+//TODO: Ao criar conta, fornecer opção de ícone com base em contas comuns
+// Caixa, BB, Nubank etc
+//TODO: gerar gráficos das transações
+//(https://medium.com/flutter/beautiful-animated-charts-for-flutter-164940780b8c)

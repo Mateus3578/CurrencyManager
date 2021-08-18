@@ -11,24 +11,25 @@ import 'package:tc/models/DAO/transaction_DAO.dart';
 /// Datas devem ser guardadas como string, e transformadas de volta usando formatação de data.
 class TransactionModel {
   int? idTransaction;
-  int? type;
-  String? description;
-  int? accountId;
-  double? value;
-  String? date;
-  String? moreDesc;
-  bool isFixed;
-  bool isRepeatable;
+  final int type;
+  final String description;
+  final int? accountId;
+  final double? value;
+  final String date;
+  final String? moreDesc;
+  final bool isFixed;
+  final bool isRepeatable;
 
-  TransactionModel(
-      {this.type,
-      this.description,
-      this.accountId,
-      this.value,
-      this.date,
-      this.moreDesc,
-      this.isFixed = false,
-      this.isRepeatable = false});
+  TransactionModel({
+    required this.type,
+    required this.description,
+    required this.accountId,
+    required this.value,
+    required this.date,
+    this.moreDesc,
+    this.isFixed = false,
+    this.isRepeatable = false,
+  });
 
   TransactionModel.fromMap(Map<String, dynamic> map)
       : idTransaction = map[TransactionModelForDb.idTransaction],
