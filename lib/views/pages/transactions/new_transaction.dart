@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/views/pages/transactions/options/new_expense.dart';
 import 'package:tc/views/pages/transactions/options/new_revenue.dart';
 
-class NewTransaction extends StatefulWidget {
+class NewTransaction extends StatelessWidget {
   final ThemeProvider theme;
-  NewTransaction(this.theme);
+  final MoneyProvider money;
+  NewTransaction({required this.theme, required this.money});
 
-  @override
-  _NewTransactionState createState() => _NewTransactionState();
-}
-
-class _NewTransactionState extends State<NewTransaction> {
-  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -29,16 +25,18 @@ class _NewTransactionState extends State<NewTransaction> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               itemOption(
+                context,
                 Colors.green,
                 Icons.arrow_upward_rounded,
                 "Receita\n",
-                NewRevenue(widget.theme),
+                NewRevenue(theme: theme, money: money),
               ),
               itemOption(
+                context,
                 Colors.red,
                 Icons.arrow_downward_rounded,
                 "Despesa\n",
-                NewExpense(widget.theme),
+                NewExpense(theme),
               ),
             ],
           ),
@@ -46,16 +44,18 @@ class _NewTransactionState extends State<NewTransaction> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               itemOption(
+                context,
                 Colors.blue,
                 Icons.cached_rounded,
                 "Transferência\n",
-                NewRevenue(widget.theme),
+                NewRevenue(theme: theme, money: money),
               ),
               itemOption(
+                context,
                 Colors.purple,
                 Icons.credit_card_rounded,
                 "Despesa\nCartão",
-                NewRevenue(widget.theme),
+                NewRevenue(theme: theme, money: money),
               ),
             ],
           ),
@@ -65,6 +65,7 @@ class _NewTransactionState extends State<NewTransaction> {
   }
 
   Expanded itemOption(
+    BuildContext context,
     Color color,
     IconData iconData,
     String text,
@@ -97,7 +98,7 @@ class _NewTransactionState extends State<NewTransaction> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
-                  color: widget.theme.textColor,
+                  color: theme.textColor,
                 ),
               ),
             ),

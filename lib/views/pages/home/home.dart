@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/views/pages/home/widgets/card_money.dart';
 import 'package:tc/views/pages/home/widgets/graph_dots.dart';
@@ -7,15 +8,8 @@ import 'package:tc/views/pages/home/widgets/home_appbar.dart';
 
 class Home extends StatefulWidget {
   final ThemeProvider theme;
-  final double currentBalance;
-  final double currentExpenses;
-  final double currentRevenues;
-  Home({
-    required this.theme,
-    required this.currentBalance,
-    required this.currentExpenses,
-    required this.currentRevenues,
-  });
+  final MoneyProvider money;
+  Home({required this.theme, required this.money});
 
   @override
   _HomeState createState() => _HomeState();
@@ -58,9 +52,9 @@ class _HomeState extends State<Home> {
         CardMoney(
           top: _screenHeight * 0.20,
           showMoney: _showBalance,
-          currentBalance: widget.currentBalance,
-          currentExpenses: widget.currentExpenses,
-          currentRevenues: widget.currentRevenues,
+          currentBalance: widget.money.balance,
+          currentExpenses: widget.money.expenses,
+          currentRevenues: widget.money.revenues,
         ),
         // Cards de gráficos
         GraphView(

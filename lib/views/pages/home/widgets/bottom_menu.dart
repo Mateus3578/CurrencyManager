@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/views/custom/navbar_custom_painter.dart';
 import 'package:tc/views/pages/transactions/new_transaction.dart';
@@ -6,10 +7,12 @@ import 'package:tc/views/pages/transactions/new_transaction.dart';
 /// Barra de menu inferior
 class BottomMenu extends StatefulWidget {
   final ThemeProvider theme;
+  final MoneyProvider money;
   final onPressed;
 
   BottomMenu({
     required this.theme,
+    required this.money,
     required this.onPressed,
   });
 
@@ -50,7 +53,10 @@ class _BottomMenuState extends State<BottomMenu> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => NewTransaction(widget.theme),
+                  builder: (context) => NewTransaction(
+                    theme: widget.theme,
+                    money: widget.money,
+                  ),
                 );
               },
               child: Icon(

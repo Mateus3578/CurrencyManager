@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/models/DAO/account_DAO.dart';
 import 'package:tc/models/DAO/transaction_DAO.dart';
@@ -9,11 +10,8 @@ import 'package:tc/views/pages/wallet/widgets/wallet_list.dart';
 
 class Wallet extends StatefulWidget {
   final ThemeProvider theme;
-  final double currentBalance;
-  Wallet({
-    required this.theme,
-    required this.currentBalance,
-  });
+  final MoneyProvider money;
+  Wallet({required this.theme, required this.money});
 
   @override
   _WalletState createState() => _WalletState();
@@ -42,6 +40,7 @@ class _WalletState extends State<Wallet> {
     if (dataAccounts.isNotEmpty) {
       accounts = dataAccounts;
     }
+    //TODO: trocar para mensal
     List<TransactionModel> dataTransactions =
         await transactionDAO.getAllTransactions();
     if (dataTransactions.isNotEmpty) {
@@ -89,7 +88,7 @@ class _WalletState extends State<Wallet> {
         WalletAppbar(
           textColor: widget.theme.textColor,
           monthBalance: _getBalance(transactions),
-          currentBalance: widget.currentBalance,
+          currentBalance: widget.money.balance,
         ),
         WalletList(
           accounts: accounts,

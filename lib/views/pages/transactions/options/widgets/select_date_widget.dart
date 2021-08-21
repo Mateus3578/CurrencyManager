@@ -3,7 +3,8 @@ import 'package:intl/intl.dart';
 
 class SelectDateWidget extends StatefulWidget {
   final Function setDate;
-  SelectDateWidget(this.setDate);
+  final Color mainColor;
+  SelectDateWidget({required this.setDate, required this.mainColor});
 
   @override
   _SelectDateWidgetState createState() => _SelectDateWidgetState();
@@ -49,9 +50,9 @@ class _SelectDateWidgetState extends State<SelectDateWidget> {
                   decoration: _date.isSameDate(DateTime.now())
                       ? BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
-                          color: Colors.green,
+                          color: widget.mainColor,
                           border: Border.all(
-                            color: Colors.green,
+                            color: widget.mainColor,
                             width: 4,
                           ),
                         )
@@ -81,9 +82,9 @@ class _SelectDateWidgetState extends State<SelectDateWidget> {
                           DateTime.now().subtract(Duration(days: 1)))
                       ? BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
-                          color: Colors.green,
+                          color: widget.mainColor,
                           border: Border.all(
-                            color: Colors.green,
+                            color: widget.mainColor,
                             width: 4,
                           ),
                         )
@@ -109,9 +110,9 @@ class _SelectDateWidgetState extends State<SelectDateWidget> {
                               DateTime.now().subtract(Duration(days: 1)))
                       ? BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
-                          color: Colors.green,
+                          color: widget.mainColor,
                           border: Border.all(
-                            color: Colors.green,
+                            color: widget.mainColor,
                             width: 4,
                           ),
                         )

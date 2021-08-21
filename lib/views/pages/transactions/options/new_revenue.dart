@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/models/DAO/account_DAO.dart';
 import 'package:tc/models/DAO/transaction_DAO.dart';
@@ -15,8 +16,10 @@ import 'package:tc/views/pages/transactions/options/widgets/select_value_widget.
 
 class NewRevenue extends StatefulWidget {
   final ThemeProvider theme;
+  final MoneyProvider money;
   final int type = 1;
-  NewRevenue(this.theme);
+  final Color mainColor = Colors.green;
+  NewRevenue({required this.theme, required this.money});
 
   @override
   _NewRevenueState createState() => _NewRevenueState();
@@ -85,7 +88,10 @@ class _NewRevenueState extends State<NewRevenue> {
                         ),
                         Divider(color: widget.theme.textColor),
                         // Data
-                        SelectDateWidget(setDate),
+                        SelectDateWidget(
+                          setDate: setDate,
+                          mainColor: widget.mainColor,
+                        ),
                         Divider(color: widget.theme.textColor),
                         SelectAccountWidget(setAccount),
                         Divider(color: Colors.white),
@@ -123,8 +129,8 @@ class _NewRevenueState extends State<NewRevenue> {
                                             _isRepeatable = value;
                                           });
                                         },
-                                        activeTrackColor: Colors.green,
-                                        activeColor: Colors.green,
+                                        activeTrackColor: widget.mainColor,
+                                        activeColor: widget.mainColor,
                                       ),
                                     ],
                                   ),
@@ -152,8 +158,8 @@ class _NewRevenueState extends State<NewRevenue> {
                                             _isFixed = value;
                                           });
                                         },
-                                        activeTrackColor: Colors.green,
-                                        activeColor: Colors.green,
+                                        activeTrackColor: widget.mainColor,
+                                        activeColor: widget.mainColor,
                                       ),
                                     ],
                                   ),
@@ -196,17 +202,21 @@ class _NewRevenueState extends State<NewRevenue> {
                               // Salvando no banco de dados
                               await transactionDAO
                                   .insertTransaction(transaction.toMap());
+
+                              // Diminui se for despesa, soma se for receita
                               await accountDAO.updateBalanceById(
-                                  // Diminui se for despesa, soma se for receita
                                   widget.type == 2
                                       ? (_account.balance! + (value! * -1))
                                       : (_account.balance! + value!),
                                   _account.idAccount);
 
+                              //Reseta os dados
+                              widget.money.fetchData();
+
                               Navigator.of(context).pop(true);
                             }
                           },
-                          backgroundColor: Colors.green,
+                          backgroundColor: widget.mainColor,
                           child: Icon(
                             Icons.check,
                             size: 30,
