@@ -4,7 +4,7 @@ class SelectDescWidget extends StatelessWidget {
   final TextEditingController controller;
   final String title;
 
-  /// Informa se precisa de validação ou não. Padrão é que precisa
+  /// Informa se precisa de validação ou não. Padrão é sim, precisa validar.
   final bool? validate;
   const SelectDescWidget({
     required this.controller,

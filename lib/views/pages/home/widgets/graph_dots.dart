@@ -30,6 +30,8 @@ class GraphDots extends StatelessWidget {
           dotContainer(1),
           SizedBox(width: 8),
           dotContainer(2),
+          SizedBox(width: 8),
+          dotContainer(3),
         ],
       ),
     );

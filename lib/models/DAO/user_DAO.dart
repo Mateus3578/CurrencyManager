@@ -37,8 +37,9 @@ class UserDAO {
   /// Busca os dados do usuário.
   Future<UserModel> getUserPrefs() async {
     Database db = await dbHelper.database;
-    List<Map<String, dynamic>> result =
-        await db.query(UserModelForDb.tableName);
+    List<Map<String, dynamic>> result = await db.query(
+      UserModelForDb.tableName,
+    );
     return UserModel.fromMap(result[0]);
   }
 

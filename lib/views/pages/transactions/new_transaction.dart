@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/views/pages/transactions/options/new_expense.dart';
-import 'package:tc/views/pages/transactions/options/new_revenue.dart';
+import 'package:tc/views/pages/transactions/options/new_card_expense.dart';
+import 'package:tc/views/pages/transactions/options/new_common_transaction.dart';
+import 'package:tc/views/pages/transactions/options/new_transfer.dart';
 
 class NewTransaction extends StatelessWidget {
   final ThemeProvider theme;
@@ -29,14 +30,22 @@ class NewTransaction extends StatelessWidget {
                 Colors.green,
                 Icons.arrow_upward_rounded,
                 "Receita\n",
-                NewRevenue(theme: theme, money: money),
+                NewCommonTransaction(
+                  theme: theme,
+                  money: money,
+                  type: NewCommonTransaction.revenueType,
+                ),
               ),
               itemOption(
                 context,
                 Colors.red,
                 Icons.arrow_downward_rounded,
                 "Despesa\n",
-                NewExpense(theme),
+                NewCommonTransaction(
+                  theme: theme,
+                  money: money,
+                  type: NewCommonTransaction.expenseType,
+                ),
               ),
             ],
           ),
@@ -48,14 +57,14 @@ class NewTransaction extends StatelessWidget {
                 Colors.blue,
                 Icons.cached_rounded,
                 "Transferência\n",
-                NewRevenue(theme: theme, money: money),
+                NewTransfer(),
               ),
               itemOption(
                 context,
                 Colors.purple,
                 Icons.credit_card_rounded,
                 "Despesa\nCartão",
-                NewRevenue(theme: theme, money: money),
+                NewCardExpense(),
               ),
             ],
           ),

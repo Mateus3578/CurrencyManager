@@ -4,14 +4,19 @@ import 'package:intl/intl.dart';
 class SelectDateWidget extends StatefulWidget {
   final Function setDate;
   final Color mainColor;
-  SelectDateWidget({required this.setDate, required this.mainColor});
+  final DateTime initialDate;
+  SelectDateWidget({
+    required this.setDate,
+    required this.mainColor,
+    required this.initialDate,
+  });
 
   @override
   _SelectDateWidgetState createState() => _SelectDateWidgetState();
 }
 
 class _SelectDateWidgetState extends State<SelectDateWidget> {
-  DateTime _date = DateTime.now();
+  late DateTime _date = widget.initialDate;
 
   /// Abre um pop-up para escolher uma data
   _selectDate(BuildContext context) async {

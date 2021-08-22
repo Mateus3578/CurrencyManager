@@ -62,7 +62,7 @@ class TransactionDAO {
   }
 
   /// Altera uma transação com base no seu id
-  Future<int> updateTransactionById(Map<String, dynamic> map, int id) async {
+  Future<int> updateTransactionById(Map<String, dynamic> map, int? id) async {
     Database db = await dbHelper.database;
     int rowsAffected = await db.update(
       TransactionModelForDb.tableName,
@@ -75,7 +75,7 @@ class TransactionDAO {
   }
 
   /// Apaga uma transação com base no seu id
-  Future<int> deleteTransactionById(int id) async {
+  Future<int> deleteTransactionById(int? id) async {
     Database db = await dbHelper.database;
     int rowsAffected = await db.delete(
       TransactionModelForDb.tableName,

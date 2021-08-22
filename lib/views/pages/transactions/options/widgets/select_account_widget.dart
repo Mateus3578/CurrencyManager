@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/models/DAO/account_DAO.dart';
 import 'package:tc/models/account_model.dart';
 import 'package:tc/views/pages/transactions/options/widgets/dialogs/new_account_dialog.dart';
 
 class SelectAccountWidget extends StatefulWidget {
   final Function(AccountModel accountModel) setAccount;
-  const SelectAccountWidget(this.setAccount);
+  final MoneyProvider moneyProvider;
+  const SelectAccountWidget({
+    required this.setAccount,
+    required this.moneyProvider,
+  });
 
   @override
   _SelectAccountWidgetState createState() => _SelectAccountWidgetState();
@@ -18,14 +23,19 @@ class _SelectAccountWidgetState extends State<SelectAccountWidget> {
   String _selectedAccount = "Carteira";
   bool loadingData = true;
 
+  // Serve pra fechar o popup do menu de contas quando for criar uma nova,
+  // aí a nova aparece.
+  late GlobalKey dropdownKey;
+
   @override
   void initState() {
     super.initState();
-    fetchingAccounts();
+    dropdownKey = GlobalKey();
+    fetchAccounts();
   }
 
   /// Busca as contas salvas
-  Future<void> fetchingAccounts() async {
+  Future<void> fetchAccounts() async {
     setState(() {
       loadingData = true;
       _accountsNames = [];
@@ -64,10 +74,21 @@ class _SelectAccountWidgetState extends State<SelectAccountWidget> {
         Container(
           padding: const EdgeInsets.all(10.0),
           child: DropdownButton<String>(
+            key: dropdownKey,
             isExpanded: true,
             value: _selectedAccount,
+            // Sem underline
             underline: Container(),
-            // não constroi enquanto não tiver dados
+            // Desabilita o botão enquanto está montando/carregando contas
+            onChanged: loadingData
+                ? null
+                : (value) {
+                    setState(() {
+                      _selectedAccount = value!;
+                      widget.setAccount(matchName(_selectedAccount));
+                    });
+                  },
+            // não monta enquanto não tiver dados
             items: loadingData
                 ? []
                 : _accountsNames.map<DropdownMenuItem<String>>((String value) {
@@ -75,20 +96,22 @@ class _SelectAccountWidgetState extends State<SelectAccountWidget> {
                       value: value,
                       child: Row(
                         children: [
-                          // TODO: trocar para ícone da conta
                           value == "Selecionar"
                               ? Container()
+                              // TODO: trocar para ícone da conta
                               : Icon(Icons.wallet_giftcard),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: value == "Criar nova conta"
                                 ? GestureDetector(
                                     onTap: () async {
+                                      Navigator.pop(
+                                          dropdownKey.currentContext!);
                                       await getNewAccountDialog(
-                                        context,
-                                        //TODO: Dar um jeito de resetar a lista
-                                        fetchingAccounts,
+                                        context: context,
+                                        moneyProvider: widget.moneyProvider,
                                       );
+                                      await fetchAccounts();
                                     },
                                     child: Text(
                                       value,
@@ -104,12 +127,6 @@ class _SelectAccountWidgetState extends State<SelectAccountWidget> {
                       ),
                     );
                   }).toList(),
-            onChanged: (value) {
-              setState(() {
-                _selectedAccount = value!;
-                widget.setAccount(matchName(_selectedAccount));
-              });
-            },
           ),
         ),
       ],

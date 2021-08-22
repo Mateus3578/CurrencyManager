@@ -7,18 +7,15 @@ import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/views/custom/default_theme.dart';
 import 'package:tc/views/splash/my_splash.dart';
 
-//TODO: Considerar transformar os saldos em consumers de um provider, para atualizar tudo ao mudar.
+// TODO: Testar editar/deletar contas/transações e conferir o reflexo nos saldos.
+//TODO: Organizar por mês
 //TODO: Opção para sempre mostrar o saldo
+//TODO: Opções para customizar os gráficos
 //TODO<Bug>: Se a cor de fundo for muito clara, o texto de notificações some
 //TODO: Opção de aumentar e reduzir tamanho do texto
-//TODO: Arrastar pra baixo pra recarregar dados
-// RefreshIndicator() faz isso (provavelmente)
-//TODO: confirmação de que algo foi salvo com um toast ou sei la
-// https://pub.dev/packages/cherry_toast
+//TODO: animação do botão ao salvar
 //TODO: Ao criar conta, fornecer opção de ícone com base em contas comuns
 // Caixa, BB, Nubank etc
-//TODO: gerar gráficos das transações
-//(https://medium.com/flutter/beautiful-animated-charts-for-flutter-164940780b8c)
 
 void main() => runApp(StartApp());
 

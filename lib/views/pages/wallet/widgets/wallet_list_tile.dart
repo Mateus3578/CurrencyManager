@@ -5,13 +5,15 @@ import 'package:tc/models/account_model.dart';
 
 class WalletListTile extends StatelessWidget {
   final onTap;
+  final onLongPress;
   final ThemeProvider theme;
   final AccountModel account;
 
   const WalletListTile({
+    required this.theme,
     required this.account,
     required this.onTap,
-    required this.theme,
+    required this.onLongPress,
   });
 
   @override
@@ -69,6 +71,7 @@ class WalletListTile extends StatelessWidget {
         ),
       ),
       onTap: onTap,
+      onLongPress: onLongPress,
     );
   }
 }

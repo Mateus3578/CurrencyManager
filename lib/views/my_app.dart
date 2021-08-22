@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
         case 1:
           return Wallet(theme: widget.theme, money: widget.money);
         case 2:
-          return TransactionsView(widget.theme);
+          return TransactionsView(theme: widget.theme, money: widget.money);
         case 3:
           return Settings(widget.theme);
         default:

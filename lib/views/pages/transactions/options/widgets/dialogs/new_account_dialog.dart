@@ -1,18 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/models/DAO/account_DAO.dart';
 import 'package:tc/models/account_model.dart';
 import 'package:tc/views/pages/transactions/options/widgets/select_description_widget.dart';
 import 'package:tc/views/pages/transactions/options/widgets/select_value_widget.dart';
-import 'package:tc/views/pages/transactions/save_data.dart';
 
 /// Pop-up da criação de nova conta.
-Future<void> getNewAccountDialog(
-    BuildContext context, Function refetchData) async {
+Future<void> getNewAccountDialog({
+  required BuildContext context,
+  required MoneyProvider moneyProvider,
+
+  /// Opcional: Model para preencher os campos com os dados.
+  /// Útil para editar uma transação já criada.
+  AccountModel? accountAutoFill,
+}) async {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   AccountDAO _accountDAO = AccountDAO();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _balanceController = TextEditingController();
+
+  /// Formata uma string(valor) para salvar no db.
+  String formatValue(String value) {
+    // TODO: Fazer algo melhor aqui
+    String formattedValue = value;
+    formattedValue = formattedValue.replaceAll("R\$", "");
+    formattedValue = formattedValue.replaceAll(" ", "");
+    formattedValue = formattedValue.replaceAll(",", "x");
+    formattedValue = formattedValue.replaceAll(".", "");
+    formattedValue = formattedValue.replaceAll("x", ".");
+    return formattedValue;
+  }
+
+  if (accountAutoFill != null) {
+    _nameController.text = accountAutoFill.name;
+    //TODO: Bug na formatação do valor recuperado
+    _balanceController.text = accountAutoFill.balance.toString();
+  }
+
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -46,14 +71,24 @@ Future<void> getNewAccountDialog(
                 FloatingActionButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      AccountModel account = AccountModel(
-                        name: _nameController.text,
-                        balance: double.tryParse(
-                          formatValue(_balanceController.text),
-                        ),
-                      );
-                      await _accountDAO.insertAccount(account.toMap());
-                      await refetchData();
+                      if (accountAutoFill == null) {
+                        AccountModel account = AccountModel(
+                          name: _nameController.text,
+                          balance: double.tryParse(
+                            formatValue(_balanceController.text),
+                          ),
+                        );
+                        await _accountDAO.insertAccount(account.toMap());
+                      } else {
+                        await _accountDAO.updateAccountById(
+                          _nameController.text,
+                          double.tryParse(
+                            formatValue(_balanceController.text),
+                          ),
+                          accountAutoFill.idAccount,
+                        );
+                      }
+                      await moneyProvider.fetchData();
                       Navigator.of(context).pop(true);
                     }
                   },

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class NewTitle extends StatelessWidget {
+class SelectTitleWidget extends StatelessWidget {
   final String title;
-  const NewTitle({required this.title});
+  const SelectTitleWidget({required this.title});
 
   @override
   Widget build(BuildContext context) {

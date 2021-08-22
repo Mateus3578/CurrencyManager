@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tc/controllers/theme_provider.dart';
 
 class TransactionListTile extends StatelessWidget {
   final onTap;
-  final Color textColor;
+  final onLongPress;
+  final ThemeProvider theme;
 
   /// Descrição da transação
   final String description;
@@ -19,7 +21,8 @@ class TransactionListTile extends StatelessWidget {
     required this.type,
     required this.value,
     required this.onTap,
-    required this.textColor,
+    required this.onLongPress,
+    required this.theme,
   });
 
   @override
@@ -66,7 +69,7 @@ class TransactionListTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       softWrap: false,
-                      style: TextStyle(color: textColor),
+                      style: TextStyle(color: theme.textColor),
                     ),
                   ),
                 ),
@@ -78,12 +81,13 @@ class TransactionListTile extends StatelessWidget {
             child: Text(
               "R\$ $formattedValue",
               maxLines: 1,
-              style: TextStyle(color: textColor),
+              style: TextStyle(color: theme.textColor),
             ),
           ),
         ],
       )),
       onTap: onTap,
+      onLongPress: onLongPress,
     );
   }
 }

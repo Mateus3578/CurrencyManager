@@ -3,7 +3,7 @@ import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/views/pages/home/widgets/card_money.dart';
 import 'package:tc/views/pages/home/widgets/graph_dots.dart';
-import 'package:tc/views/pages/home/widgets/graph_view.dart';
+import 'package:tc/views/pages/home/widgets/custom_card_view.dart';
 import 'package:tc/views/pages/home/widgets/home_appbar.dart';
 
 class Home extends StatefulWidget {
@@ -55,11 +55,15 @@ class _HomeState extends State<Home> {
           currentBalance: widget.money.balance,
           currentExpenses: widget.money.expenses,
           currentRevenues: widget.money.revenues,
+          onRefresh: () async {
+            widget.money.fetchData();
+          },
         ),
         // Cards de gráficos
-        GraphView(
+        CustomCardView(
           top: !_showBalance ? _screenHeight * 0.20 : _screenHeight * 0.40,
-          backgroundColor: widget.theme.primaryColor,
+          theme: widget.theme,
+          money: widget.money,
           index: (index) {
             setState(
               () {

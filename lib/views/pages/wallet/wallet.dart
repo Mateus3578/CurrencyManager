@@ -5,8 +5,10 @@ import 'package:tc/models/DAO/account_DAO.dart';
 import 'package:tc/models/DAO/transaction_DAO.dart';
 import 'package:tc/models/account_model.dart';
 import 'package:tc/models/transaction_model.dart';
+import 'package:tc/views/custom/dialogs/delete_dialog.dart';
+import 'package:tc/views/pages/transactions/options/widgets/dialogs/new_account_dialog.dart';
 import 'package:tc/views/pages/wallet/widgets/wallet_appbar.dart';
-import 'package:tc/views/pages/wallet/widgets/wallet_list.dart';
+import 'package:tc/views/pages/wallet/widgets/wallet_list_tile.dart';
 
 class Wallet extends StatefulWidget {
   final ThemeProvider theme;
@@ -20,18 +22,14 @@ class Wallet extends StatefulWidget {
 class _WalletState extends State<Wallet> {
   AccountDAO accountDAO = AccountDAO();
   TransactionDAO transactionDAO = TransactionDAO();
-
   List<AccountModel> accounts = [];
   List<TransactionModel> transactions = [];
+
   bool isLoading = false;
-  bool allLoaded = false;
   final ScrollController _scrollController = ScrollController();
 
   /// Busca os dados e coloca na lista
-  fetchingData() async {
-    if (allLoaded) {
-      return;
-    }
+  Future<void> fetchData() async {
     setState(() {
       isLoading = true;
     });
@@ -50,7 +48,6 @@ class _WalletState extends State<Wallet> {
     Future.delayed(Duration(milliseconds: 250), () {
       setState(() {
         isLoading = false;
-        allLoaded = dataAccounts.isEmpty && dataTransactions.isEmpty;
       });
     });
   }
@@ -58,7 +55,7 @@ class _WalletState extends State<Wallet> {
   @override
   void initState() {
     super.initState();
-    fetchingData();
+    fetchData();
   }
 
   // ScrollController
@@ -82,19 +79,78 @@ class _WalletState extends State<Wallet> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Stack(
       alignment: Alignment.topCenter,
       children: <Widget>[
         WalletAppbar(
-          textColor: widget.theme.textColor,
-          monthBalance: _getBalance(transactions),
-          currentBalance: widget.money.balance,
-        ),
-        WalletList(
-          accounts: accounts,
-          scrollController: _scrollController,
           theme: widget.theme,
-          isLoading: isLoading,
+          monthBalance: _getBalance(transactions),
+          moneyProvider: widget.money,
+        ),
+        Container(
+          padding: EdgeInsets.fromLTRB(0, height * 0.27, 0, 0),
+          child: accounts.isNotEmpty && !isLoading
+              ? RefreshIndicator(
+                  onRefresh: fetchData,
+                  child: NotificationListener<OverscrollIndicatorNotification>(
+                    onNotification:
+                        (OverscrollIndicatorNotification overscroll) {
+                      overscroll.disallowGlow();
+                      return false;
+                    },
+                    child: ListView.builder(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, height * 0.12),
+                      controller: _scrollController,
+                      itemCount: accounts.length,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            WalletListTile(
+                              account: accounts[index],
+                              theme: widget.theme,
+                              onTap: () async {
+                                // TODO: Carregar dados da conta
+                                await getNewAccountDialog(
+                                  context: context,
+                                  moneyProvider: widget.money,
+                                  accountAutoFill: accounts[index],
+                                );
+                                await fetchData();
+                              },
+                              onLongPress: () async {
+                                // Não pode apaga a carteira porque sim
+                                if (accounts[index].idAccount != 1) {
+                                  await getDeleteDialog(
+                                    context,
+                                    "Você realmente deseja apagar essa conta?",
+                                    () async {
+                                      await accountDAO.deleteAccountById(
+                                        accounts[index].idAccount,
+                                      );
+                                      await widget.money.fetchData();
+                                      await fetchData();
+                                    },
+                                  );
+                                }
+                              },
+                            ),
+                            Divider(
+                                color: widget.theme.textColor.withAlpha(50)),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                )
+              : Container(
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: widget.theme.primaryColor,
+                    ),
+                  ),
+                ),
         )
       ],
     );
