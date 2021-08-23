@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/models/account_model.dart';
 
 class WalletListTile extends StatelessWidget {
   final onTap;
   final onLongPress;
   final ThemeProvider theme;
-  final AccountModel account;
+  final String accountName;
+  final double accountBalanceMonth;
 
   const WalletListTile({
     required this.theme,
-    required this.account,
+    required this.accountName,
+    required this.accountBalanceMonth,
     required this.onTap,
     required this.onLongPress,
   });
@@ -19,7 +20,7 @@ class WalletListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String formattedValue = NumberFormat.currency(decimalDigits: 2, symbol: "")
-        .format(account.balance);
+        .format(accountBalanceMonth);
 
     return ListTile(
       title: Container(
@@ -37,7 +38,7 @@ class WalletListTile extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Text(
-                        account.name,
+                        accountName,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         softWrap: false,

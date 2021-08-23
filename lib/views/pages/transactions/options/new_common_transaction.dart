@@ -91,7 +91,7 @@ class _NewCommonTransactionState extends State<NewCommonTransaction> {
     );
 
     setState(() {
-      //TODO: bug da formatação do valor
+      //TODO: bug na formatação do valor ao recuperar de uma existente
       _valueController.text = widget.transactionAutoFill!.value.toString();
       _descriptionController.text =
           widget.transactionAutoFill!.description.toString();
@@ -100,7 +100,7 @@ class _NewCommonTransactionState extends State<NewCommonTransaction> {
       _date = DateTime.parse(widget.transactionAutoFill!.date);
       _isRepeatable = widget.transactionAutoFill!.isRepeatable;
       _isFixed = widget.transactionAutoFill!.isFixed;
-      //TODO: Bug ao definir a conta.
+      //TODO: Bug ao definir a conta recuperada. Problema encontrado.
       //O widget de contas define como carteira ao dar fetchData
       _account = account;
     });
@@ -135,6 +135,15 @@ class _NewCommonTransactionState extends State<NewCommonTransaction> {
           }
         },
         child: Scaffold(
+          appBar: AppBar(
+            brightness:
+                widget.theme.isDarkMode ? Brightness.dark : Brightness.light,
+            toolbarHeight: 0,
+            backgroundColor: widget.theme.backgroundColor,
+            shadowColor: widget.theme.backgroundColor,
+            foregroundColor: widget.theme.backgroundColor,
+            elevation: 0,
+          ),
           body: Form(
             key: _formKey,
             child: SingleChildScrollView(

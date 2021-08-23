@@ -8,14 +8,13 @@ import 'package:tc/views/custom/default_theme.dart';
 import 'package:tc/views/splash/my_splash.dart';
 
 // TODO: Testar editar/deletar contas/transações e conferir o reflexo nos saldos.
-//TODO: Organizar por mês
 //TODO: Opção para sempre mostrar o saldo
 //TODO: Opções para customizar os gráficos
-//TODO<Bug>: Se a cor de fundo for muito clara, o texto de notificações some
 //TODO: Opção de aumentar e reduzir tamanho do texto
-//TODO: animação do botão ao salvar
+//TODO: Animação no botão de salvar ao salvar
 //TODO: Ao criar conta, fornecer opção de ícone com base em contas comuns
 // Caixa, BB, Nubank etc
+//TODO: Opção para fazer backup do app
 
 void main() => runApp(StartApp());
 

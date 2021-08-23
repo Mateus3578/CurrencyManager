@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:tc/controllers/constants.dart';
 import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/models/DAO/account_DAO.dart';
@@ -20,13 +22,14 @@ class Wallet extends StatefulWidget {
 }
 
 class _WalletState extends State<Wallet> {
+  final ScrollController _scrollController = ScrollController();
+
   AccountDAO accountDAO = AccountDAO();
   TransactionDAO transactionDAO = TransactionDAO();
   List<AccountModel> accounts = [];
   List<TransactionModel> transactions = [];
-
   bool isLoading = false;
-  final ScrollController _scrollController = ScrollController();
+  DateTime date = DateTime.now();
 
   /// Busca os dados e coloca na lista
   Future<void> fetchData() async {
@@ -38,12 +41,17 @@ class _WalletState extends State<Wallet> {
     if (dataAccounts.isNotEmpty) {
       accounts = dataAccounts;
     }
-    //TODO: trocar para mensal
-    List<TransactionModel> dataTransactions =
-        await transactionDAO.getAllTransactions();
-    if (dataTransactions.isNotEmpty) {
-      transactions = dataTransactions;
-    }
+    String firstDate = DateFormat("yyyy-MM").format(date) + "-01";
+    String lastDate = DateFormat("yyyy-MM").format(date) + "-31";
+
+    List<TransactionModel> data = await transactionDAO.getTransactionsByPeriod(
+      firstDate,
+      lastDate,
+    );
+
+    setState(() {
+      transactions = data;
+    });
 
     Future.delayed(Duration(milliseconds: 250), () {
       setState(() {
@@ -65,7 +73,21 @@ class _WalletState extends State<Wallet> {
     _scrollController.dispose();
   }
 
-  double _getBalance(List<TransactionModel> list) {
+  double _getMonthBalanceOfAccount(List<TransactionModel> list, int? id) {
+    double balance = 0;
+    for (int i = 0; i < list.length; i++) {
+      if (list[i].accountId == id) {
+        if (list[i].type == 1) {
+          balance += list[i].value!;
+        } else if (list[i].type == 2) {
+          balance -= list[i].value!;
+        }
+      }
+    }
+    return balance;
+  }
+
+  double _getMonthBalance(List<TransactionModel> list) {
     double balance = 0;
     for (int i = 0; i < list.length; i++) {
       if (list[i].type == 1) {
@@ -85,8 +107,21 @@ class _WalletState extends State<Wallet> {
       children: <Widget>[
         WalletAppbar(
           theme: widget.theme,
-          monthBalance: _getBalance(transactions),
+          currentMonth: Constants.months[date.month],
+          monthBalance: _getMonthBalance(transactions),
           moneyProvider: widget.money,
+          onPressedNext: () async {
+            setState(() {
+              date = DateTime(date.year, date.month + 1, date.day);
+            });
+            await fetchData();
+          },
+          onPressedPrevious: () async {
+            setState(() {
+              date = DateTime(date.year, date.month - 1, date.day);
+            });
+            await fetchData();
+          },
         ),
         Container(
           padding: EdgeInsets.fromLTRB(0, height * 0.27, 0, 0),
@@ -108,10 +143,13 @@ class _WalletState extends State<Wallet> {
                         return Column(
                           children: [
                             WalletListTile(
-                              account: accounts[index],
+                              accountName: accounts[index].name,
+                              accountBalanceMonth: _getMonthBalanceOfAccount(
+                                transactions,
+                                accounts[index].idAccount,
+                              ),
                               theme: widget.theme,
                               onTap: () async {
-                                // TODO: Carregar dados da conta
                                 await getNewAccountDialog(
                                   context: context,
                                   moneyProvider: widget.money,

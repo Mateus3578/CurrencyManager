@@ -1,14 +1,5 @@
 import 'package:tc/models/DAO/transaction_DAO.dart';
 
-/// Model de transação
-///
-/// O id nunca deve ser inserido, somente recuperado
-///
-/// O tipo varia entre: 1 = receita, 2 = despesa, 3 = transferência
-///
-/// O valor, em caso de despesa, deve ser guardado negativo
-///
-/// Datas devem ser guardadas como string, e transformadas de volta usando formatação de data.
 class TransactionModel {
   int? idTransaction;
   final int type;
@@ -20,6 +11,15 @@ class TransactionModel {
   final bool isFixed;
   final bool isRepeatable;
 
+  /// Model de transação
+  ///
+  /// O id nunca deve ser inserido, somente recuperado
+  ///
+  /// O tipo varia entre: 1 = receita, 2 = despesa, 3 = transferência
+  ///
+  /// O valor, em caso de despesa, deve ser guardado negativo
+  ///
+  /// Datas devem ser guardadas como string, e transformadas de volta usando formatação de data.
   TransactionModel({
     required this.type,
     required this.description,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tc/models/DAO/account_DAO.dart';
 import 'package:tc/models/DAO/transaction_DAO.dart';
 import 'package:tc/models/account_model.dart';
@@ -13,24 +14,30 @@ class MoneyProvider extends ChangeNotifier {
   get revenues => _currentRevenueBalance;
   get expenses => _currentExpenseBalance;
 
-  /// Busca as cores guardadas no db.
+  /// Busca os dados no db.
   fetchData() async {
     AccountDAO accountDAO = AccountDAO();
     TransactionDAO transactionDAO = TransactionDAO();
-    List<AccountModel> dataAccount = await accountDAO.getAllAccounts();
+
     double tempBalance = 0;
     double tempRevenues = 0;
     double tempExpenses = 0;
 
+    List<AccountModel> dataAccount = await accountDAO.getAllAccounts();
     if (dataAccount.isNotEmpty) {
       for (int i = 0; i < dataAccount.length; i++) {
         tempBalance += dataAccount[i].balance!;
       }
     }
 
-    //TODO: trocar para pegar do mes
+    String firstDate = DateFormat("yyyy-MM").format(DateTime.now()) + "-01";
+    String lastDate = DateFormat("yyyy-MM").format(DateTime.now()) + "-31";
+
     List<TransactionModel> dataTransaction =
-        await transactionDAO.getAllTransactions();
+        await transactionDAO.getTransactionsByPeriod(
+      firstDate,
+      lastDate,
+    );
     if (dataTransaction.isNotEmpty) {
       for (int i = 0; i < dataTransaction.length; i++) {
         if (dataTransaction[i].type == 1) {

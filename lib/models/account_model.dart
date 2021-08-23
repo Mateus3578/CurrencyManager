@@ -1,13 +1,13 @@
 import 'package:tc/models/DAO/account_DAO.dart';
 
-/// Model de contas
-///
-/// O id nunca deve ser inserido, somente recuperado
 class AccountModel {
   int? idAccount;
   final String name;
   final double? balance;
 
+  /// Model de contas
+  ///
+  /// O id nunca deve ser inserido, somente recuperado
   AccountModel({
     required this.name,
     required this.balance,

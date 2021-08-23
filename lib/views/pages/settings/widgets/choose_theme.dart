@@ -10,11 +10,41 @@ class ChooseTheme extends StatelessWidget {
   final ThemeProvider theme;
   ChooseTheme(this.theme);
 
+  //Lista de temas, na ordem de exibição
+  final List<PreBuiltThemeModel> themes = [
+    PrebuiltThemes.defaultTheme,
+    PrebuiltThemes.defaultThemeReverse,
+    PrebuiltThemes.magicGrey,
+    PrebuiltThemes.magicGreyReverse,
+    PrebuiltThemes.materialBlue,
+    PrebuiltThemes.materialBlueReverse,
+    PrebuiltThemes.purple,
+    PrebuiltThemes.purpleReverse,
+    PrebuiltThemes.lilac,
+    PrebuiltThemes.lilacReverse,
+    PrebuiltThemes.pastelPink,
+    PrebuiltThemes.pastelPinkReverse,
+    PrebuiltThemes.blackWhite,
+    PrebuiltThemes.blackWhiteReverse,
+    PrebuiltThemes.islandGreen,
+    PrebuiltThemes.islandGreenReverse,
+    PrebuiltThemes.tomato,
+    PrebuiltThemes.tomatoGreenReverse,
+  ];
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(
+        brightness: theme.isDarkMode ? Brightness.dark : Brightness.light,
+        toolbarHeight: 0,
+        backgroundColor: theme.backgroundColor,
+        shadowColor: theme.backgroundColor,
+        foregroundColor: theme.backgroundColor,
+        elevation: 0,
+      ),
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
@@ -80,63 +110,16 @@ class ChooseTheme extends StatelessWidget {
                     width: 5,
                   ),
                 ),
-                child: GridView(
+                child: GridView.builder(
                   physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(0, 0, 0, _size.height * 0.12),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                   ),
-                  children: [
-                    //TODO: Buscar as cores/temas de um jeito melhor
-                    exampleTheme(
-                      Bee.primary,
-                      Bee.alter,
-                      Bee.background,
-                      Bee.text,
-                      Bee.icon,
-                      _size,
-                    ),
-                    exampleTheme(
-                      HighContrast.primary,
-                      HighContrast.alter,
-                      HighContrast.background,
-                      HighContrast.text,
-                      HighContrast.icon,
-                      _size,
-                    ),
-                    exampleTheme(
-                      MaterialBlue.primary,
-                      MaterialBlue.alter,
-                      MaterialBlue.background,
-                      MaterialBlue.text,
-                      MaterialBlue.icon,
-                      _size,
-                    ),
-                    exampleTheme(
-                      PastelPink.primary,
-                      PastelPink.alter,
-                      PastelPink.background,
-                      PastelPink.text,
-                      PastelPink.icon,
-                      _size,
-                    ),
-                    exampleTheme(
-                      RedBrown.primary,
-                      RedBrown.alter,
-                      RedBrown.background,
-                      RedBrown.text,
-                      RedBrown.icon,
-                      _size,
-                    ),
-                    exampleTheme(
-                      Marley.primary,
-                      Marley.alter,
-                      Marley.background,
-                      Marley.text,
-                      Marley.icon,
-                      _size,
-                    )
-                  ],
+                  itemCount: themes.length,
+                  itemBuilder: (context, index) {
+                    return exampleTheme(themes[index], _size);
+                  },
                 ),
               ),
             ),
@@ -156,25 +139,20 @@ class ChooseTheme extends StatelessWidget {
     theme.setBackgroundColor(Color(int.parse(user.backgroundColor)));
     theme.setTextColor(Color(int.parse(user.textColor)));
     theme.setIconColor(Color(int.parse(user.iconColor)));
+    theme.setThemeMode(user.isDarkMode);
   }
 
-  Widget exampleTheme(
-    Color primary,
-    Color alter,
-    Color background,
-    Color text,
-    Color icon,
-    Size size,
-  ) {
+  Widget exampleTheme(PreBuiltThemeModel prebuiltTheme, Size size) {
     return GestureDetector(
       onTap: () {
         UserModel user = UserModel(
           name: theme.username,
-          backgroundColor: "${background.value}",
-          primaryColor: "${primary.value}",
-          alterColor: "${alter.value}",
-          iconColor: "${icon.value}",
-          textColor: "${text.value}",
+          backgroundColor: "${prebuiltTheme.background.value}",
+          primaryColor: "${prebuiltTheme.primary.value}",
+          alterColor: "${prebuiltTheme.alter.value}",
+          iconColor: "${prebuiltTheme.icon.value}",
+          textColor: "${prebuiltTheme.text.value}",
+          isDarkMode: prebuiltTheme.isDarkMode,
         );
         _onSave(user);
       },
@@ -184,35 +162,41 @@ class ChooseTheme extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: background,
+                color: prebuiltTheme.background,
                 border: Border.all(
-                  color: primary,
+                  color: prebuiltTheme.primary,
                   width: 3,
                 ),
               ),
               height: 50,
               width: size.width,
               child: Center(
-                child: Text("TEXTO", style: TextStyle(color: text)),
+                child: Text(
+                  "TEXTO",
+                  style: TextStyle(color: prebuiltTheme.text),
+                ),
               ),
             ),
             Container(
               height: 50,
-              color: primary,
+              color: prebuiltTheme.primary,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    color: alter,
+                    color: prebuiltTheme.alter,
                     child: Icon(
                       Icons.account_balance_wallet,
-                      color: icon,
+                      color: prebuiltTheme.icon,
                       size: 50,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text("TEXTO", style: TextStyle(color: text)),
+                    child: Text(
+                      "TEXTO",
+                      style: TextStyle(color: prebuiltTheme.text),
+                    ),
                   ),
                 ],
               ),

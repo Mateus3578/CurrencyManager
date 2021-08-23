@@ -2,17 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TransactionViewAppbar extends StatelessWidget {
+  final onPressedNext;
+  final onPressedPrevious;
+
   /// Quantidade de transações
   final String transactionsCount;
 
   /// Balanço mensal. Calcular antes de enviar
   final double monthBalance;
+  final String currentMonth;
   final Color textColor;
 
   TransactionViewAppbar({
     required this.transactionsCount,
     required this.monthBalance,
+    required this.currentMonth,
     required this.textColor,
+    required this.onPressedNext,
+    required this.onPressedPrevious,
   });
 
   @override
@@ -46,16 +53,13 @@ class TransactionViewAppbar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  splashRadius: 25,
-                  icon: Icon(Icons.arrow_back_ios_rounded, color: textColor),
-                  onPressed: () {
-                    //TODO: alternar entre os meses
-                  },
-                ),
+                    splashRadius: 25,
+                    icon: Icon(Icons.arrow_back_ios_rounded, color: textColor),
+                    onPressed: onPressedPrevious),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: Text(
-                    "Julho",
+                    currentMonth,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -63,12 +67,10 @@ class TransactionViewAppbar extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  splashRadius: 25,
-                  icon: Icon(Icons.arrow_forward_ios_rounded, color: textColor),
-                  onPressed: () {
-                    //TODO: alternar entre os meses
-                  },
-                ),
+                    splashRadius: 25,
+                    icon:
+                        Icon(Icons.arrow_forward_ios_rounded, color: textColor),
+                    onPressed: onPressedNext),
               ],
             ),
             SizedBox(height: 8),

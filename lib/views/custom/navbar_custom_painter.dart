@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// Desenha a barra de menu.
 class NavbarCustomPainter extends CustomPainter {
   final Color? color;
 
+  /// Desenha o menu inferior.
   NavbarCustomPainter(this.color);
 
   @override

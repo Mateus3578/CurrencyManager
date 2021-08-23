@@ -46,6 +46,15 @@ class _MyAppState extends State<MyApp> {
         return Consumer<MoneyProvider>(
           builder: (context, money, __) {
             return Scaffold(
+              appBar: AppBar(
+                brightness:
+                    theme.isDarkMode ? Brightness.dark : Brightness.light,
+                toolbarHeight: 0,
+                backgroundColor: theme.backgroundColor,
+                shadowColor: theme.backgroundColor,
+                foregroundColor: theme.backgroundColor,
+                elevation: 0,
+              ),
               body: _body(pageIndex),
               bottomNavigationBar: BottomMenu(
                 theme: widget.theme,

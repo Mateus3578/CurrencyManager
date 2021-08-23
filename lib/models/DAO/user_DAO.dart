@@ -52,7 +52,8 @@ class UserDAO {
       ${UserModelForDb.primaryColor} TEXT,
       ${UserModelForDb.alterColor} TEXT,
       ${UserModelForDb.iconColor} TEXT,
-      ${UserModelForDb.textColor} TEXT
+      ${UserModelForDb.textColor} TEXT,
+      ${UserModelForDb.isDarkMode} BOOLEAN
     )
   ''';
 }
@@ -66,6 +67,7 @@ class UserModelForDb {
   static String alterColor = "alterColor";
   static String iconColor = "iconColor";
   static String textColor = "textColor";
+  static String isDarkMode = "isDarkMode";
 
   static String tableName = "userPrefs";
 }

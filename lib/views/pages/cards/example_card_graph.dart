@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tc/controllers/theme_provider.dart';
 
-// Temporário, apenas para visualização. Cada gráfico terá sua classe
-// TODO: Criar os cards de gráficos usando esse como preset
 class ExampleCardGraphs extends StatelessWidget {
   final ThemeProvider theme;
+
+  /// Temporário, apenas para visualização. Cada gráfico terá seu arquivo
   const ExampleCardGraphs({required this.theme});
 
   @override

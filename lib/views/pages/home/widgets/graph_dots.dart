@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-/// Bolinhas (dots) que representam a página dos gráficos
 class GraphDots extends StatelessWidget {
   final int index; // Recebe o índice do card (página)
   final double top; // Recebe a posição (altura)
   final Color color;
 
+  /// Bolinhas (dots) que representam a página dos gráficos
   const GraphDots({
     required this.index,
     required this.top,

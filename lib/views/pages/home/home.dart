@@ -43,14 +43,14 @@ class _HomeState extends State<Home> {
               () {
                 _showBalance = !_showBalance;
                 _yPosition =
-                    _showBalance ? _screenHeight * 0.40 : _screenHeight * 0.20;
+                    _showBalance ? _screenHeight * 0.35 : _screenHeight * 0.15;
               },
             );
           },
         ),
         // Card ocultável com o saldo e receitas/despesas
         CardMoney(
-          top: _screenHeight * 0.20,
+          top: _screenHeight * 0.15,
           showMoney: _showBalance,
           currentBalance: widget.money.balance,
           currentExpenses: widget.money.expenses,
@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
         ),
         // Cards de gráficos
         CustomCardView(
-          top: !_showBalance ? _screenHeight * 0.20 : _screenHeight * 0.40,
+          top: !_showBalance ? _screenHeight * 0.15 : _screenHeight * 0.35,
           theme: widget.theme,
           money: widget.money,
           index: (index) {
@@ -73,8 +73,8 @@ class _HomeState extends State<Home> {
           },
           // A mágica de puxar os gráficos pra cima ou pra baixo e mostrar o saldo
           pan: (details) {
-            double topLimit = _screenHeight * 0.20; //Posição inicial
-            double bottomLimit = _screenHeight * 0.40; //Posição final
+            double topLimit = _screenHeight * 0.15; //Posição inicial
+            double bottomLimit = _screenHeight * 0.35; //Posição final
             double midlePosition =
                 (bottomLimit - topLimit) / 2; //Posição do meio
 
@@ -116,7 +116,7 @@ class _HomeState extends State<Home> {
         GraphDots(
           index: _graphIndex,
           color: widget.theme.textColor,
-          top: !_showBalance ? _screenHeight * 0.60 : _screenHeight * 0.80,
+          top: !_showBalance ? _screenHeight * 0.55 : _screenHeight * 0.75,
         ),
       ],
     );

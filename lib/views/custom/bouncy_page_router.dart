@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// PageRoute customizado
 class BouncyPageRouter extends PageRouteBuilder {
   ///Para onde deve ir depois da animação
   final Widget widget;
@@ -11,6 +10,7 @@ class BouncyPageRouter extends PageRouteBuilder {
   ///Efeito da animação
   final Curve curve;
 
+  /// PageRoute customizado
   BouncyPageRouter({
     required this.widget,
     this.duration = const Duration(milliseconds: 800),

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// Icone animado customizado
-///
-/// Se mexe de um lado para outro ou cima para baixo
 class CustomAnimatedShake extends StatefulWidget {
-  /// Direções para passar como parâmetro ao construir a animação
+  /// Direção para passar como parâmetro ao construir a animação
   static const verticalDirection = true;
+
+  /// Direção para passar como parâmetro ao construir a animação
   static const horizontalDirection = false;
 
   /// Duração da animação.
@@ -21,10 +20,17 @@ class CustomAnimatedShake extends StatefulWidget {
   /// Widget que vai ser animado
   final Widget child;
 
-  /// Efeito da animação.
+  /// Efeito da animação. Veja as possibilidades no link.
+  ///
+  /// https://api.flutter.dev/flutter/animation/Curves-class.html
   ///
   /// Padrão: Curves.bounceOut
   final Curve curve;
+
+  /// Delay entre cada ciclo da animação.
+  ///
+  /// Padrão: sem delay
+  final Duration delay;
 
   /// Direção da animação. A classe possui constantes para facilitar a troca.
   ///
@@ -36,11 +42,14 @@ class CustomAnimatedShake extends StatefulWidget {
   /// ```
   final bool direction;
 
+  /// Anima um widget, fazendo ele se movimentar
+  /// na horizontal ou na vertical, infinitamente.
   const CustomAnimatedShake({
     this.duration = const Duration(seconds: 2),
     this.delta = 10,
     this.curve = Curves.bounceOut,
     this.direction = verticalDirection,
+    this.delay = const Duration(milliseconds: 0),
     required this.child,
   });
 
@@ -60,9 +69,11 @@ class _CustomAnimatedShakeState extends State<CustomAnimatedShake>
       vsync: this,
     )
       ..forward()
-      ..addListener(() {
+      ..addListener(() async {
         if (_controller.isCompleted) {
-          _controller.repeat();
+          await Future.delayed(widget.delay, () {
+            _controller.repeat();
+          });
         }
       });
   }

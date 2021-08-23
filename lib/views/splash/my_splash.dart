@@ -42,7 +42,7 @@ class MySplashState extends State<MySplash> {
   /// Delay entre a tela de início e o app
   Future<void> delayAndGoToHome() async {
     return await Future.delayed(Duration(milliseconds: 1500), () {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         BouncyPageRouter(
           widget: MyApp(

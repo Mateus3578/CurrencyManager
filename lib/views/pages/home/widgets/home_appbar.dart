@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tc/views/custom/custom_animated_shake.dart';
 
-/// Barra de saudações. Ao clicar, mostra o saldo
 class HomeAppBar extends StatelessWidget {
   final bool showBalance; // Mostra ou não o saldo
   final VoidCallback onClick; // Recebe o evento de clique no ícone
   final Color iconColor;
   final String userName;
 
+  /// Barra de saudações. Ao clicar, mostra o saldo
   const HomeAppBar({
     required this.showBalance,
     required this.onClick,
@@ -52,9 +53,12 @@ class HomeAppBar extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(
-                  !showBalance ? Icons.expand_more : Icons.expand_less,
-                  color: iconColor,
+                CustomAnimatedShake(
+                  delay: Duration(seconds: 10),
+                  child: Icon(
+                    !showBalance ? Icons.expand_more : Icons.expand_less,
+                    color: iconColor,
+                  ),
                 ),
               ],
             ),

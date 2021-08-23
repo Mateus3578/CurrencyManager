@@ -13,6 +13,14 @@ class CustomThemeSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        brightness: theme.isDarkMode ? Brightness.dark : Brightness.light,
+        toolbarHeight: 0,
+        backgroundColor: theme.backgroundColor,
+        shadowColor: theme.backgroundColor,
+        foregroundColor: theme.backgroundColor,
+        elevation: 0,
+      ),
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
@@ -61,6 +69,11 @@ class CustomThemeSetting extends StatelessWidget {
                 ChangePrefsButton(
                   text: "Mudar cor dos ícones",
                   prefId: UserModelForDb.iconColor,
+                  theme: theme,
+                ),
+                ChangePrefsButton(
+                  text: "Mudar tom da barra de notificações",
+                  prefId: UserModelForDb.isDarkMode,
                   theme: theme,
                 ),
               ],

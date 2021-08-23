@@ -5,13 +5,20 @@ import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/views/pages/transactions/options/widgets/dialogs/new_account_dialog.dart';
 
 class WalletAppbar extends StatelessWidget {
+  final onPressedNext;
+  final onPressedPrevious;
+
   final double monthBalance;
+  final String currentMonth;
   final ThemeProvider theme;
   final MoneyProvider moneyProvider;
   WalletAppbar({
     required this.theme,
     required this.monthBalance,
+    required this.currentMonth,
     required this.moneyProvider,
+    required this.onPressedNext,
+    required this.onPressedPrevious,
   });
 
   @override
@@ -77,14 +84,12 @@ class WalletAppbar extends StatelessWidget {
                   splashRadius: 25,
                   icon: Icon(Icons.arrow_back_ios_rounded,
                       color: theme.textColor),
-                  onPressed: () {
-                    //TODO: alternar entre os meses
-                  },
+                  onPressed: onPressedPrevious,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: Text(
-                    "Julho",
+                    currentMonth,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -95,9 +100,7 @@ class WalletAppbar extends StatelessWidget {
                   splashRadius: 25,
                   icon: Icon(Icons.arrow_forward_ios_rounded,
                       color: theme.textColor),
-                  onPressed: () {
-                    //TODO: alternar entre os meses
-                  },
+                  onPressed: onPressedNext,
                 ),
               ],
             ),

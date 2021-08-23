@@ -10,6 +10,7 @@ class ThemeProvider extends ChangeNotifier {
   Color _backgroundColor = Color(0xFF212121);
   Color _textColor = Colors.white;
   Color _iconColor = Colors.black;
+  bool _isDarkMode = true;
 
   /// Busca as cores guardadas no db.
   fetchData() async {
@@ -28,6 +29,8 @@ class ThemeProvider extends ChangeNotifier {
       setIconColor(Color(int.parse(userPrefs.iconColor)));
 
     if (userPrefs.name.isNotEmpty) setUsername(userPrefs.name);
+
+    setThemeMode(userPrefs.isDarkMode);
   }
 
   // Getters
@@ -36,6 +39,8 @@ class ThemeProvider extends ChangeNotifier {
   get primaryColor => _primaryColor;
   get backgroundColor => _backgroundColor;
   get iconColor => _iconColor;
+
+  get isDarkMode => _isDarkMode;
 
   get username => _username;
 
@@ -68,5 +73,11 @@ class ThemeProvider extends ChangeNotifier {
   setUsername(String username) {
     _username = username;
     notifyListeners();
+  }
+
+  setThemeMode(bool isDarkMode) {
+    _isDarkMode = isDarkMode;
+    notifyListeners();
+    print(isDarkMode);
   }
 }

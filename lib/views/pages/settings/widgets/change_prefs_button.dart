@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:tc/controllers/theme_provider.dart';
+import 'package:tc/models/DAO/user_DAO.dart';
+import 'package:tc/views/pages/settings/widgets/dialogs/change_appbar_tone.dart';
 import 'package:tc/views/pages/settings/widgets/dialogs/change_color_dialog.dart';
 
-/// Widget com um botão que muda a cor e reinicia o app
 class ChangePrefsButton extends StatefulWidget {
+  /// Texto do botão
   final String text;
+
+  /// Nome da pref. a ser alterada.
+  ///
+  /// Usar a classe [`UserModelForDb`]
   final String prefId;
   final ThemeProvider theme;
 
+  /// Widget com um botão que abre um dialog para mudar um item do tema
   ChangePrefsButton({
     required this.text,
     required this.prefId,
@@ -38,7 +45,9 @@ class _ChangePrefsButtonState extends State<ChangePrefsButton> {
           ),
         ),
         onPressed: () {
-          changeColorDialog(context, widget.theme, widget.prefId);
+          widget.prefId == UserModelForDb.isDarkMode
+              ? changeAppbarToneDialog(context, widget.theme)
+              : changeColorDialog(context, widget.theme, widget.prefId);
         },
       ),
     );

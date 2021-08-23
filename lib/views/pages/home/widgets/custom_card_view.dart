@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/views/pages/home/widgets/graphs/criptoexchange_card.dart';
-import 'package:tc/views/pages/home/widgets/graphs/exchange_card.dart';
-import 'package:tc/views/pages/home/widgets/graphs/month_balance_graph.dart';
-import 'graphs/example_card_graph.dart';
+import 'package:tc/views/pages/cards/cripto_currency_card.dart';
+import 'package:tc/views/pages/cards/currency_card.dart';
+import 'package:tc/views/pages/cards/example_card_graph.dart';
+import 'package:tc/views/pages/cards/month_balance_graph.dart';
 
 //TODO: Opção para mostar/esconder card e customizar card
 
@@ -43,8 +43,8 @@ class CustomCardView extends StatelessWidget {
           children: <Widget>[
             // Lembrar de atualizar o índice, ou deixar isso automático
             MonthBalanceGraphs(theme: theme, money: money),
-            ExchangeCard(theme: theme),
-            CriptoExchangeCard(theme: theme),
+            CurrencyCard(theme: theme),
+            CriptoCurrencyCard(theme: theme),
             ExampleCardGraphs(theme: theme),
           ],
         ),

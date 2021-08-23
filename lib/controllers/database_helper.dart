@@ -7,6 +7,8 @@ import 'package:tc/models/DAO/user_DAO.dart';
 class DatabaseHelper {
   // Singleton
   DatabaseHelper._();
+
+  /// Comunicação com o banco de dados local.
   static final DatabaseHelper instance = DatabaseHelper._();
   static Database? _database;
 
@@ -28,7 +30,6 @@ class DatabaseHelper {
     );
   }
 
-  /// Funções de criação do db.
   _onCreate(db, versao) async {
     await db.execute(TransactionDAO().createTableTransactions);
     await db.execute(AccountDAO().createTableAccounts);
@@ -42,7 +43,8 @@ class DatabaseHelper {
         UserModelForDb.primaryColor: "0xFFFFC107",
         UserModelForDb.alterColor: "0xFFFF9800",
         UserModelForDb.iconColor: "0xFF000000",
-        UserModelForDb.textColor: "0xFFFFFFFF"
+        UserModelForDb.textColor: "0xFFFFFFFF",
+        UserModelForDb.isDarkMode: true
       },
     );
     await db.insert(

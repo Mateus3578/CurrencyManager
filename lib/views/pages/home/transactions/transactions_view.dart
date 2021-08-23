@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:tc/controllers/constants.dart';
 import 'package:tc/controllers/money_provider.dart';
 import 'package:tc/controllers/theme_provider.dart';
 import 'package:tc/models/DAO/account_DAO.dart';
@@ -20,11 +22,13 @@ class TransactionsView extends StatefulWidget {
 }
 
 class _TransactionsViewState extends State<TransactionsView> {
+  final ScrollController _scrollController = ScrollController();
+
   TransactionDAO transactionDAO = TransactionDAO();
   AccountDAO accountDAO = AccountDAO();
   List<TransactionModel> transactions = [];
   bool isLoading = false;
-  final ScrollController _scrollController = ScrollController();
+  DateTime date = DateTime.now();
 
   /// Busca os dados e coloca na lista
   Future<void> fetchData() async {
@@ -32,7 +36,14 @@ class _TransactionsViewState extends State<TransactionsView> {
       isLoading = true;
     });
 
-    List<TransactionModel> data = await transactionDAO.getAllTransactions();
+    String firstDate = DateFormat("yyyy-MM").format(date) + "-01";
+    String lastDate = DateFormat("yyyy-MM").format(date) + "-31";
+
+    List<TransactionModel> data = await transactionDAO.getTransactionsByPeriod(
+      firstDate,
+      lastDate,
+    );
+
     setState(() {
       transactions = data;
     });
@@ -82,6 +93,19 @@ class _TransactionsViewState extends State<TransactionsView> {
           textColor: widget.theme.textColor,
           transactionsCount: "${transactions.length}",
           monthBalance: _getBalance(transactions),
+          currentMonth: Constants.months[date.month],
+          onPressedNext: () async {
+            setState(() {
+              date = DateTime(date.year, date.month + 1, date.day);
+            });
+            await fetchData();
+          },
+          onPressedPrevious: () async {
+            setState(() {
+              date = DateTime(date.year, date.month - 1, date.day);
+            });
+            await fetchData();
+          },
         ),
         Container(
           padding: EdgeInsets.fromLTRB(0, height * 0.27, 0, 0),
