@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/views/custom/bouncy_page_router.dart';
-import 'package:tc/views/my_app.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/views/custom/bouncy_page_router.dart';
+import 'package:currency_manager/views/my_app.dart';
 
 class MySplash extends StatefulWidget {
   final ThemeProvider theme;

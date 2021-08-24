@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/models/DAO/account_DAO.dart';
-import 'package:tc/models/account_model.dart';
-import 'package:tc/views/pages/transactions/options/widgets/select_description_widget.dart';
-import 'package:tc/views/pages/transactions/options/widgets/select_value_widget.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/models/DAO/account_DAO.dart';
+import 'package:currency_manager/models/account_model.dart';
+import 'package:currency_manager/views/pages/transactions/options/widgets/select_description_widget.dart';
+import 'package:currency_manager/views/pages/transactions/options/widgets/select_value_widget.dart';
 
 /// Pop-up da criação de nova conta.
 Future<void> getNewAccountDialog({

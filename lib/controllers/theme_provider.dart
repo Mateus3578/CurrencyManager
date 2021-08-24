@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tc/models/DAO/user_DAO.dart';
-import 'package:tc/models/user_model.dart';
+import 'package:currency_manager/models/DAO/user_DAO.dart';
+import 'package:currency_manager/models/user_model.dart';
 
 class ThemeProvider extends ChangeNotifier {
   // Configurações padrão do app
@@ -78,6 +78,5 @@ class ThemeProvider extends ChangeNotifier {
   setThemeMode(bool isDarkMode) {
     _isDarkMode = isDarkMode;
     notifyListeners();
-    print(isDarkMode);
   }
 }

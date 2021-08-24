@@ -1,4 +1,4 @@
-import 'package:tc/models/DAO/transaction_DAO.dart';
+import 'package:currency_manager/models/DAO/transaction_DAO.dart';
 
 class TransactionModel {
   int? idTransaction;

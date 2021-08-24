@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 // Customizações de sistema, como orientação da tela e cor da barra de notificações
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/views/custom/default_theme.dart';
-import 'package:tc/views/splash/my_splash.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/views/custom/default_theme.dart';
+import 'package:currency_manager/views/splash/my_splash.dart';
 
-// TODO: Testar editar/deletar contas/transações e conferir o reflexo nos saldos.
+//TODO: Testar editar/deletar contas/transações e conferir o reflexo nos saldos.
+//TODO: Transferência entre contas
+//TODO: Cartões de crédito
+
+//TODO: Tema Nubank
+//TODO: Trocar ícone launcher
+
+//TODO <Bug>: no delay da animação do ícone
+
 //TODO: Opção para sempre mostrar o saldo
 //TODO: Opções para customizar os gráficos
 //TODO: Opção de aumentar e reduzir tamanho do texto

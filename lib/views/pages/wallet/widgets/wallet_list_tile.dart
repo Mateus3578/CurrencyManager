@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tc/controllers/theme_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
 
 class WalletListTile extends StatelessWidget {
   final onTap;

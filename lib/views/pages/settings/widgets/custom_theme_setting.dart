@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/models/DAO/user_DAO.dart';
-import 'package:tc/views/pages/settings/widgets/change_prefs_button.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/models/DAO/user_DAO.dart';
+import 'package:currency_manager/views/pages/settings/widgets/change_prefs_button.dart';
 
 class CustomThemeSetting extends StatelessWidget {
   final ThemeProvider theme;
@@ -24,19 +24,15 @@ class CustomThemeSetting extends StatelessWidget {
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
-          Positioned(
-            left: 0,
-            top: MediaQuery.of(context).size.height * 0.07,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.fromLTRB(20, 0, 0, height * 0.020),
-              child: Text(
-                "Configurações",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: theme.textColor,
-                ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.fromLTRB(20, 0, 0, height * 0.02),
+            child: Text(
+              "Configurações",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: theme.textColor,
               ),
             ),
           ),

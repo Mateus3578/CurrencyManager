@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/views/pages/settings/widgets/choose_theme.dart';
-import 'package:tc/views/pages/settings/widgets/custom_theme_setting.dart';
-import 'package:tc/views/pages/settings/widgets/dialogs/change_name_dialog.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/views/pages/settings/widgets/choose_theme.dart';
+import 'package:currency_manager/views/pages/settings/widgets/custom_theme_setting.dart';
+import 'package:currency_manager/views/pages/settings/widgets/dialogs/change_name_dialog.dart';
 
 class Settings extends StatelessWidget {
   final ThemeProvider theme;

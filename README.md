@@ -1,8 +1,10 @@
-# tc
+# Currency Manager
 
-A new Flutter project.
+Projeto em Flutter para conclusão do curso subsequente de Desenvolvimento de Sistemas do COLTEC-MG.
 
-## Getting Started
+O aplicativo é um gerenciador de finanças, com tema customizável.
+
+## About Flutter
 
 This project is a starting point for a Flutter application.
 

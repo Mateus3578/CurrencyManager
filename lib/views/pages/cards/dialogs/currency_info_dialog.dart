@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tc/models/quotation_model.dart';
+import 'package:currency_manager/models/quotation_model.dart';
 
 Future<void> getCurrencyInfoDialog(
   BuildContext context,

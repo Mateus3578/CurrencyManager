@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/views/pages/home/home.dart';
-import 'package:tc/views/pages/home/transactions/transactions_view.dart';
-import 'package:tc/views/pages/home/widgets/bottom_menu.dart';
-import 'package:tc/views/pages/settings/settings.dart';
-import 'package:tc/views/pages/wallet/wallet.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/views/pages/home/home.dart';
+import 'package:currency_manager/views/pages/home/transactions/transactions_view.dart';
+import 'package:currency_manager/views/pages/home/widgets/bottom_menu.dart';
+import 'package:currency_manager/views/pages/settings/settings.dart';
+import 'package:currency_manager/views/pages/wallet/wallet.dart';
 
 class MyApp extends StatefulWidget {
   final ThemeProvider theme;

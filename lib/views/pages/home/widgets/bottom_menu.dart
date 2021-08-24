@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/views/custom/navbar_custom_painter.dart';
-import 'package:tc/views/pages/transactions/new_transaction.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/views/custom/navbar_custom_painter.dart';
+import 'package:currency_manager/views/pages/transactions/new_transaction.dart';
 
 /// Barra de menu inferior
 class BottomMenu extends StatefulWidget {

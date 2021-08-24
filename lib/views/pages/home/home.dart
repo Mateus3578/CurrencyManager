@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/views/pages/home/widgets/card_money.dart';
-import 'package:tc/views/pages/home/widgets/graph_dots.dart';
-import 'package:tc/views/pages/home/widgets/custom_card_view.dart';
-import 'package:tc/views/pages/home/widgets/home_appbar.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/views/pages/home/widgets/card_money.dart';
+import 'package:currency_manager/views/pages/home/widgets/graph_dots.dart';
+import 'package:currency_manager/views/pages/home/widgets/custom_card_view.dart';
+import 'package:currency_manager/views/pages/home/widgets/home_appbar.dart';
 
 class Home extends StatefulWidget {
   final ThemeProvider theme;

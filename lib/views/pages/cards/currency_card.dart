@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tc/controllers/api_quotation_helper.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/models/quotation_model.dart';
-import 'package:tc/views/pages/cards/dialogs/currency_info_dialog.dart';
+import 'package:currency_manager/controllers/api_quotation_helper.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/models/quotation_model.dart';
+import 'package:currency_manager/views/pages/cards/dialogs/currency_info_dialog.dart';
 
 class CurrencyCard extends StatefulWidget {
   final ThemeProvider theme;

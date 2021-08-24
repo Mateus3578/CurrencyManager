@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/models/DAO/user_DAO.dart';
-import 'package:tc/views/custom/prebuilt_themes.dart';
-import 'package:tc/models/user_model.dart';
-import 'package:tc/views/custom/custom_animated_shake.dart';
-import 'package:tc/views/custom/navbar_custom_painter.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/models/DAO/user_DAO.dart';
+import 'package:currency_manager/views/custom/prebuilt_themes.dart';
+import 'package:currency_manager/models/user_model.dart';
+import 'package:currency_manager/views/custom/custom_animated_shake.dart';
+import 'package:currency_manager/views/custom/navbar_custom_painter.dart';
 
 class ChooseTheme extends StatelessWidget {
   final ThemeProvider theme;

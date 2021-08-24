@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/views/pages/cards/cripto_currency_card.dart';
-import 'package:tc/views/pages/cards/currency_card.dart';
-import 'package:tc/views/pages/cards/example_card_graph.dart';
-import 'package:tc/views/pages/cards/month_balance_graph.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/views/pages/cards/cripto_currency_card.dart';
+import 'package:currency_manager/views/pages/cards/currency_card.dart';
+import 'package:currency_manager/views/pages/cards/example_card_graph.dart';
+import 'package:currency_manager/views/pages/cards/month_balance_graph.dart';
 
 //TODO: Opção para mostar/esconder card e customizar card
 

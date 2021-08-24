@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:tc/models/quotation_model.dart';
+import 'package:currency_manager/models/quotation_model.dart';
 
 class ApiQuotationHelper {
   // Singleton

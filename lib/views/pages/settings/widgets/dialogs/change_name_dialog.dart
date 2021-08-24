@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/models/DAO/user_DAO.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/models/DAO/user_DAO.dart';
 
 Future<void> changeNameDialog(BuildContext context, ThemeProvider theme) {
   UserDAO userDAO = UserDAO();

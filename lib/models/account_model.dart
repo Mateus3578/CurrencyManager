@@ -1,4 +1,4 @@
-import 'package:tc/models/DAO/account_DAO.dart';
+import 'package:currency_manager/models/DAO/account_DAO.dart';
 
 class AccountModel {
   int? idAccount;

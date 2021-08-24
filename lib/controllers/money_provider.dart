@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tc/models/DAO/account_DAO.dart';
-import 'package:tc/models/DAO/transaction_DAO.dart';
-import 'package:tc/models/account_model.dart';
-import 'package:tc/models/transaction_model.dart';
+import 'package:currency_manager/models/DAO/account_DAO.dart';
+import 'package:currency_manager/models/DAO/transaction_DAO.dart';
+import 'package:currency_manager/models/account_model.dart';
+import 'package:currency_manager/models/transaction_model.dart';
 
 class MoneyProvider extends ChangeNotifier {
   double _currentBalance = 0;

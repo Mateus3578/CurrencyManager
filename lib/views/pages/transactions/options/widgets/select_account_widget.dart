@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/models/DAO/account_DAO.dart';
-import 'package:tc/models/account_model.dart';
-import 'package:tc/views/pages/transactions/options/widgets/dialogs/new_account_dialog.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/models/DAO/account_DAO.dart';
+import 'package:currency_manager/models/account_model.dart';
+import 'package:currency_manager/views/pages/transactions/options/widgets/dialogs/new_account_dialog.dart';
 
 class SelectAccountWidget extends StatefulWidget {
   final Function(AccountModel accountModel) setAccount;

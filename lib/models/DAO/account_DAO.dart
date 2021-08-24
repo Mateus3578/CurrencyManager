@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:tc/controllers/database_helper.dart';
-import 'package:tc/models/account_model.dart';
+import 'package:currency_manager/controllers/database_helper.dart';
+import 'package:currency_manager/models/account_model.dart';
 
 class AccountDAO {
   DatabaseHelper dbHelper = DatabaseHelper.instance;

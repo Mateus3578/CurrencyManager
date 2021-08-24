@@ -71,9 +71,7 @@ class _CustomAnimatedShakeState extends State<CustomAnimatedShake>
       ..forward()
       ..addListener(() async {
         if (_controller.isCompleted) {
-          await Future.delayed(widget.delay, () {
-            _controller.repeat();
-          });
+          _controller.repeat();
         }
       });
   }

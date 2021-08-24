@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 //import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/controllers/theme_provider.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
 
 class MonthBalanceGraphs extends StatelessWidget {
   final ThemeProvider theme;

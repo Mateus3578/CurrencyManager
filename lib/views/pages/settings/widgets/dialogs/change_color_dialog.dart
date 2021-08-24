@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_circle_color_picker/flutter_circle_color_picker.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/models/DAO/user_DAO.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/models/DAO/user_DAO.dart';
 
 //TODO: Impedir/remediar o usuário que colocar a cor do texto e fundo iguais
 

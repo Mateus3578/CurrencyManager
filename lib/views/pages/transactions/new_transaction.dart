@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/views/pages/transactions/options/new_card_expense.dart';
-import 'package:tc/views/pages/transactions/options/new_common_transaction.dart';
-import 'package:tc/views/pages/transactions/options/new_transfer.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/views/pages/transactions/options/new_card_expense.dart';
+import 'package:currency_manager/views/pages/transactions/options/new_common_transaction.dart';
+import 'package:currency_manager/views/pages/transactions/options/new_transfer.dart';
 
 class NewTransaction extends StatelessWidget {
   final ThemeProvider theme;

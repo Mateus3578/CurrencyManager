@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/theme_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
 
 ThemeData getDefaultTheme(ThemeProvider theme) {
   return ThemeData(

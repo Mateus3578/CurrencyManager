@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tc/controllers/constants.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/models/DAO/account_DAO.dart';
-import 'package:tc/models/DAO/transaction_DAO.dart';
-import 'package:tc/models/account_model.dart';
-import 'package:tc/models/transaction_model.dart';
-import 'package:tc/views/custom/dialogs/delete_dialog.dart';
-import 'package:tc/views/pages/transactions/options/widgets/dialogs/new_account_dialog.dart';
-import 'package:tc/views/pages/wallet/widgets/wallet_appbar.dart';
-import 'package:tc/views/pages/wallet/widgets/wallet_list_tile.dart';
+import 'package:currency_manager/controllers/constants.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/models/DAO/account_DAO.dart';
+import 'package:currency_manager/models/DAO/transaction_DAO.dart';
+import 'package:currency_manager/models/account_model.dart';
+import 'package:currency_manager/models/transaction_model.dart';
+import 'package:currency_manager/views/custom/dialogs/delete_dialog.dart';
+import 'package:currency_manager/views/pages/transactions/options/widgets/dialogs/new_account_dialog.dart';
+import 'package:currency_manager/views/pages/wallet/widgets/wallet_appbar.dart';
+import 'package:currency_manager/views/pages/wallet/widgets/wallet_list_tile.dart';
 
 class Wallet extends StatefulWidget {
   final ThemeProvider theme;
@@ -124,7 +124,7 @@ class _WalletState extends State<Wallet> {
           },
         ),
         Container(
-          padding: EdgeInsets.fromLTRB(0, height * 0.27, 0, 0),
+          padding: EdgeInsets.fromLTRB(0, height * 0.2, 0, 0),
           child: accounts.isNotEmpty && !isLoading
               ? RefreshIndicator(
                   onRefresh: fetchData,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/models/DAO/user_DAO.dart';
-import 'package:tc/views/pages/settings/widgets/dialogs/change_appbar_tone.dart';
-import 'package:tc/views/pages/settings/widgets/dialogs/change_color_dialog.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/models/DAO/user_DAO.dart';
+import 'package:currency_manager/views/pages/settings/widgets/dialogs/change_appbar_tone.dart';
+import 'package:currency_manager/views/pages/settings/widgets/dialogs/change_color_dialog.dart';
 
 class ChangePrefsButton extends StatefulWidget {
   /// Texto do botão

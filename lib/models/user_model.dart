@@ -1,4 +1,4 @@
-import 'package:tc/models/DAO/user_DAO.dart';
+import 'package:currency_manager/models/DAO/user_DAO.dart';
 
 class UserModel {
   final int userId;

@@ -1,8 +1,8 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:tc/models/DAO/account_DAO.dart';
-import 'package:tc/models/DAO/transaction_DAO.dart';
-import 'package:tc/models/DAO/user_DAO.dart';
+import 'package:currency_manager/models/DAO/account_DAO.dart';
+import 'package:currency_manager/models/DAO/transaction_DAO.dart';
+import 'package:currency_manager/models/DAO/user_DAO.dart';
 
 class DatabaseHelper {
   // Singleton

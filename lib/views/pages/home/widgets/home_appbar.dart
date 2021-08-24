@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tc/views/custom/custom_animated_shake.dart';
+import 'package:currency_manager/views/custom/custom_animated_shake.dart';
 
 class HomeAppBar extends StatelessWidget {
   final bool showBalance; // Mostra ou não o saldo

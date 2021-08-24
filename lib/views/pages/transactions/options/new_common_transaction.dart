@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tc/controllers/money_provider.dart';
-import 'package:tc/controllers/theme_provider.dart';
-import 'package:tc/models/DAO/account_DAO.dart';
-import 'package:tc/models/DAO/transaction_DAO.dart';
-import 'package:tc/models/account_model.dart';
-import 'package:tc/models/transaction_model.dart';
-import 'package:tc/views/pages/transactions/options/widgets/dialogs/exit_confirmation_dialog.dart';
-import 'package:tc/views/pages/transactions/options/widgets/select_account_widget.dart';
-import 'package:tc/views/pages/transactions/options/widgets/select_date_widget.dart';
-import 'package:tc/views/pages/transactions/options/widgets/select_description_widget.dart';
-import 'package:tc/views/pages/transactions/options/widgets/select_title_widget.dart';
-import 'package:tc/views/pages/transactions/options/widgets/select_value_widget.dart';
+import 'package:currency_manager/controllers/money_provider.dart';
+import 'package:currency_manager/controllers/theme_provider.dart';
+import 'package:currency_manager/models/DAO/account_DAO.dart';
+import 'package:currency_manager/models/DAO/transaction_DAO.dart';
+import 'package:currency_manager/models/account_model.dart';
+import 'package:currency_manager/models/transaction_model.dart';
+import 'package:currency_manager/views/pages/transactions/options/widgets/dialogs/exit_confirmation_dialog.dart';
+import 'package:currency_manager/views/pages/transactions/options/widgets/select_account_widget.dart';
+import 'package:currency_manager/views/pages/transactions/options/widgets/select_date_widget.dart';
+import 'package:currency_manager/views/pages/transactions/options/widgets/select_description_widget.dart';
+import 'package:currency_manager/views/pages/transactions/options/widgets/select_title_widget.dart';
+import 'package:currency_manager/views/pages/transactions/options/widgets/select_value_widget.dart';
 
 class NewCommonTransaction extends StatefulWidget {
   //Tipos de transação suportados.
@@ -150,7 +150,6 @@ class _NewCommonTransactionState extends State<NewCommonTransaction> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: MediaQuery.of(context).padding.top),
                   // Título
                   SelectTitleWidget(title: "Nova Receita"),
                   // Dados. Se estiver escrevendo, espera
