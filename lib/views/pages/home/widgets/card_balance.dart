@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 /// Card com o saldo
-class CardMoney extends StatelessWidget {
+class CardBalance extends StatelessWidget {
   final double top;
   final bool showMoney;
   final double currentBalance;
@@ -10,7 +10,7 @@ class CardMoney extends StatelessWidget {
   final double currentExpenses;
   final Future<void> Function() onRefresh;
 
-  CardMoney({
+  CardBalance({
     Key? key,
     required this.top,
     required this.showMoney,

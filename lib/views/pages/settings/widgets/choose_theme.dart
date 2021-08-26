@@ -3,7 +3,7 @@ import 'package:currency_manager/controllers/theme_provider.dart';
 import 'package:currency_manager/models/DAO/user_DAO.dart';
 import 'package:currency_manager/views/custom/prebuilt_themes.dart';
 import 'package:currency_manager/models/user_model.dart';
-import 'package:currency_manager/views/custom/custom_animated_shake.dart';
+import 'package:currency_manager/views/custom/custom_animated_bounce.dart';
 import 'package:currency_manager/views/custom/navbar_custom_painter.dart';
 
 class ChooseTheme extends StatelessWidget {
@@ -29,7 +29,9 @@ class ChooseTheme extends StatelessWidget {
     PrebuiltThemes.islandGreen,
     PrebuiltThemes.islandGreenReverse,
     PrebuiltThemes.tomato,
-    PrebuiltThemes.tomatoGreenReverse,
+    PrebuiltThemes.tomatoReverse,
+    PrebuiltThemes.bank,
+    PrebuiltThemes.bankAlter,
   ];
 
   @override
@@ -45,82 +47,44 @@ class ChooseTheme extends StatelessWidget {
         foregroundColor: theme.backgroundColor,
         elevation: 0,
       ),
-      body: Stack(
-        alignment: Alignment.topCenter,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Column(
-            children: <Widget>[
-              SizedBox(
-                height: MediaQuery.of(context).padding.top,
-              ),
-              Container(
-                height: _size.height * 0.14,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Escolha um tema",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "O menu é apenas para visualização",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Positioned(
-            top: _size.height * 0.185,
-            child: CustomAnimatedShake(
-              child: Icon(
-                Icons.expand_more,
-                color: theme.textColor,
-              ),
+          Text(
+            "Escolha um tema",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
             ),
           ),
-          Positioned(
-            top: _size.height * 0.22,
-            height: _size.height * 0.65,
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: theme.primaryColor,
-                    width: 5,
-                  ),
+          CustomAnimatedBounce(
+            child: Icon(
+              Icons.expand_more,
+              color: theme.textColor,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(20),
+            height: _size.height * 0.7,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: theme.primaryColor,
+                  width: 5,
                 ),
-                child: GridView.builder(
-                  physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, _size.height * 0.12),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: themes.length,
-                  itemBuilder: (context, index) {
-                    return exampleTheme(themes[index], _size);
-                  },
+              ),
+              child: GridView.builder(
+                physics: BouncingScrollPhysics(),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, _size.height * 0.12),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
                 ),
+                itemCount: themes.length,
+                itemBuilder: (context, index) {
+                  return exampleTheme(themes[index], _size);
+                },
               ),
             ),
           ),

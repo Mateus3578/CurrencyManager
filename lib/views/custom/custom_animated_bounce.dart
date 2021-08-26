@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomAnimatedShake extends StatefulWidget {
+class CustomAnimatedBounce extends StatefulWidget {
   /// Direção para passar como parâmetro ao construir a animação
   static const verticalDirection = true;
 
@@ -44,7 +44,7 @@ class CustomAnimatedShake extends StatefulWidget {
 
   /// Anima um widget, fazendo ele se movimentar
   /// na horizontal ou na vertical, infinitamente.
-  const CustomAnimatedShake({
+  const CustomAnimatedBounce({
     this.duration = const Duration(seconds: 2),
     this.delta = 10,
     this.curve = Curves.bounceOut,
@@ -54,10 +54,10 @@ class CustomAnimatedShake extends StatefulWidget {
   });
 
   @override
-  _CustomAnimatedShakeState createState() => _CustomAnimatedShakeState();
+  _CustomAnimatedBounceState createState() => _CustomAnimatedBounceState();
 }
 
-class _CustomAnimatedShakeState extends State<CustomAnimatedShake>
+class _CustomAnimatedBounceState extends State<CustomAnimatedBounce>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -69,9 +69,13 @@ class _CustomAnimatedShakeState extends State<CustomAnimatedShake>
       vsync: this,
     )
       ..forward()
-      ..addListener(() async {
+      ..addListener(() {
         if (_controller.isCompleted) {
-          _controller.repeat();
+          Future.delayed(widget.delay, () {
+            if (mounted) {
+              _controller.forward(from: 0.0);
+            }
+          });
         }
       });
   }

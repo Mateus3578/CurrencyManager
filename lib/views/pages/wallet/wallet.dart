@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:currency_manager/controllers/constants.dart';
 import 'package:currency_manager/controllers/money_provider.dart';
 import 'package:currency_manager/controllers/theme_provider.dart';
 import 'package:currency_manager/models/DAO/account_DAO.dart';
@@ -102,12 +101,14 @@ class _WalletState extends State<Wallet> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    String currentMonth = DateFormat.MMMM("pt_BR").format(date);
     return Stack(
       alignment: Alignment.topCenter,
       children: <Widget>[
         WalletAppbar(
           theme: widget.theme,
-          currentMonth: Constants.months[date.month],
+          currentMonth: currentMonth.substring(0, 1).toUpperCase() +
+              currentMonth.substring(1, currentMonth.length),
           monthBalance: _getMonthBalance(transactions),
           moneyProvider: widget.money,
           onPressedNext: () async {

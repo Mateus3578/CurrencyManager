@@ -1,3 +1,4 @@
+import 'package:currency_manager/models/transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:currency_manager/controllers/theme_provider.dart';
@@ -6,20 +7,10 @@ class TransactionListTile extends StatelessWidget {
   final onTap;
   final onLongPress;
   final ThemeProvider theme;
-
-  /// Descrição da transação
-  final String description;
-
-  /// Tipo de transação (despesa, receita etc)
-  final int type;
-
-  /// Valor da transação. Formatado aqui mesmo
-  final double value;
+  final TransactionModel transaction;
 
   const TransactionListTile({
-    required this.description,
-    required this.type,
-    required this.value,
+    required this.transaction,
     required this.onTap,
     required this.onLongPress,
     required this.theme,
@@ -27,6 +18,8 @@ class TransactionListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime _date = DateTime.parse(transaction.date);
+
     _returnIcon(int type) {
       if (type == 1) {
         return Icon(
@@ -49,8 +42,8 @@ class TransactionListTile extends StatelessWidget {
       return Icon(Icons.circle_outlined);
     }
 
-    String formattedValue =
-        NumberFormat.currency(decimalDigits: 2, symbol: "").format(value);
+    String formattedValue = NumberFormat.currency(decimalDigits: 2, symbol: "")
+        .format(transaction.value);
 
     return ListTile(
       title: Container(
@@ -60,16 +53,15 @@ class TransactionListTile extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                _returnIcon(type),
+                _returnIcon(transaction.type),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
-                      description,
+                      transaction.description,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       softWrap: false,
-                      style: TextStyle(color: theme.textColor),
                     ),
                   ),
                 ),
@@ -78,10 +70,20 @@ class TransactionListTile extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              "R\$ $formattedValue",
-              maxLines: 1,
-              style: TextStyle(color: theme.textColor),
+            child: Column(
+              children: [
+                Text(
+                  "R\$ $formattedValue",
+                  maxLines: 1,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  "${DateFormat("EEEE, dd", "pt_BR").format(_date)}",
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 14),
+                ),
+              ],
             ),
           ),
         ],

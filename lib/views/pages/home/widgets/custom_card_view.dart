@@ -3,10 +3,8 @@ import 'package:currency_manager/controllers/money_provider.dart';
 import 'package:currency_manager/controllers/theme_provider.dart';
 import 'package:currency_manager/views/pages/cards/cripto_currency_card.dart';
 import 'package:currency_manager/views/pages/cards/currency_card.dart';
-import 'package:currency_manager/views/pages/cards/example_card_graph.dart';
+import 'package:currency_manager/views/pages/cards/example_card.dart';
 import 'package:currency_manager/views/pages/cards/month_balance_graph.dart';
-
-//TODO: Opção para mostar/esconder card e customizar card
 
 /// Cards com os gráficos
 class CustomCardView extends StatelessWidget {
@@ -45,7 +43,7 @@ class CustomCardView extends StatelessWidget {
             MonthBalanceGraphs(theme: theme, money: money),
             CurrencyCard(theme: theme),
             CriptoCurrencyCard(theme: theme),
-            ExampleCardGraphs(theme: theme),
+            ExampleCard(theme: theme),
           ],
         ),
       ),
@@ -58,8 +56,7 @@ TODO: Ideias de gráficos
 Timeline com a frequência de gastos. Semana, Mês e Ano
 Percentual gasto/lucro
 Indicadores (API)(Com data): Salário mínimo, CDI, SELIC;
-Câmbio (Valor e variação): Dólar, Euro, Libra, etc
-Câmbio criptomoedas (Valor e variação): Bitcoin e cia
+Gráficos baseados em tags
 
 Notícias?
 

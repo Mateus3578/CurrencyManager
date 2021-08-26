@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:currency_manager/controllers/constants.dart';
 import 'package:currency_manager/controllers/money_provider.dart';
 import 'package:currency_manager/controllers/theme_provider.dart';
 import 'package:currency_manager/models/DAO/account_DAO.dart';
@@ -44,6 +43,8 @@ class _TransactionsViewState extends State<TransactionsView> {
       lastDate,
     );
 
+    data.sort((a, b) => b.date.compareTo(a.date));
+
     setState(() {
       transactions = data;
     });
@@ -86,6 +87,7 @@ class _TransactionsViewState extends State<TransactionsView> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    String currentMonth = DateFormat.MMMM("pt_BR").format(date);
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -93,7 +95,8 @@ class _TransactionsViewState extends State<TransactionsView> {
           textColor: widget.theme.textColor,
           transactionsCount: "${transactions.length}",
           monthBalance: _getBalance(transactions),
-          currentMonth: Constants.months[date.month],
+          currentMonth: currentMonth.substring(0, 1).toUpperCase() +
+              currentMonth.substring(1, currentMonth.length),
           onPressedNext: () async {
             setState(() {
               date = DateTime(date.year, date.month + 1, date.day);
@@ -127,9 +130,7 @@ class _TransactionsViewState extends State<TransactionsView> {
                         return Column(
                           children: [
                             TransactionListTile(
-                              type: transactions[index].type,
-                              description: transactions[index].description,
-                              value: transactions[index].value ?? 0,
+                              transaction: transactions[index],
                               theme: widget.theme,
                               onTap: () {
                                 Navigator.push(

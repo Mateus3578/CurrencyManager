@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // Customizações de sistema, como orientação da tela e cor da barra de notificações
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:currency_manager/controllers/money_provider.dart';
 import 'package:currency_manager/controllers/theme_provider.dart';
@@ -10,19 +11,20 @@ import 'package:currency_manager/views/splash/my_splash.dart';
 //TODO: Testar editar/deletar contas/transações e conferir o reflexo nos saldos.
 //TODO: Transferência entre contas
 //TODO: Cartões de crédito
-
-//TODO: Tema Nubank
 //TODO: Trocar ícone launcher
-
-//TODO <Bug>: no delay da animação do ícone
-
 //TODO: Opção para sempre mostrar o saldo
-//TODO: Opções para customizar os gráficos
+//TODO: Opção para mostar/esconder/customizar cards
 //TODO: Opção de aumentar e reduzir tamanho do texto
-//TODO: Animação no botão de salvar ao salvar
-//TODO: Ao criar conta, fornecer opção de ícone com base em contas comuns
+//TODO: Opção de ícone com base em contas comuns
 // Caixa, BB, Nubank etc
-//TODO: Opção para fazer backup do app
+//TODO: Opção para fazer backup dos dados
+//TODO: Dar funcionalidade para despesa fixa e repetível
+//TODO: Notificação no dia da despesa fixa
+//TODO: Tags
+//TODO: Filtro para tags
+//TODO: Exportar gráficos/dados
+//TODO: Tutorial de uso do app
+//TODO: Guia na primeira vez que o app for aberto
 
 void main() => runApp(StartApp());
 
@@ -40,10 +42,8 @@ class StartApp extends StatelessWidget {
     ]);
 
     // https://pub.dev/packages/provider.
-    // Basicamente, o widget pai de todos é o provedor do tema, que o envia para
-    // os filhos. Quando uma coisa mudar é só notificar da mudança.
-    // A main é um consumer porque o splash carrega os dados.
     return MultiProvider(
+      // Os providers são inicializados aqui
       providers: [
         ChangeNotifierProvider<ThemeProvider>(
           create: (_) => ThemeProvider(),
@@ -52,6 +52,7 @@ class StartApp extends StatelessWidget {
           create: (_) => MoneyProvider(),
         ),
       ],
+      // O widget pai (MaterialApp) é um consumidor, que passa para os filhos.
       child: Consumer<ThemeProvider>(
         builder: (context, theme, __) {
           return Consumer<MoneyProvider>(
@@ -65,6 +66,13 @@ class StartApp extends StatelessWidget {
                 // Definição do tema.
                 // Facilita para não ter que definir algumas cores.
                 theme: getDefaultTheme(theme),
+                // Suporte melhor para português, principalmente em datas
+                supportedLocales: [Locale("pt", "BR"), Locale("en", "")],
+                localizationsDelegates: [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
               );
             },
           );

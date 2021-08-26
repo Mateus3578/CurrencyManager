@@ -53,7 +53,10 @@ class MonthBalanceGraphs extends StatelessWidget {
             axisLine: AxisLine(color: theme.iconColor, width: 2),
             labelStyle: TextStyle(color: theme.iconColor, fontSize: 20),
           ),
-          primaryYAxis: NumericAxis(isVisible: false),
+          primaryYAxis: NumericAxis(
+            isVisible: false,
+            labelFormat: "R\$ {value}",
+          ),
           /* Config para mostrar dados no y
           primaryYAxis: NumericAxis(
             numberFormat: NumberFormat.simpleCurrency(locale: "pt-br"),

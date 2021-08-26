@@ -192,12 +192,30 @@ class PrebuiltThemes {
     isDarkMode: true,
   );
 
-  static PreBuiltThemeModel tomatoGreenReverse = PreBuiltThemeModel(
+  static PreBuiltThemeModel tomatoReverse = PreBuiltThemeModel(
     primary: Color(0xFFE94B3C),
     alter: Color(0xFFE94B3C),
     text: Color(0xFF000000),
     icon: Color(0xFF000000),
     background: Color(0xFFFCF6F5),
     isDarkMode: false,
+  );
+
+  static PreBuiltThemeModel bank = PreBuiltThemeModel(
+    primary: Color(0xFFFFFFFF),
+    alter: Color(0xFFFFFFFF),
+    text: Color(0xFFFFFFFF),
+    icon: Color(0xFF000000),
+    background: Color(0xFF9C27B0),
+    isDarkMode: true,
+  );
+
+  static PreBuiltThemeModel bankAlter = PreBuiltThemeModel(
+    primary: Color(0xFFFFFFFF),
+    alter: Color(0xFFFFFFFF),
+    text: Color(0xFFFFFFFF),
+    icon: Color(0xFF000000),
+    background: Color(0xFFEF6C00),
+    isDarkMode: true,
   );
 }

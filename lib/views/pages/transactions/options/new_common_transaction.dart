@@ -1,3 +1,4 @@
+import 'package:currency_manager/views/custom/custom_confirm_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:currency_manager/controllers/money_provider.dart';
@@ -57,6 +58,7 @@ class _NewCommonTransactionState extends State<NewCommonTransaction> {
   // Espera enquanto está escrevendo os dados
   AccountDAO accountDAO = AccountDAO();
   bool _isAutoFilling = false;
+  bool _isSaved = false;
 
   // Funcões-callback dos widgets que compoem a tela.
   void _setDate(DateTime pickedDate) {
@@ -116,6 +118,72 @@ class _NewCommonTransactionState extends State<NewCommonTransaction> {
     if (widget.transactionAutoFill != null) {
       autoFill();
     }
+  }
+
+  Future<void> onSave() async {
+    TransactionDAO transactionDAO = TransactionDAO();
+    AccountDAO accountDAO = AccountDAO();
+
+    double? value = double.tryParse(
+      formatValue(_valueController.text),
+    );
+
+    // Montando o objeto/mapa da transação
+    TransactionModel transaction = TransactionModel(
+      type: widget.type,
+      description: _descriptionController.text,
+      value: value,
+      date: DateFormat("yyyy-MM-dd").format(_date),
+      accountId: _account.idAccount,
+      moreDesc: _moreDescController.text,
+      isFixed: _isFixed,
+      isRepeatable: _isRepeatable,
+    );
+
+    if (widget.transactionAutoFill == null) {
+      // Salvando a transação no banco de dados
+      await transactionDAO.insertTransaction(transaction.toMap());
+
+      // Salvando novo saldo na conta
+      if (widget.type == 1) {
+        await accountDAO.updateBalanceById(
+            (_account.balance! + value!), _account.idAccount);
+      } else if (widget.type == 2) {
+        await accountDAO.updateBalanceById(
+            (_account.balance! - value!), _account.idAccount);
+      }
+    } else {
+      // Salvando a edição
+      await transactionDAO.updateTransactionById(
+        transaction.toMap(),
+        widget.transactionAutoFill!.idTransaction,
+      );
+
+      // Alterando o saldo da conta
+      if (widget.type == 1) {
+        await accountDAO.updateBalanceById(
+          (_account.balance! +
+              value! -
+              (widget.transactionAutoFill!.value! * 1)),
+          _account.idAccount,
+        );
+      } else if (widget.type == 2) {
+        await accountDAO.updateBalanceById(
+          (_account.balance! +
+              (value! * -1) -
+              (widget.transactionAutoFill!.value! * 1)),
+          _account.idAccount,
+        );
+      }
+    }
+
+    // Reseta os dados de receita/despesa/saldo
+    await widget.money.fetchData();
+
+    // Fim :)
+    setState(() {
+      _isSaved = true;
+    });
   }
 
   @override
@@ -246,79 +314,20 @@ class _NewCommonTransactionState extends State<NewCommonTransaction> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate() &&
                                 _account.idAccount != null) {
-                              TransactionDAO transactionDAO = TransactionDAO();
-                              AccountDAO accountDAO = AccountDAO();
-
-                              double? value = double.tryParse(
-                                formatValue(_valueController.text),
-                              );
-
-                              // Montando o objeto/mapa da transação
-                              TransactionModel transaction = TransactionModel(
-                                type: widget.type,
-                                description: _descriptionController.text,
-                                value: value,
-                                date: DateFormat("yyyy-MM-dd").format(_date),
-                                accountId: _account.idAccount,
-                                moreDesc: _moreDescController.text,
-                                isFixed: _isFixed,
-                                isRepeatable: _isRepeatable,
-                              );
-
-                              if (widget.transactionAutoFill == null) {
-                                // Salvando a transação no banco de dados
-                                await transactionDAO
-                                    .insertTransaction(transaction.toMap());
-
-                                // Salvando novo saldo na conta
-                                if (widget.type == 1) {
-                                  await accountDAO.updateBalanceById(
-                                      (_account.balance! + value!),
-                                      _account.idAccount);
-                                } else if (widget.type == 2) {
-                                  await accountDAO.updateBalanceById(
-                                      (_account.balance! - value!),
-                                      _account.idAccount);
-                                }
-                              } else {
-                                // Salvando a edição
-                                await transactionDAO.updateTransactionById(
-                                  transaction.toMap(),
-                                  widget.transactionAutoFill!.idTransaction,
-                                );
-
-                                // Alterando o saldo da conta
-                                if (widget.type == 1) {
-                                  await accountDAO.updateBalanceById(
-                                    (_account.balance! +
-                                        value! -
-                                        (widget.transactionAutoFill!.value! *
-                                            1)),
-                                    _account.idAccount,
-                                  );
-                                } else if (widget.type == 2) {
-                                  await accountDAO.updateBalanceById(
-                                    (_account.balance! +
-                                        (value! * -1) -
-                                        (widget.transactionAutoFill!.value! *
-                                            1)),
-                                    _account.idAccount,
-                                  );
-                                }
-                              }
-
-                              // Reseta os dados de receita/despesa/saldo
-                              await widget.money.fetchData();
-
-                              // Fim :)
-                              Navigator.of(context).pop(true);
+                              await onSave();
                             }
                           },
                           backgroundColor: mainColor,
-                          child: Icon(
-                            Icons.check,
-                            size: 30,
-                          ),
+                          child: _isSaved
+                              ? CustomConfirmAnimation(
+                                  color: widget.theme.iconColor,
+                                  onComplete: () =>
+                                      Navigator.of(context).pop(true),
+                                )
+                              : Icon(
+                                  Icons.check,
+                                  size: 30,
+                                ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),

@@ -1,3 +1,4 @@
+import 'package:currency_manager/views/custom/custom_confirm_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:currency_manager/controllers/money_provider.dart';
 import 'package:currency_manager/controllers/theme_provider.dart';

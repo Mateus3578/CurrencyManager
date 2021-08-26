@@ -1,7 +1,8 @@
+import 'package:currency_manager/views/pages/home/widgets/reminders.dart';
 import 'package:flutter/material.dart';
 import 'package:currency_manager/controllers/money_provider.dart';
 import 'package:currency_manager/controllers/theme_provider.dart';
-import 'package:currency_manager/views/pages/home/widgets/card_money.dart';
+import 'package:currency_manager/views/pages/home/widgets/card_balance.dart';
 import 'package:currency_manager/views/pages/home/widgets/graph_dots.dart';
 import 'package:currency_manager/views/pages/home/widgets/custom_card_view.dart';
 import 'package:currency_manager/views/pages/home/widgets/home_appbar.dart';
@@ -49,7 +50,7 @@ class _HomeState extends State<Home> {
           },
         ),
         // Card ocultável com o saldo e receitas/despesas
-        CardMoney(
+        CardBalance(
           top: _screenHeight * 0.15,
           showMoney: _showBalance,
           currentBalance: widget.money.balance,
@@ -117,6 +118,11 @@ class _HomeState extends State<Home> {
           index: _graphIndex,
           color: widget.theme.textColor,
           top: !_showBalance ? _screenHeight * 0.55 : _screenHeight * 0.75,
+        ),
+        // Lembretes
+        RemindersView(
+          top: !_showBalance ? _screenHeight * 0.6 : _screenHeight * 0.8,
+          theme: widget.theme,
         ),
       ],
     );

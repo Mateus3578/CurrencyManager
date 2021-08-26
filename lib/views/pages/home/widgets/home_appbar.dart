@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:currency_manager/views/custom/custom_animated_shake.dart';
+import 'package:currency_manager/views/custom/custom_animated_bounce.dart';
 
 class HomeAppBar extends StatelessWidget {
   final bool showBalance; // Mostra ou não o saldo
@@ -53,7 +53,7 @@ class HomeAppBar extends StatelessWidget {
                     ],
                   ),
                 ),
-                CustomAnimatedShake(
+                CustomAnimatedBounce(
                   delay: Duration(seconds: 10),
                   child: Icon(
                     !showBalance ? Icons.expand_more : Icons.expand_less,

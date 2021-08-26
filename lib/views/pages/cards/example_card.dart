@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:currency_manager/controllers/theme_provider.dart';
 
-class ExampleCardGraphs extends StatelessWidget {
+class ExampleCard extends StatelessWidget {
   final ThemeProvider theme;
 
   /// Temporário, apenas para visualização. Cada gráfico terá seu arquivo
-  const ExampleCardGraphs({required this.theme});
+  const ExampleCard({required this.theme});
 
   @override
   Widget build(BuildContext context) {
